@@ -1,32 +1,48 @@
-import * as React from 'react'
-import Link from 'next/link'
-import Head from 'next/head'
+import * as React from "react";
+import { Flex } from "rebass";
+import Head from "next/head";
+
+import MyLink from "./MyLink";
 
 type Props = {
-  title?: string,
-}
+  title?: string;
+};
 
-const Layout: React.FunctionComponent<Props> = ({ children, title = 'This is the default title' }) => (
-  <div>
+const Layout: React.FunctionComponent<Props> = ({
+  children,
+  title = "This is the default title"
+}) => (
+  <Flex flexDirection="column" width={[1]}>
     <Head>
       <title>{title}</title>
-      <meta charSet='utf-8' />
-      <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+      <meta charSet="utf-8" />
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-    <header>
+    <Flex as="header">
       <nav>
-        <Link href='/'><a>Home</a></Link> | {' '}
-        <Link href='/list-fc'><a>List as Functional Component</a></Link> | {' '}
-        <Link href='/list-class'><a>List As Class</a></Link> | {' '}
-        <Link href='/about'><a>About</a></Link> | {' '}
+        <MyLink prefetch pathn href="/" name="home">
+          <a>Home</a>
+        </MyLink>{" "}
+        |{" "}
+        <MyLink prefetch pathn href="/cars" name="cars">
+          <a>Cars</a>
+        </MyLink>{" "}
+        |{" "}
+        <MyLink prefetch pathn href="/login" name="login">
+          <a>Login</a>
+        </MyLink>{" "}
+        |{" "}
+        <MyLink prefetch pathn href="/register" name="register">
+          <a>Register</a>
+        </MyLink>{" "}
       </nav>
-    </header>
+    </Flex>
     {children}
     <footer>
       <hr />
-      <span>I'm here to stay (Footer)</span>
+      <span>Made with ❤️ by Eddie Naff</span>
     </footer>
-  </div>
-)
+  </Flex>
+);
 
-export default Layout
+export default Layout;

@@ -1,6 +1,19 @@
 import * as React from "react";
-import Document, { NextDocumentContext } from "next/document";
-import { ServerStyleSheet } from "styled-components";
+import Document, {
+  Head,
+  Main,
+  NextScript,
+  NextDocumentContext
+} from "next/document";
+import { ServerStyleSheet, createGlobalStyle } from "styled-components";
+
+// Global styles but theme- and update-able!
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    text-size-adjust: 100%;
+  }
+`;
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: NextDocumentContext) {
@@ -27,5 +40,21 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal();
     }
+  }
+  render() {
+    const sheet = new ServerStyleSheet();
+    const main = sheet.collectStyles(<Main />);
+    const styleTags = sheet.getStyleElement();
+
+    return (
+      <html>
+        <Head>{styleTags}</Head>
+        <body>
+          <GlobalStyle />
+          <div className="root">{main}</div>
+          <NextScript />
+        </body>
+      </html>
+    );
   }
 }

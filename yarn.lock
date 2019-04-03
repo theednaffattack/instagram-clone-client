@@ -903,7 +903,7 @@
     "@types/react-native" "*"
     csstype "^2.2.0"
 
-"@types/styled-system@*":
+"@types/styled-system@*", "@types/styled-system@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/styled-system/-/styled-system-4.0.0.tgz#d6fe4f1d6a9ed075b86c54a5d792748a68aba130"
   integrity sha512-pRbhOmp4C2Psj2jXHwTsTrUwzOYinZGmSq7dLEGCYUMQq9aePAswQLYqTEQK3002ZtfEX5okipifDMhlOBcQ4w==

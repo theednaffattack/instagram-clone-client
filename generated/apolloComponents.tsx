@@ -1,9 +1,7 @@
 export type Maybe<T> = T | null;
 
-export interface ChangePasswordInput {
-  password: string;
-
-  token: string;
+export interface ProductInput {
+  name: string;
 }
 
 export interface RegisterInput {
@@ -16,8 +14,14 @@ export interface RegisterInput {
   email: string;
 }
 
-export interface ProductInput {
-  name: string;
+export interface ChangePasswordInput {
+  password: string;
+
+  token: string;
+}
+
+export interface PasswordInput {
+  password: string;
 }
 
 /** The `Upload` scalar type represents a file upload. */
@@ -84,6 +88,14 @@ export type RegisterRegister = {
   email: string;
 
   name: string;
+};
+
+export type HelloWorldVariables = {};
+
+export type HelloWorldQuery = {
+  __typename?: "Query";
+
+  helloWorld: string;
 };
 
 import * as ReactApollo from "react-apollo";
@@ -232,4 +244,42 @@ export function RegisterHOC<TProps, TChildProps = any>(
     RegisterVariables,
     RegisterProps<TChildProps>
   >(RegisterDocument, operationOptions);
+}
+export const HelloWorldDocument = gql`
+  query HelloWorld {
+    helloWorld
+  }
+`;
+export class HelloWorldComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<HelloWorldQuery, HelloWorldVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<HelloWorldQuery, HelloWorldVariables>
+        query={HelloWorldDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type HelloWorldProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<HelloWorldQuery, HelloWorldVariables>
+> &
+  TChildProps;
+export function HelloWorldHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        HelloWorldQuery,
+        HelloWorldVariables,
+        HelloWorldProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    HelloWorldQuery,
+    HelloWorldVariables,
+    HelloWorldProps<TChildProps>
+  >(HelloWorldDocument, operationOptions);
 }

@@ -33,21 +33,25 @@ const Layout: React.FunctionComponent<Props> = ({
     </Head>
     <Flex as="header">
       <nav>
-        <MyLink prefetch pathn href="/" name="home">
+        <MyLink prefetch href="/" name="home">
           <a>Home</a>
         </MyLink>{" "}
         |{" "}
-        <MyLink prefetch pathn href="/cars" name="cars">
+        <MyLink prefetch href="/cars" name="cars">
           <a>Cars</a>
         </MyLink>{" "}
         |{" "}
-        <MyLink prefetch pathn href="/login" name="login">
+        <MyLink prefetch href="/login" name="login">
           <a>Login</a>
         </MyLink>{" "}
         |{" "}
-        <MyLink prefetch pathn href="/register" name="register">
+        <MyLink prefetch href="/register" name="register">
           <a>Register</a>
         </MyLink>{" "}
+        |{" "}
+        <MyLink prefetch href="/hello" name="hello">
+          <a>Hello</a>
+        </MyLink>
       </nav>
     </Flex>
     {children}

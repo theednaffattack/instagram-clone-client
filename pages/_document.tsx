@@ -9,10 +9,17 @@ import { ServerStyleSheet, createGlobalStyle } from "styled-components";
 
 // Global styles but theme- and update-able!
 const GlobalStyle = createGlobalStyle`
-  body {
+html {
+  box-sizing: border-box;
+}  
+body {
     margin: 0;
     text-size-adjust: 100%;
   }
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 `;
 
 export default class MyDocument extends Document {

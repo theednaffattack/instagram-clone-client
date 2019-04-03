@@ -12,6 +12,10 @@ export const InputField = ({
   ...props
 }: FieldProps & InputProps) => {
   const errorMessage = touched[field.name] && errors[field.name];
+  console.log("errorMessage");
+  console.log(errorMessage);
+  console.log(touched[field.name]);
+  console.log(errors[field.name]);
 
   return (
     <div>

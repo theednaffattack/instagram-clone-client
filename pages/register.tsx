@@ -3,6 +3,7 @@ import React from "react";
 import { InputField } from "../components/fields/InputField";
 import Layout from "../components/Layout";
 import { RegisterComponent } from "../generated/apolloComponents";
+import { Router } from "../server/routes";
 
 export default () => {
   return (
@@ -20,18 +21,33 @@ export default () => {
                   }
                 });
                 console.log(response);
-              } catch (err) {
-                const errors: { [key: string]: string } = {};
-                err.graphQLErrors[0].validationErrors.forEach(
-                  (validationErr: any) => {
-                    Object.values(validationErr.constraints).forEach(
-                      (message: any) => {
-                        errors[validationErr.property] = message;
-                      }
-                    );
-                  }
-                );
-                setErrors(errors);
+                Router.push("/check-email");
+              } catch (error) {
+                const displayErrors: { [key: string]: string } = {};
+
+                let myErrors =
+                  error.graphQLErrors[0].extensions.exception.validationErrors;
+
+                myErrors.forEach((validationError: any) => {
+                  Object.values(validationError.constraints).forEach(
+                    (message: any) => {
+                      displayErrors[validationError.property] = message;
+                    }
+                  );
+                });
+                return setErrors(displayErrors);
+
+                // const errors: { [key: string]: string } = {};
+                // err.graphQLErrors[0].validationErrors.forEach(
+                //   (validationErr: any) => {
+                //     Object.values(validationErr.constraints).forEach(
+                //       (message: any) => {
+                //         errors[validationErr.property] = message;
+                //       }
+                //     );
+                //   }
+                // );
+                // setErrors(errors);
               }
             }}
             initialValues={{

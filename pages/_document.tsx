@@ -17,9 +17,6 @@ body {
     text-size-adjust: 100%;
   }
 
-*, *:before, *:after {
-  box-sizing: inherit;
-}
 `;
 
 export default class MyDocument extends Document {

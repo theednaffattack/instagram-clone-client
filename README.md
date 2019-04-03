@@ -7,16 +7,19 @@ https://github.com/theednaffattack/typegraphql-server-starter
 
 ## Features
 
-- user registration, login, logout, forgot password, account verification
+- user registration (change password, lock account)
+- multi-device/screen logout
+- confirmation email
+- file uploads
+
+## Todo
+
+- testing with jest or react testing library
 
 ## Bones
 
 - Typescript
-
 - React
-
 - Styled Components
-
 - Rebass & Styled System
-
 - Apollo GraqphQL

@@ -55,6 +55,10 @@ const Layout: React.FunctionComponent<Props> = ({
         |{" "}
         <MyLink prefetch href="/forgot-password" name="forgot-password">
           <a>Forgot Password</a>
+        </MyLink>{" "}
+        |{" "}
+        <MyLink prefetch href="/logout" name="logout">
+          <a>Logout</a>
         </MyLink>
       </nav>
     </Flex>

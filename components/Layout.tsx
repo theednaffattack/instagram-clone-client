@@ -10,6 +10,7 @@ const Flex = styled(FlexBase)`
 `;
 
 import MyLink from "./MyLink";
+import { MeComponent } from "../generated/apolloComponents";
 
 type Props = {
   title?: string;
@@ -55,11 +56,23 @@ const Layout: React.FunctionComponent<Props> = ({
         |{" "}
         <MyLink prefetch href="/forgot-password" name="forgot-password">
           <a>Forgot Password</a>
-        </MyLink>{" "}
-        |{" "}
-        <MyLink prefetch href="/logout" name="logout">
-          <a>Logout</a>
         </MyLink>
+        <MeComponent>
+          {({ data, loading }) => {
+            if (!data || loading || !data.me) {
+              return null;
+            }
+            return (
+              <>
+                {" "}
+                |{" "}
+                <MyLink prefetch href="/logout" name="logout">
+                  <a>Logout</a>
+                </MyLink>
+              </>
+            );
+          }}
+        </MeComponent>
       </nav>
     </Flex>
     {children}

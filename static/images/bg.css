@@ -1,0 +1,26 @@
+.bg {
+  background-image: -moz-linear-gradient(
+    75deg,
+    rgb(210, 48, 120) 6%,
+    rgb(254, 97, 97) 74%,
+    rgb(255, 121, 85) 100%
+  );
+  background-image: -webkit-linear-gradient(
+    75deg,
+    rgb(210, 48, 120) 6%,
+    rgb(254, 97, 97) 74%,
+    rgb(255, 121, 85) 100%
+  );
+  background-image: -ms-linear-gradient(
+    75deg,
+    rgb(210, 48, 120) 6%,
+    rgb(254, 97, 97) 74%,
+    rgb(255, 121, 85) 100%
+  );
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 1366px;
+  height: 768px;
+  z-index: 2123;
+}

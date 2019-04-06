@@ -3,7 +3,7 @@ import Link from "next/link";
 import styled from "styled-components";
 
 const StyledLink = styled.a`
-  color: crimson;
+  color: white;
 `;
 
 export default ({ href, name }: any) => (

@@ -9,6 +9,21 @@ const Flex = styled(FlexBase)`
   ${borders}
 `;
 
+const FlexHeader = styled(FlexBase)`
+  ${minHeight}
+  ${borders}
+
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 9999;
+`;
+
+const FlexFooter = styled(FlexBase)`
+  ${minHeight}
+  ${borders}
+`;
+
 import MyLink from "./MyLink";
 import { MeComponent } from "../generated/apolloComponents";
 
@@ -21,7 +36,7 @@ const Layout: React.FunctionComponent<Props> = ({
   title = "This is the default title"
 }) => (
   <Flex
-    border="3px crimson solid"
+    // border="3px crimson solid"
     m={[0]}
     minHeight="100vh"
     flexDirection="column"
@@ -32,7 +47,7 @@ const Layout: React.FunctionComponent<Props> = ({
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-    <Flex as="header">
+    <FlexHeader color="white" as="header">
       <nav>
         <MyLink prefetch href="/" name="home">
           <a>Home</a>
@@ -74,12 +89,15 @@ const Layout: React.FunctionComponent<Props> = ({
           }}
         </MeComponent>
       </nav>
+    </FlexHeader>
+
+    <Flex flexDirection="column" minHeight="50vh">
+      {children}
+      <FlexFooter flexDirection="column" as="footer">
+        <hr />
+        <span>Made with ❤️ by Eddie Naff</span>
+      </FlexFooter>
     </Flex>
-    {children}
-    <footer>
-      <hr />
-      <span>Made with ❤️ by Eddie Naff</span>
-    </footer>
   </Flex>
 );
 

@@ -1,33 +1,39 @@
-import Link from "next/link";
+// import Link from "next/link";
 import * as React from "react";
 import Layout from "../components/Layout";
 import { LoginComponent } from "../generated/apolloComponents";
-import { Flex as FlexBase } from "rebass";
+import { Box, Flex as FlexBase, Text } from "rebass";
 import styled from "styled-components";
-import { minHeight } from "styled-system";
+import { minHeight, space, width } from "styled-system";
+
+import { Button } from "../components/Button/Button";
+
+import CatBase from "../static/images/blissful2.svg";
+
+const Cat = styled(CatBase)`
+  ${space}
+  ${width}
+`;
 
 const Flex = styled(FlexBase)`
   ${minHeight}
-  background: url('/static/bg.png') center center no-repeat;
-  // background: url('http://unsplash.it/1200x800') center center no-repeat;
-  background-size: cover;
+
+  background-image: linear-gradient(
+    0deg,
+    rgba(210, 48, 120, 1) 6%,
+    rgba(254, 97, 97, 1) 74%,
+    rgba(255, 121, 85, 1) 100%
+  );
 `;
 
 const InnerFlex = styled(FlexBase)`
   ${minHeight}
-  // background: url('http://unsplash.it/1200x800') center center no-repeat;
+  background: url('/static/bg.png') center center no-repeat;
   background-size: cover;
-
-  background-image: linear-gradient(
-    75deg,
-    rgba(210, 48, 120, 0.9) 6%,
-    rgba(254, 97, 97, 0.9) 74%,
-    rgba(255, 121, 85, 0.9) 100%
-  );
 `;
 
 const ContentFlex = styled(FlexBase)`
-  ${minHeight} // opacity: 1;
+  ${minHeight}
 `;
 
 // const Card = styled(CardBase)`
@@ -63,18 +69,70 @@ const IndexPage: React.FunctionComponent = () => {
         color="white"
         bg="black"
       > */}
-      <Flex flexDirection="column" width={[1]}>
+      <Flex minHeight="100vh" flexDirection="column" width={[1]}>
         <InnerFlex flexDirection="column">
-          <ContentFlex color="black" flexDirection="column" minHeight="100vh">
-            <h1>hello Next.js 👋</h1>
-            <p>
-              <Link href="/about">
-                <a>About</a>
-              </Link>
-            </p>
+          <ContentFlex
+            alignItems="center"
+            justifyContent="center"
+            color="black"
+            flexDirection="column"
+            minHeight="100vh"
+          >
+            <Text
+              mb={2}
+              letterSpacing="0.5em"
+              color="white"
+              fontSize={[4, 3, 3]}
+            >
+              ATLAS
+            </Text>
+            <Cat width="300px" mx="auto" />
+
+            <Box width="36px" mb={5}>
+              <hr
+                style={{
+                  border: "4px solid white"
+                }}
+              />
+            </Box>
+            <Button
+              shadow="0px 13px 27px 0px rgba(0, 0, 0, 0.1)"
+              bg="rgb(238, 238, 238)"
+            >
+              <Text color="#e9486d">Login</Text>
+            </Button>
+            <FlexBase
+              justifyContent="center"
+              width="250px"
+              // style={{ border: "1px solid white" }}
+              py={3}
+            >
+              <Box width={1 / 3}>
+                <hr
+                  style={{
+                    border: "1px solid white",
+                    opacity: "0.5"
+                  }}
+                />
+              </Box>
+              <Box px={3}>
+                <Text fontSize={1} color="#fff">
+                  OR
+                </Text>
+              </Box>
+              <Box width={1 / 3}>
+                <hr
+                  style={{
+                    border: "1px solid white",
+                    opacity: "0.5"
+                  }}
+                />
+              </Box>
+            </FlexBase>
             <LoginComponent>
               {mutate => (
-                <button
+                <Button
+                  bg="transparent"
                   onClick={async () => {
                     const response = await mutate({
                       variables: {
@@ -86,10 +144,11 @@ const IndexPage: React.FunctionComponent = () => {
                     console.log(response);
                   }}
                 >
-                  call login mutation
-                </button>
+                  Create an account
+                </Button>
               )}
             </LoginComponent>
+            {/* <img src="/static/bg.png" /> */}
           </ContentFlex>
         </InnerFlex>
       </Flex>

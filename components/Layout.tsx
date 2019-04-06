@@ -47,7 +47,7 @@ const Layout: React.FunctionComponent<Props> = ({
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-    <FlexHeader color="white" as="header">
+    {/* <FlexHeader color="white" as="header">
       <nav>
         <MyLink prefetch href="/" name="home">
           <a>Home</a>
@@ -89,14 +89,14 @@ const Layout: React.FunctionComponent<Props> = ({
           }}
         </MeComponent>
       </nav>
-    </FlexHeader>
+    </FlexHeader> */}
 
     <Flex flexDirection="column" minHeight="50vh">
       {children}
-      <FlexFooter flexDirection="column" as="footer">
+      {/* <FlexFooter flexDirection="column" as="footer">
         <hr />
         <span>Made with ❤️ by Eddie Naff</span>
-      </FlexFooter>
+      </FlexFooter> */}
     </Flex>
   </Flex>
 );

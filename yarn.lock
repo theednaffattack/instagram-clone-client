@@ -6542,6 +6542,11 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
+geomicons-open@^3.0.0-beta.2:
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/geomicons-open/-/geomicons-open-3.0.0-beta.2.tgz#3b1b8f4ffe89d8ad7ca467115d314b1fd62eb023"
+  integrity sha1-OxuPT/6J2K18pGcRXTFLH9YusCM=
+
 get-caller-file@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.3.tgz#f978fa4c90d1dfe7ff2d6beda2a515e713bdcf4a"
@@ -10436,6 +10441,13 @@ polished@^2.3.3:
   dependencies:
     "@babel/runtime" "^7.2.0"
 
+polished@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/polished/-/polished-3.2.0.tgz#65045e080704a6ba524fb3f32eb99d4ed2e46c91"
+  integrity sha512-uXIr2Nu5SU5khDa4JwWh8q5czi4GoJf+U1za5LN59Tk0mL/W3egZrPL0H0ADXeompCp0QhmiK9zs06gw0J5m4Q==
+  dependencies:
+    "@babel/runtime" "^7.4.2"
+
 popper.js@^1.14.4:
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.15.0.tgz#5560b99bbad7647e9faa475c6b8056621f5a4ff2"
@@ -11004,6 +11016,14 @@ react-focus-lock@^1.17.7:
     focus-lock "^0.6.0"
     prop-types "^15.6.2"
     react-clientside-effect "^1.2.0"
+
+react-geomicons@^3.0.0-0:
+  version "3.0.0-0"
+  resolved "https://registry.yarnpkg.com/react-geomicons/-/react-geomicons-3.0.0-0.tgz#8a797b28922abe41a3034035f3a7f0d8f7320df0"
+  integrity sha512-7QJkmT+eWTK9OK0+5JHjcAeIcVN0seUXgz1wMPWRgQgDAR6uPlCQzPJp/iRoN1hKH+T4p1B0q+rYOfYGFnqjDw==
+  dependencies:
+    geomicons-open "^3.0.0-beta.2"
+    prop-types "^15.6.2"
 
 react-helmet-async@^0.2.0:
   version "0.2.0"

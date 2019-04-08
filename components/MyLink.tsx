@@ -3,11 +3,15 @@ import Link from "next/link";
 import styled from "styled-components";
 
 const StyledLink = styled.a`
-  color: white;
+  color: ${props =>
+    props.shade === "dark" ? props.theme.colors.text : "white"};
 `;
 
-export default ({ href, name }: any) => (
+export default ({ href, name, shade, theme }: any) => (
   <Link prefetch href={href} passHref>
-    <StyledLink>{name}</StyledLink>
+    <StyledLink shade={shade}>
+      {name}
+      {JSON.stringify(theme)}
+    </StyledLink>
   </Link>
 );

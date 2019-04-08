@@ -16,7 +16,9 @@ body {
     margin: 0;
     text-size-adjust: 100%;
   }
-
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 `;
 
 export default class MyDocument extends Document {
@@ -52,7 +54,14 @@ export default class MyDocument extends Document {
 
     return (
       <html>
-        <Head>{styleTags}</Head>
+        <Head>
+          <link
+            href="https://fonts.googleapis.com/css?family=Montserrat"
+            rel="stylesheet"
+            key="google-font-montserrat"
+          />
+          {styleTags}
+        </Head>
         <body>
           <GlobalStyle />
           <div className="root">{main}</div>

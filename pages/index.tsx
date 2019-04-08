@@ -1,18 +1,37 @@
 // import Link from "next/link";
 import * as React from "react";
-import Layout from "../components/Layout";
-import { LoginComponent } from "../generated/apolloComponents";
 import { Box, Flex as FlexBase, Text } from "rebass";
 import styled from "styled-components";
-import { minHeight, space, width } from "styled-system";
+import {
+  height,
+  minHeight,
+  space,
+  width,
+  boxShadow,
+  borderRadius
+} from "styled-system";
 
 import { Button } from "../components/Button/Button";
+import Layout from "../components/Layout";
+import { LoginComponent } from "../generated/apolloComponents";
 
 import CatBase from "../static/images/blissful2.svg";
+import LogoBase from "../static/images/logoX.svg";
 
 const Cat = styled(CatBase)`
   ${space}
   ${width}
+`;
+
+const Logo = styled(LogoBase)`
+  ${space}
+  ${width}
+`;
+
+const LogoFlex = styled(FlexBase)`
+  ${boxShadow}
+  ${borderRadius}
+  ${height}
 `;
 
 const Flex = styled(FlexBase)`
@@ -78,11 +97,25 @@ const IndexPage: React.FunctionComponent = () => {
             flexDirection="column"
             minHeight="100vh"
           >
+            <LogoFlex
+              justifyContent="center"
+              alignItems="center"
+              boxShadow="0px 23px 27px 0px rgba(0, 0, 0, 0.15)"
+              bg="#eee"
+              borderRadius="30px"
+              width="85px"
+              height="85px"
+              mb={5}
+            >
+              <Logo width="50px" />
+            </LogoFlex>
             <Text
               mb={2}
+              ml="0.5em"
               letterSpacing="0.5em"
               color="white"
-              fontSize={[4, 3, 3]}
+              fontSize={[4, 4, 4]}
+              fontFamily="Montserrat, sans-serif"
             >
               ATLAS
             </Text>
@@ -95,44 +128,12 @@ const IndexPage: React.FunctionComponent = () => {
                 }}
               />
             </Box>
-            <Button
-              shadow="0px 13px 27px 0px rgba(0, 0, 0, 0.1)"
-              bg="rgb(238, 238, 238)"
-            >
-              <Text color="#e9486d">Login</Text>
-            </Button>
-            <FlexBase
-              justifyContent="center"
-              width="250px"
-              // style={{ border: "1px solid white" }}
-              py={3}
-            >
-              <Box width={1 / 3}>
-                <hr
-                  style={{
-                    border: "1px solid white",
-                    opacity: "0.5"
-                  }}
-                />
-              </Box>
-              <Box px={3}>
-                <Text fontSize={1} color="#fff">
-                  OR
-                </Text>
-              </Box>
-              <Box width={1 / 3}>
-                <hr
-                  style={{
-                    border: "1px solid white",
-                    opacity: "0.5"
-                  }}
-                />
-              </Box>
-            </FlexBase>
+
             <LoginComponent>
               {mutate => (
                 <Button
-                  bg="transparent"
+                  shadow="0px 13px 27px 0px rgba(0, 0, 0, 0.1)"
+                  bg="rgb(238, 238, 238)"
                   onClick={async () => {
                     const response = await mutate({
                       variables: {
@@ -144,10 +145,62 @@ const IndexPage: React.FunctionComponent = () => {
                     console.log(response);
                   }}
                 >
-                  Create an account
+                  <Text
+                    letterSpacing="0.2em"
+                    fontSize="0.9em"
+                    fontFamily="Montserrat, sans-serif"
+                    color="#e9486d"
+                  >
+                    Login
+                  </Text>
                 </Button>
               )}
             </LoginComponent>
+
+            <FlexBase
+              justifyContent="center"
+              width="250px"
+              // style={{ border: "1px solid white" }}
+              py={3}
+            >
+              <Box width={1 / 3}>
+                <hr
+                  style={{
+                    border: "1px solid white",
+                    opacity: "0.3"
+                  }}
+                />
+              </Box>
+              <Box px={3}>
+                <Text
+                  fontFamily="Montserrat, sans-serif"
+                  letterSpacing="0.2em"
+                  fontSize="0.9em"
+                  color="#fff"
+                >
+                  OR
+                </Text>
+              </Box>
+              <Box width={1 / 3}>
+                <hr
+                  style={{
+                    border: "1px solid white",
+                    opacity: "0.3"
+                  }}
+                />
+              </Box>
+            </FlexBase>
+
+            <Button bg="transparent">
+              <Text
+                fontSize="0.75em"
+                letterSpacing="0.1em"
+                fontFamily="Montserrat, sans-serif"
+              >
+                Create an account
+              </Text>
+            </Button>
+
             {/* <img src="/static/bg.png" /> */}
           </ContentFlex>
         </InnerFlex>

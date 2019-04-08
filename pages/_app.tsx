@@ -12,7 +12,8 @@ const theme = {
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64],
   colors: {
     blue,
-    lightgray: "#f6f6ff"
+    lightgray: "#f6f6ff",
+    text: "rgb(68, 68, 68)"
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   fonts: {
@@ -32,6 +33,12 @@ const theme = {
       color: "#fff",
       backgroundColor: "transparent",
       boxShadow: "inset 0 0 0 2px"
+    },
+    gradient: {
+      backgroundImage:
+        "linear-gradient( 87deg, rgb(210,48,120) 6%, rgb(254,97,97) 74%, rgb(255,121,85) 100%)",
+
+      boxShadow: "0px 10px 27px 0px rgba(0, 0, 0, 0.1);"
     }
   }
 };

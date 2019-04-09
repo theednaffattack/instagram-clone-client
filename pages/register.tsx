@@ -62,7 +62,7 @@ export default () => {
                 firstName: "",
                 lastName: "",
                 password: "",
-                keepMeSignedIn: true
+                termsAndConditions: false
               }}
             >
               {({ handleSubmit }) => (
@@ -96,9 +96,9 @@ export default () => {
                     <Box mr={2}>
                       <label>
                         <Field
-                          label="keep me signed in"
-                          id="keepMeSignedIn"
-                          name="keepMeSignedIn"
+                          label="terms and conditions"
+                          id="termsAndConditions"
+                          name="termsAndConditions"
                           type="checkbox"
                           shadow="0px 10px 27px 0px rgba(0, 0, 0, 0.1)"
                           component={CheckBox}

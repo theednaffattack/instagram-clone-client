@@ -30,13 +30,13 @@ const HiddenCheckbox = styled.input.attrs({ type: "checkbox" })`
 
 const StyledCheckbox = styled.div`
   display: inline-block;
-  width: 16px;
+  width: 20px;
   padding: 0px;
   margin: 0px;
   box-sizing: border-box; 
-  height: 16px;
+  height: 20px;
   background: ${props => (props.checked ? "" : "papayawhip")};
-  border-radius: 3px;
+  border-radius: 7px;
   border: ${props => (!props.checked ? "1px rgba(0,0,0,0.3) solid" : "")};
   transition: all 150ms;
   background-image:  ${props =>

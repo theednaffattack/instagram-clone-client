@@ -15,6 +15,7 @@ html {
 body {
     margin: 0;
     text-size-adjust: 100%;
+    font-family: 'Montserrat', sans-serif;
   }
 *, *:before, *:after {
   box-sizing: inherit;
@@ -56,7 +57,7 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <link
-            href="https://fonts.googleapis.com/css?family=Montserrat"
+            href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700"
             rel="stylesheet"
             key="google-font-montserrat"
           />

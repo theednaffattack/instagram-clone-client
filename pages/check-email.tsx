@@ -24,7 +24,7 @@ export default ({ handleDismiss }: any) => {
           alignItems="center"
         >
           <IconEmail mx="auto" mb={4} />
-          <Text mb={3} fontSize={[3]} fontWeight="bold" fontFamily="montserrat">
+          <Text mb={3} fontSize={[3]} fontWeight="600" fontFamily="montserrat">
             We sent you an email!
           </Text>
           <Text fontFamily="montserrat">

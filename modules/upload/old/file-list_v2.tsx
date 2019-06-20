@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import DragAndDrop from "./drag-and-drop";
+import DragAndDrop from "../drag-and-drop";
 
 interface IFileListState {
   files: string[];

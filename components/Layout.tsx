@@ -9,24 +9,6 @@ const Flex = styled(FlexBase)`
   ${borders}
 `;
 
-const FlexHeader = styled(FlexBase)`
-  ${minHeight}
-  ${borders}
-
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  z-index: 9999;
-`;
-
-const FlexFooter = styled(FlexBase)`
-  ${minHeight}
-  ${borders}
-`;
-
-import MyLink from "./MyLink";
-import { MeComponent } from "../generated/apolloComponents";
-
 type Props = {
   title?: string;
 };

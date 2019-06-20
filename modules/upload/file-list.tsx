@@ -10,6 +10,7 @@ interface IFileListState {
 
 interface IFileListProps {
   mutate: any;
+  me: string;
 }
 
 const initialState = {
@@ -24,7 +25,7 @@ const initialState = {
 
 type FileListState = Readonly<IFileListState>;
 
-class FileList extends Component<IFileListProps, FileListState> {
+class FileListBase extends Component<IFileListProps, FileListState> {
   constructor(props: IFileListProps) {
     super(props);
 
@@ -52,6 +53,7 @@ class FileList extends Component<IFileListProps, FileListState> {
     this.setState({ files: fileList });
   };
   render() {
+    const { me } = this.props;
     return (
       <DragAndDrop handleDrop={this.handleDrop}>
         <div style={{ height: 300, width: 250 }}>
@@ -70,7 +72,11 @@ class FileList extends Component<IFileListProps, FileListState> {
   }
 }
 
-const FileListMutation = () => {
+interface IFileListMutation {
+  me: string;
+}
+
+const FileListMutation = ({ me }: IFileListMutation) => {
   return (
     <Mutation
       mutation={gql`
@@ -80,13 +86,13 @@ const FileListMutation = () => {
       `}
     >
       {mutate => (
-        <FileList mutate={mutate}>
+        <FileListBase me={me} mutate={mutate}>
           {/* <div style={{ height: 300, width: 250 }}>
             {this.state.files.map((file, i) => (
               <div key={i}>{file}</div>
             ))}
           </div> */}
-        </FileList>
+        </FileListBase>
       )}
     </Mutation>
   );

@@ -4,12 +4,15 @@ import {
   NormalizedCacheObject
 } from "apollo-boost";
 import { setContext } from "apollo-link-context";
-import { createHttpLink } from "apollo-link-http";
+// import { createHttpLink } from "apollo-link-http";
+const { createUploadLink } = require("apollo-upload-client");
 import fetch from "isomorphic-unfetch";
 import { onError } from "apollo-link-error";
 
 import { isBrowser } from "./isBrowser";
 import Router from "next/router";
+
+const myIpAddress = "192.168.1.8"; // internalIp.v4.sync();
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 
@@ -23,8 +26,13 @@ interface Options {
 }
 
 function create(initialState: any, { getToken }: Options) {
-  const httpLink = createHttpLink({
-    uri: "http://localhost:4000/graphql",
+  // const httpLink = createHttpLink({
+  //   uri: `http://${myIpAddress}:4000/graphql`,
+  //   credentials: "include"
+  // });
+
+  const uploadLink = createUploadLink({
+    uri: `http://${myIpAddress}:4000/graphql`,
     credentials: "include"
   });
 
@@ -55,7 +63,7 @@ function create(initialState: any, { getToken }: Options) {
   return new ApolloClient({
     connectToDevTools: isBrowser,
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
-    link: errorLink.concat(authLink.concat(httpLink)),
+    link: errorLink.concat(authLink.concat(uploadLink)),
     cache: new InMemoryCache().restore(initialState || {})
   });
 }

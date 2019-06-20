@@ -8,6 +8,10 @@ interface IFileListState {
   files: string[];
 }
 
+interface IFileListProps {
+  mutate: any;
+}
+
 const initialState = {
   files: [
     "nice.pdf",
@@ -20,8 +24,8 @@ const initialState = {
 
 type FileListState = Readonly<IFileListState>;
 
-class FileList extends Component<object, FileListState> {
-  constructor(props: object) {
+class FileList extends Component<IFileListProps, FileListState> {
+  constructor(props: IFileListProps) {
     super(props);
 
     this.handleDrop = this.handleDrop.bind(this);
@@ -32,35 +36,60 @@ class FileList extends Component<object, FileListState> {
   }
   handleDrop = (files: any) => {
     console.log("`handleDrop` FIRING");
+    console.log(files.length);
     console.log(files);
-    let fileList = this.state.files;
+    let fileList = [...this.state.files];
+    console.log("fileList", fileList);
+
     for (var i = 0; i < files.length; i++) {
       if (!files[i].name) return;
       fileList.push(files[i].name);
     }
+    console.log("fileList", fileList);
+    this.props.mutate({
+      variables: { picture: files[0] }
+    });
     this.setState({ files: fileList });
   };
   render() {
     return (
-      <Mutation
-        mutation={gql`
-          mutation($picture: Upload!) {
-            addProfilePicture(picture: $picture)
-          }
-        `}
-      >
-        {mutate => (
-          <DragAndDrop handleDrop={mutate}>
-            <div style={{ height: 300, width: 250 }}>
-              {this.state.files.map((file, i) => (
-                <div key={i}>{file}</div>
-              ))}
+      <DragAndDrop handleDrop={this.handleDrop}>
+        <div style={{ height: 300, width: 250 }}>
+          {this.state.files.map((file, i) => (
+            <div key={i}>
+              <img
+                src={`http://192.168.1.8:4000/images/${file}`}
+                alt="some stuff"
+              />
+              {file}
             </div>
-          </DragAndDrop>
-        )}
-      </Mutation>
+          ))}
+        </div>
+      </DragAndDrop>
     );
   }
 }
 
-export default FileList;
+const FileListMutation = () => {
+  return (
+    <Mutation
+      mutation={gql`
+        mutation($picture: Upload!) {
+          addProfilePicture(picture: $picture)
+        }
+      `}
+    >
+      {mutate => (
+        <FileList mutate={mutate}>
+          {/* <div style={{ height: 300, width: 250 }}>
+            {this.state.files.map((file, i) => (
+              <div key={i}>{file}</div>
+            ))}
+          </div> */}
+        </FileList>
+      )}
+    </Mutation>
+  );
+};
+
+export default FileListMutation;

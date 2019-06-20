@@ -60,9 +60,7 @@ class DragAndDrop extends Component<IDragAndDropProps, IDragAndDropState> {
     console.log(e.dataTransfer.files[0]);
     this.setState({ dragging: false });
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      this.props.handleDrop({
-        variables: { picture: e.dataTransfer.files[0] }
-      });
+      this.props.handleDrop(e.dataTransfer.files);
 
       e.dataTransfer.clearData();
       this.dragCounter = 0;

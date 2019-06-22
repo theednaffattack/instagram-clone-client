@@ -12,12 +12,28 @@ export interface RegisterInput {
   lastName: string;
 
   email: string;
+
+  termsAndConditions: boolean;
+
+  keepMeSignedIn: boolean;
 }
 
 export interface ChangePasswordInput {
   password: string;
 
   token: string;
+}
+
+export interface PostInput {
+  text: string;
+
+  title?: Maybe<string>;
+
+  user: string;
+
+  images?: Maybe<string[]>;
+
+  picture: Upload;
 }
 
 export interface PasswordInput {
@@ -63,6 +79,26 @@ export type ConfirmUserMutation = {
   __typename?: "Mutation";
 
   confirmUser: boolean;
+};
+
+export type CreatePostVariables = {
+  data: PostInput;
+};
+
+export type CreatePostMutation = {
+  __typename?: "Mutation";
+
+  createPost: CreatePostCreatePost;
+};
+
+export type CreatePostCreatePost = {
+  __typename?: "Post";
+
+  id: string;
+
+  title: Maybe<string>;
+
+  text: string;
 };
 
 export type ForgotPasswordVariables = {
@@ -262,6 +298,52 @@ export function ConfirmUserHOC<TProps, TChildProps = any>(
     ConfirmUserVariables,
     ConfirmUserProps<TChildProps>
   >(ConfirmUserDocument, operationOptions);
+}
+export const CreatePostDocument = gql`
+  mutation CreatePost($data: PostInput!) {
+    createPost(data: $data) {
+      id
+      title
+      text
+    }
+  }
+`;
+export class CreatePostComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<CreatePostMutation, CreatePostVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<CreatePostMutation, CreatePostVariables>
+        mutation={CreatePostDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type CreatePostProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<CreatePostMutation, CreatePostVariables>
+> &
+  TChildProps;
+export type CreatePostMutationFn = ReactApollo.MutationFn<
+  CreatePostMutation,
+  CreatePostVariables
+>;
+export function CreatePostHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        CreatePostMutation,
+        CreatePostVariables,
+        CreatePostProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    CreatePostMutation,
+    CreatePostVariables,
+    CreatePostProps<TChildProps>
+  >(CreatePostDocument, operationOptions);
 }
 export const ForgotPasswordDocument = gql`
   mutation ForgotPassword($email: String!) {

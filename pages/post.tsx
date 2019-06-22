@@ -1,4 +1,4 @@
-import FileList from "../modules/upload/file-list-profile-picture";
+import FileList from "../modules/upload/file-list-create-post";
 import Layout from "./../components/Layout";
 import { MeComponent } from "../generated/apolloComponents";
 import { Flex, Heading, Text } from "rebass";

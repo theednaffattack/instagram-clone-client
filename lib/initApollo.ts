@@ -4,8 +4,8 @@ import {
   NormalizedCacheObject
 } from "apollo-boost";
 import { setContext } from "apollo-link-context";
-import { createHttpLink } from "apollo-link-http";
-const { createUploadLink } = require("apollo-upload-client");
+// import { createHttpLink } from "apollo-link-http";
+import { createUploadLink } from "apollo-upload-client";
 import fetch from "isomorphic-unfetch";
 import { onError } from "apollo-link-error";
 
@@ -26,10 +26,10 @@ interface Options {
 }
 
 function create(initialState: any, { getToken }: Options) {
-  const httpLink = createHttpLink({
-    uri: `http://${myIpAddress}:4000/graphql`,
-    credentials: "include"
-  });
+  // const httpLink = createHttpLink({
+  //   uri: `http://${myIpAddress}:4000/graphql`,
+  //   credentials: "include"
+  // });
 
   const uploadLink = createUploadLink({
     uri: `http://${myIpAddress}:4000/graphql`,
@@ -50,8 +50,6 @@ function create(initialState: any, { getToken }: Options) {
   });
 
   const authLink = setContext((_, { headers }) => {
-    console.log("INSIDE AUTHLLINK getToken()");
-    console.log(getToken());
     const token = getToken();
     return {
       headers: {
@@ -60,9 +58,6 @@ function create(initialState: any, { getToken }: Options) {
       }
     };
   });
-
-  console.log("AUTHLINK");
-  console.log(authLink);
 
   // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
   return new ApolloClient({

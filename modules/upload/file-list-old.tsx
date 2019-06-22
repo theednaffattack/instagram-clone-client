@@ -53,7 +53,6 @@ class FileListBase extends Component<IFileListProps, FileListState> {
     this.setState({ files: fileList });
   };
   render() {
-    const { me } = this.props;
     return (
       <DragAndDrop handleDrop={this.handleDrop}>
         <div style={{ height: 300, width: 250 }}>

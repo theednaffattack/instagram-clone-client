@@ -9,7 +9,7 @@ interface IDragAndDropProps {
 }
 
 class DragAndDrop extends Component<IDragAndDropProps, IDragAndDropState> {
-  constructor(props) {
+  constructor(props: IDragAndDropProps) {
     super(props);
     this.handleDrag = this.handleDrag.bind(this);
     this.handleDragIn = this.handleDragIn.bind(this);
@@ -60,7 +60,7 @@ class DragAndDrop extends Component<IDragAndDropProps, IDragAndDropState> {
     console.log(e.dataTransfer.files[0]);
     this.setState({ dragging: false });
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      this.props.handleDrop(e.dataTransfer.files);
+      this.props.handleDrop(e);
 
       e.dataTransfer.clearData();
       this.dragCounter = 0;

@@ -9,9 +9,6 @@ import { isBrowser } from "./isBrowser";
 import redirect from "./redirect";
 
 function parseCookies(req?: any, options = {}) {
-  console.log("PARSE COOKIES!! req.headers.cookie".toUpperCase());
-  console.log(req && req.headers ? req.headers.cookie : "no cookie m'man");
-
   return cookie.parse(
     req && req.headers ? req.headers.cookie || "" : document.cookie,
     options
@@ -31,9 +28,7 @@ export default (App: any) => {
         router,
         ctx: { req, res }
       } = ctx;
-      console.log("VIEW COOKIE IN GETINITIAL");
-      console.log(Object.keys(ctx));
-      console.log(parseCookies(ctx.ctx.req));
+
       const apollo = initApollo(
         {},
         {

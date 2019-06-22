@@ -89,7 +89,11 @@ class DragAndDrop extends Component<IDragAndDropProps, IDragAndDropState> {
   render() {
     return (
       <div
-        style={{ display: "inline-block", position: "relative" }}
+        style={{
+          // display: "inline-block",
+          width: "100%",
+          position: "relative"
+        }}
         ref={this.dropRef}
       >
         {this.state.dragging && (
@@ -109,8 +113,8 @@ class DragAndDrop extends Component<IDragAndDropProps, IDragAndDropState> {
               style={{
                 position: "absolute",
                 top: "50%",
-                right: 0,
                 left: 0,
+                right: 0,
                 textAlign: "center",
                 color: "grey",
                 fontSize: 36

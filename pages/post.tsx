@@ -2,6 +2,8 @@ import FileList from "../modules/upload/file-list-create-post";
 import Layout from "./../components/Layout";
 import { MeComponent } from "../generated/apolloComponents";
 import { Flex, Heading, Text } from "rebass";
+import FileListMutation from "../modules/upload/file-list-mutation";
+// import FileListMutation from "../modules/upload/file-list-create-post_OLD";
 
 const CarsPage = () => (
   <Layout>
@@ -30,12 +32,7 @@ const CarsPage = () => (
           </Flex>;
         }
 
-        return (
-          <>
-            {JSON.stringify(data)}
-            <FileList me={data.me.id} />
-          </>
-        );
+        return <FileListMutation me={data.me.id} />;
       }}
     </MeComponent>
   </Layout>

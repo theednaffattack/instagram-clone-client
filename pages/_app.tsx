@@ -44,6 +44,10 @@ const theme = {
 
       boxShadow: "0px 10px 27px 0px rgba(0, 0, 0, 0.1);"
     }
+  },
+  borders: {
+    crimson: "2px crimson dashed",
+    lime: "2px limegreen dashed"
   }
 };
 

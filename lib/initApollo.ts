@@ -40,7 +40,11 @@ function create(initialState: any, { getToken }: Options) {
     if (graphQLErrors)
       graphQLErrors.map(({ message, locations, path }) => {
         console.log(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+          `[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(
+            locations,
+            null,
+            2
+          )}, Path: ${path}`
         );
         if (isBrowser && message.includes("Not authenticated")) {
           Router.replace("/login");

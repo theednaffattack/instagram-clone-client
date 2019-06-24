@@ -99,7 +99,7 @@ function create(initialState: any, { getToken }: Options) {
   return new ApolloClient({
     connectToDevTools: isBrowser,
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
-    link: errorLink.concat(authLink.concat(uploadLink)),
+    link: errorLink.concat(authLink.concat(splitLink)),
     cache: new InMemoryCache().restore(initialState || {})
   });
 }

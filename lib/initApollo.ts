@@ -6,8 +6,12 @@ import {
 import { setContext } from "apollo-link-context";
 // import { createHttpLink } from "apollo-link-http";
 import { createUploadLink } from "apollo-upload-client";
+import { WebSocketLink } from "apollo-link-ws";
 import fetch from "isomorphic-unfetch";
 import { onError } from "apollo-link-error";
+import { split } from "apollo-link";
+
+import { getMainDefinition } from "apollo-utilities";
 
 import { isBrowser } from "./isBrowser";
 import Router from "next/router";
@@ -35,6 +39,34 @@ function create(initialState: any, { getToken }: Options) {
     uri: `http://${myIpAddress}:4000/graphql`,
     credentials: "include"
   });
+
+  // Create a WebSocket link:
+  const wsLink = isBrowser
+    ? new WebSocketLink({
+        uri: `ws://${myIpAddress}:4000/subscriptions`,
+        options: {
+          reconnect: true
+          // connectionParams: {
+          //   authToken: authToken ? `qid=${authToken}` : ""
+          // }
+        }
+      })
+    : null;
+
+  const splitLink = isBrowser
+    ? split(
+        // split based on operation type
+        ({ query }) => {
+          const definition = getMainDefinition(query);
+          return (
+            definition.kind === "OperationDefinition" &&
+            definition.operation === "subscription"
+          );
+        },
+        wsLink!,
+        uploadLink
+      )
+    : uploadLink;
 
   const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)

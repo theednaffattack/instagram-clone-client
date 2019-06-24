@@ -36,6 +36,10 @@ export interface PostInput {
   picture: Upload;
 }
 
+export interface FollowUserInput {
+  userIDToFollow: string;
+}
+
 export interface PasswordInput {
   password: string;
 }
@@ -99,6 +103,22 @@ export type CreatePostCreatePost = {
   title: Maybe<string>;
 
   text: string;
+};
+
+export type FollowUserVariables = {
+  data: FollowUserInput;
+};
+
+export type FollowUserMutation = {
+  __typename?: "Mutation";
+
+  followUser: Maybe<FollowUserFollowUser>;
+};
+
+export type FollowUserFollowUser = {
+  __typename?: "User";
+
+  id: string;
 };
 
 export type ForgotPasswordVariables = {
@@ -188,6 +208,76 @@ export type RegisterRegister = {
   email: string;
 
   name: string;
+};
+
+export type GetAllMyImagesVariables = {};
+
+export type GetAllMyImagesQuery = {
+  __typename?: "Query";
+
+  GetAllMyImages: GetAllMyImagesGetAllMyImages[];
+};
+
+export type GetAllMyImagesGetAllMyImages = {
+  __typename?: "Image";
+
+  id: string;
+
+  uri: string;
+};
+
+export type GetThoseIFollowAndTheirPostsResolverVariables = {};
+
+export type GetThoseIFollowAndTheirPostsResolverQuery = {
+  __typename?: "Query";
+
+  getThoseIFollowAndTheirPostsResolver: Maybe<
+    GetThoseIFollowAndTheirPostsResolverGetThoseIFollowAndTheirPostsResolver
+  >;
+};
+
+export type GetThoseIFollowAndTheirPostsResolverGetThoseIFollowAndTheirPostsResolver = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  email: string;
+
+  name: string;
+
+  am_follower: GetThoseIFollowAndTheirPostsResolverAmFollower[];
+};
+
+export type GetThoseIFollowAndTheirPostsResolverAmFollower = {
+  __typename?: "User";
+
+  firstName: string;
+
+  posts: Maybe<GetThoseIFollowAndTheirPostsResolverPosts[]>;
+};
+
+export type GetThoseIFollowAndTheirPostsResolverPosts = {
+  __typename?: "Post";
+
+  id: string;
+
+  title: Maybe<string>;
+
+  text: string;
+
+  images: Maybe<GetThoseIFollowAndTheirPostsResolverImages[]>;
+};
+
+export type GetThoseIFollowAndTheirPostsResolverImages = {
+  __typename?: "Image";
+
+  id: string;
+
+  uri: string;
 };
 
 export type HelloWorldVariables = {};
@@ -344,6 +434,50 @@ export function CreatePostHOC<TProps, TChildProps = any>(
     CreatePostVariables,
     CreatePostProps<TChildProps>
   >(CreatePostDocument, operationOptions);
+}
+export const FollowUserDocument = gql`
+  mutation FollowUser($data: FollowUserInput!) {
+    followUser(data: $data) {
+      id
+    }
+  }
+`;
+export class FollowUserComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<FollowUserMutation, FollowUserVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<FollowUserMutation, FollowUserVariables>
+        mutation={FollowUserDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type FollowUserProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<FollowUserMutation, FollowUserVariables>
+> &
+  TChildProps;
+export type FollowUserMutationFn = ReactApollo.MutationFn<
+  FollowUserMutation,
+  FollowUserVariables
+>;
+export function FollowUserHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        FollowUserMutation,
+        FollowUserVariables,
+        FollowUserProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    FollowUserMutation,
+    FollowUserVariables,
+    FollowUserProps<TChildProps>
+  >(FollowUserDocument, operationOptions);
 }
 export const ForgotPasswordDocument = gql`
   mutation ForgotPassword($email: String!) {
@@ -570,6 +704,119 @@ export function RegisterHOC<TProps, TChildProps = any>(
     RegisterVariables,
     RegisterProps<TChildProps>
   >(RegisterDocument, operationOptions);
+}
+export const GetAllMyImagesDocument = gql`
+  query GetAllMyImages {
+    GetAllMyImages {
+      id
+      uri
+    }
+  }
+`;
+export class GetAllMyImagesComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetAllMyImagesQuery, GetAllMyImagesVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetAllMyImagesQuery, GetAllMyImagesVariables>
+        query={GetAllMyImagesDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetAllMyImagesProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetAllMyImagesQuery, GetAllMyImagesVariables>
+> &
+  TChildProps;
+export function GetAllMyImagesHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetAllMyImagesQuery,
+        GetAllMyImagesVariables,
+        GetAllMyImagesProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetAllMyImagesQuery,
+    GetAllMyImagesVariables,
+    GetAllMyImagesProps<TChildProps>
+  >(GetAllMyImagesDocument, operationOptions);
+}
+export const GetThoseIFollowAndTheirPostsResolverDocument = gql`
+  query GetThoseIFollowAndTheirPostsResolver {
+    getThoseIFollowAndTheirPostsResolver {
+      id
+      firstName
+      lastName
+      email
+      name
+      am_follower {
+        firstName
+        posts {
+          id
+          title
+          text
+          images {
+            id
+            uri
+          }
+        }
+      }
+    }
+  }
+`;
+export class GetThoseIFollowAndTheirPostsResolverComponent extends React.Component<
+  Partial<
+    ReactApollo.QueryProps<
+      GetThoseIFollowAndTheirPostsResolverQuery,
+      GetThoseIFollowAndTheirPostsResolverVariables
+    >
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Query<
+        GetThoseIFollowAndTheirPostsResolverQuery,
+        GetThoseIFollowAndTheirPostsResolverVariables
+      >
+        query={GetThoseIFollowAndTheirPostsResolverDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetThoseIFollowAndTheirPostsResolverProps<
+  TChildProps = any
+> = Partial<
+  ReactApollo.DataProps<
+    GetThoseIFollowAndTheirPostsResolverQuery,
+    GetThoseIFollowAndTheirPostsResolverVariables
+  >
+> &
+  TChildProps;
+export function GetThoseIFollowAndTheirPostsResolverHOC<
+  TProps,
+  TChildProps = any
+>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetThoseIFollowAndTheirPostsResolverQuery,
+        GetThoseIFollowAndTheirPostsResolverVariables,
+        GetThoseIFollowAndTheirPostsResolverProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetThoseIFollowAndTheirPostsResolverQuery,
+    GetThoseIFollowAndTheirPostsResolverVariables,
+    GetThoseIFollowAndTheirPostsResolverProps<TChildProps>
+  >(GetThoseIFollowAndTheirPostsResolverDocument, operationOptions);
 }
 export const HelloWorldDocument = gql`
   query HelloWorld {

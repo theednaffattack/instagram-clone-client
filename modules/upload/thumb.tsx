@@ -1,26 +1,35 @@
 import React from "react";
 import { Image } from "rebass";
 
-export default class Thumb extends React.Component {
-  state = {
-    loading: false,
-    thumb: undefined
-  };
+interface IThumbProps {
+  file: any;
+}
 
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.file) {
-      return;
+interface IThumbState {
+  loading: boolean;
+  thumb: any;
+}
+export default class Thumb extends React.Component<IThumbProps, IThumbState> {
+  constructor(props: IThumbProps) {
+    super(props);
+    this.state = {
+      loading: false,
+      thumb: undefined
+    };
+  }
+  componentDidUpdate(prevProps: IThumbProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.file !== prevProps.file) {
+      this.setState({ loading: true }, () => {
+        let reader = new FileReader();
+
+        reader.onloadend = () => {
+          this.setState({ loading: false, thumb: reader.result });
+        };
+
+        reader.readAsDataURL(this.props.file);
+      });
     }
-
-    this.setState({ loading: true }, () => {
-      let reader = new FileReader();
-
-      reader.onloadend = () => {
-        this.setState({ loading: false, thumb: reader.result });
-      };
-
-      reader.readAsDataURL(nextProps.file);
-    });
   }
 
   render() {

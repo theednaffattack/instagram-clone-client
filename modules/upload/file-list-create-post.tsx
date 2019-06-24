@@ -63,8 +63,8 @@ class FileListBase extends Component<IFileListProps, FileListState> {
 
     this.fileUpload = null;
 
+    // this.handleFormUpload = this.handleFormUpload.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
-    this.handleFormUpload = this.handleFormUpload.bind(this);
     this.handlePreview = this.handlePreview.bind(this);
     this.dataURItoBlob = this.dataURItoBlob.bind(this);
     this.handlePost = this.handlePost.bind(this);
@@ -187,19 +187,19 @@ class FileListBase extends Component<IFileListProps, FileListState> {
               ? submissionData.pic
               : this.dataURItoBlob(this.image.src)
         }
+      },
+      update: (cache: any, { data }: any) => {
+        if (!data || !data.createPost) {
+          return;
+        }
+        cache.writeQuery({
+          query: this.props.mutate,
+          data: {
+            __typename: "Mutation",
+            createPost: data.createPost
+          }
+        });
       }
-      //   update: (cache, { data }) => {
-      //     if (!data || !data.login) {
-      //       return;
-      //     }
-      //     cache.writeQuery<CreatePostCreatePost>({
-      //       query: createPost,
-      //       data: {
-      //         __typename: "Mutation",
-      //         createPost: data.createPost
-      //       }
-      //     });
-      //   }
     });
     log("is the error after mutate?");
     resetForm({
@@ -212,40 +212,6 @@ class FileListBase extends Component<IFileListProps, FileListState> {
       fileInputKey: Date.now().toString()
     });
     this.image && this.image.src ? (this.image.src = "") : null;
-  }
-
-  async handleFormUpload(event: React.FormEvent<HTMLInputElement>) {
-    const {
-      target: { files }
-    } = event;
-
-    log("VIEW event.currentTarget");
-    log(event.currentTarget);
-    const filesToUpload = [...this.state.files];
-    const { keys } = Object;
-
-    log(event);
-    log(keys(event));
-    log(event.target.files);
-    if (files) {
-      //   const { validity, files } = fileUpload;
-      log("FILE UPLOAD FORM");
-      //   log(validity);
-      log(files);
-
-      for (var i = 0; i < files.length; i++) {
-        if (!files[i].name) return;
-        filesToUpload.push(files[i].name);
-      }
-
-      this.setState({
-        files: [...filesToUpload]
-      });
-
-      this.image.src = await this.handlePreview(this, files);
-
-      return;
-    }
   }
 
   handleDrop = async (event: any) => {
@@ -303,85 +269,11 @@ class FileListBase extends Component<IFileListProps, FileListState> {
       <CreatePostForm
         handlePost={this.handlePost}
         handleDrop={this.handleDrop}
-        handleFormUpload={this.handleFormUpload}
         me={this.props.me}
+        createPost={this.props.mutate}
         fileInputKey={this.state.fileInputKey}
         setPreviewImageRef={this.setPreviewImageRef}
       />
-      //  <Flex flexDirection="column">
-      //   <Flex minHeight="300px" width="450px">
-      //     <DragAndDrop handleDrop={this.handleDrop}>
-      //       {this.setPreviewImageRef ? (
-      //         <Image
-      //           width="100%"
-      //           ref={this.setPreviewImageRef}
-      //           alt=""
-      //           src=""
-      //         />
-      //       ) : (
-      //         <Text>DROP AN IMAGE HERE!</Text>
-      //       )}
-      //     </DragAndDrop>
-      //   </Flex>
-      //   <Formik
-      //     validateOnBlur={false}
-      //     validateOnChange={false}
-      //     onSubmit={this.handlePost}
-      //     initialValues={{
-      //       text: "",
-      //       title: "",
-      //       pic: null,
-      //       user: this.props.me
-      //     }}
-      //   >
-      //     {({ handleSubmit, setFieldValue, values }) => (
-      //       <form onSubmit={handleSubmit}>
-      //         <Field
-      //           id="title"
-      //           name="title"
-      //           placeholder="title this post"
-      //           component={InputField}
-      //         />
-      //         <Field
-      //           id="text"
-      //           name="text"
-      //           placeholder="say a few words"
-      //           component={InputField}
-      //         />
-      //         <Field
-      //           id="user"
-      //           name="user"
-      //           type="hidden"
-      //           component={InputField}
-      //         />
-
-      //         <input
-      //           id="pic"
-      //           name="pic"
-      //           type="file"
-      //           onChange={event => {
-      //             setFieldValue("pic", event.currentTarget.files[0]);
-      //           }}
-      //         />
-
-      //         <Thumb file={values.pic} />
-
-      //         <Field
-      //           onChange={this.handleFormUpload}
-      //           id="picNew"
-      //           name="picNew"
-      //           type="file"
-      //           accept="image/*"
-      //           multiple
-      //           required
-      //           component={FileUploadField}
-      //         />
-
-      //         <Button type="submit">submit</Button>
-      //       </form>
-      //     )}
-      //   </Formik>
-      // </Flex>
     );
   }
 }

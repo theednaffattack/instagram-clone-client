@@ -2,15 +2,15 @@ import React from "react";
 import { Formik, Field } from "formik";
 import { Image, Button } from "rebass";
 
-import { InputField } from "../../components/fields/InputField";
 // import { FileUploadField } from "../../components/fields/FileUploadField";
+import { InputField } from "../../components/fields/InputField";
 import { Flex } from "./styled-components/rebass-extend";
 import Thumb from "./thumb";
 import DragAndDrop from "./drag-and-drop";
 import { Label } from "./styled-components/label";
 
 interface ICreatePostFormArgs {
-  handleFormUpload: any;
+  //   handleFormUpload: any;
   handleDrop: any;
   handlePost: any;
   me: any;
@@ -19,7 +19,8 @@ interface ICreatePostFormArgs {
 }
 
 function CreatePostForm({
-  handleFormUpload,
+  //   handleFormUpload,
+  createPost,
   handleDrop,
   handlePost,
   me,
@@ -38,60 +39,88 @@ function CreatePostForm({
         user: me
       }}
     >
-      {({ handleSubmit, setFieldValue, values }) => (
-        <Flex flexDirection="column">
-          <Flex minHeight="300px" width="450px" border="crimson">
-            <DragAndDrop handleDrop={handleDrop}>
-              <Thumb file={values.pic || null} />
+      {({ handleSubmit, setFieldValue, values }) => {
+        const picValue = values.pic;
+        return (
+          <Flex flexDirection="column">
+            <Flex minHeight="300px" width="450px" border="crimson">
+              <DragAndDrop handleDrop={handleDrop}>
+                <Thumb file={values.pic} />
 
-              {setPreviewImageRef ? (
-                <Image width="100%" ref={setPreviewImageRef} alt="" src="" />
-              ) : (
-                ""
-              )}
-            </DragAndDrop>
-          </Flex>
-          <form onSubmit={handleSubmit}>
-            <Field
-              id="title"
-              name="title"
-              placeholder="title this post"
-              component={InputField}
-            />
-            <Field
-              id="text"
-              name="text"
-              placeholder="say a few words"
-              component={InputField}
-            />
-            <Field id="user" name="user" type="hidden" component={InputField} />
+                {setPreviewImageRef ? (
+                  <Image width="100%" ref={setPreviewImageRef} alt="" src="" />
+                ) : (
+                  ""
+                )}
+              </DragAndDrop>
 
-            <Label>
-              Select File
-              <input
-                key={fileInputKey}
-                id="pic"
-                name="pic"
-                type="file"
-                placeholder=""
-                onChange={event => {
-                  setFieldValue("pic", event.currentTarget.files[0]);
-                }}
-                style={{
-                  position: "absolute",
-                  height: "1px",
-                  width: "1px",
-                  overflow: "hidden",
-                  clip: "rect(1px 1px 1px 1px)"
-                }}
+              <Label>
+                +
+                <input
+                  key={fileInputKey}
+                  id="pic"
+                  name="pic"
+                  type="file"
+                  placeholder=""
+                  onChange={event => {
+                    setFieldValue("pic", event.currentTarget.files[0]);
+                  }}
+                  style={{
+                    position: "absolute",
+                    height: "1px",
+                    width: "1px",
+                    overflow: "hidden",
+                    clip: "rect(1px 1px 1px 1px)"
+                  }}
+                />
+              </Label>
+            </Flex>
+            <form onSubmit={handleSubmit}>
+              <Field
+                id="title"
+                name="title"
+                placeholder="title this post"
+                component={InputField}
               />
-            </Label>
-            {/* <Thumb file={values.pic || null} /> */}
+              <Field
+                id="text"
+                name="text"
+                placeholder="say a few words"
+                component={InputField}
+              />
+              <Field
+                id="user"
+                name="user"
+                type="hidden"
+                component={InputField}
+              />
 
-            <Button type="submit">submit</Button>
-          </form>
-        </Flex>
-      )}
+              <Label>
+                +
+                <input
+                  key={fileInputKey}
+                  id="pic"
+                  name="pic"
+                  type="file"
+                  placeholder=""
+                  onChange={event => {
+                    setFieldValue("pic", event.currentTarget.files[0]);
+                  }}
+                  style={{
+                    position: "absolute",
+                    height: "1px",
+                    width: "1px",
+                    overflow: "hidden",
+                    clip: "rect(1px 1px 1px 1px)"
+                  }}
+                />
+              </Label>
+
+              <Button type="submit">submit</Button>
+            </form>
+          </Flex>
+        );
+      }}
     </Formik>
   );
 }

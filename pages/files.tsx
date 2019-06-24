@@ -1,5 +1,5 @@
 import FileList from "../modules/upload/file-list-profile-picture";
-import Layout from "./../components/Layout";
+import Layout from "../components/Layout";
 import { MeComponent } from "../generated/apolloComponents";
 import { Flex, Heading, Text } from "rebass";
 

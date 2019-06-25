@@ -1,6 +1,6 @@
 import { gql } from "apollo-boost";
 
-export const confirmUserMutation = gql`
+export const GetThoseIFollowAndTheirPostsResolver = gql`
   query GetThoseIFollowAndTheirPostsResolver {
     getThoseIFollowAndTheirPostsResolver {
       id
@@ -8,8 +8,8 @@ export const confirmUserMutation = gql`
       lastName
       email
       name
-
       am_follower {
+        id
         firstName
         posts {
           id

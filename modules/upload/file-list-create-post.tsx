@@ -187,19 +187,19 @@ class FileListBase extends Component<IFileListProps, FileListState> {
               ? submissionData.pic
               : this.dataURItoBlob(this.image.src)
         }
-      },
-      update: (cache: any, { data }: any) => {
-        if (!data || !data.createPost) {
-          return;
-        }
-        cache.writeQuery({
-          query: this.props.mutate,
-          data: {
-            __typename: "Mutation",
-            createPost: data.createPost
-          }
-        });
       }
+      // update: (cache: any, { data }: any) => {
+      //   if (!data || !data.createPost) {
+      //     return;
+      //   }
+      //   cache.writeQuery({
+      //     query: this.props.mutate,
+      //     data: {
+      //       __typename: "Mutation",
+      //       createPost: data.createPost
+      //     }
+      //   });
+      // }
     });
     log("is the error after mutate?");
     resetForm({

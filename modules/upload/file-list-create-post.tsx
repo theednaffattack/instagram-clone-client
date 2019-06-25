@@ -209,7 +209,8 @@ class FileListBase extends Component<IFileListProps, FileListState> {
       user: this.props.me
     });
     this.setState({
-      fileInputKey: Date.now().toString()
+      fileInputKey: Date.now().toString(),
+      files: []
     });
     this.image && this.image.src ? (this.image.src = "") : null;
   }

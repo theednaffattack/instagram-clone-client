@@ -60,8 +60,6 @@ const StyledCard = styled(CardBase)`
 
 export default class DestinationCard extends Component {
   truncate(words: string) {
-    console.log("words", words);
-    console.log("words length", words.length);
     if (words.length > 16) {
       return words.slice(0, 16) + "...";
     } else {

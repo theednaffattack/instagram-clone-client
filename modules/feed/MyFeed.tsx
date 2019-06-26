@@ -86,14 +86,14 @@ const Feed = ({ me }) => (
                     console.log(subscriptionData.data.newPost);
                     const newFeedItem = subscriptionData.data.newPost;
                     const oldItems = prev.getThoseIFollowAndTheirPostsResolver;
-                    const itemsToFind = prev.getThoseIFollowAndTheirPostsResolver.am_follower.map(
+                    const itemsToFind = prev.getThoseIFollowAndTheirPostsResolver.followers.map(
                       peopleIFollow => {
                         return peopleIFollow.posts.map(item => item);
                       }
                     );
                     let amFollowerTransform;
                     if (prev.getThoseIFollowAndTheirPostsResolver != null) {
-                      amFollowerTransform = prev.getThoseIFollowAndTheirPostsResolver.am_follower.map(
+                      amFollowerTransform = prev.getThoseIFollowAndTheirPostsResolver.followers.map(
                         peopleIFollow => {
                           peopleIFollow.posts!.unshift(newFeedItem);
                           return peopleIFollow;
@@ -103,7 +103,7 @@ const Feed = ({ me }) => (
                       amFollowerTransform = null;
                     }
 
-                    // const itemsToSendBack = prev.getThoseIFollowAndTheirPostsResolver.am_follower.map(
+                    // const itemsToSendBack = prev.getThoseIFollowAndTheirPostsResolver.followers.map(
                     //   peopleIFollow => {
                     //     let peoplePostPlusNew = peopleIFollow;
                     //     peoplePostPlusNew.posts(newFeedItem);
@@ -121,7 +121,7 @@ const Feed = ({ me }) => (
                     console.log(amFollowerTransform);
 
                     let goodItems = oldItems;
-                    goodItems.am_follower = amFollowerTransform;
+                    goodItems.followers = amFollowerTransform;
 
                     console.log("goodItems");
                     console.log(goodItems);
@@ -135,7 +135,7 @@ const Feed = ({ me }) => (
             />
 
             {data
-              ? data.getThoseIFollowAndTheirPostsResolver.am_follower.map(
+              ? data.getThoseIFollowAndTheirPostsResolver.followers.map(
                   peopleIFollow => {
                     return peopleIFollow.posts.map(
                       ({ title, text, images }, index) => {

@@ -304,10 +304,10 @@ export type GetThoseIFollowAndTheirPostsResolverGetThoseIFollowAndTheirPostsReso
 
   name: string;
 
-  am_follower: GetThoseIFollowAndTheirPostsResolverAmFollower[];
+  followers: GetThoseIFollowAndTheirPostsResolverFollowers[];
 };
 
-export type GetThoseIFollowAndTheirPostsResolverAmFollower = {
+export type GetThoseIFollowAndTheirPostsResolverFollowers = {
   __typename?: "User";
 
   id: string;
@@ -902,7 +902,7 @@ export const GetThoseIFollowAndTheirPostsResolverDocument = gql`
       lastName
       email
       name
-      am_follower {
+      followers {
         id
         firstName
         posts {

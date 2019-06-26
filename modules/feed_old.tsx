@@ -50,7 +50,7 @@ const ListFunction: NextFunctionComponent = () => (
 
         return (
           <Flex>
-            {data.getThoseIFollowAndTheirPostsResolver.am_follower.map(
+            {data.getThoseIFollowAndTheirPostsResolver.followers.map(
               peopleIFollow => {
                 return peopleIFollow.posts.map(
                   ({ title, text, images }, index) => {

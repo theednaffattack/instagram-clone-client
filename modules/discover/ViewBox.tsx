@@ -71,8 +71,6 @@ export default class ViewBox extends Component {
     this.truncate = this.truncate.bind(this);
   }
   truncate(words: string) {
-    console.log("words", words);
-    console.log("words length", words.length);
     if (words.length > 16) {
       return words.slice(0, 16) + "...";
     } else {

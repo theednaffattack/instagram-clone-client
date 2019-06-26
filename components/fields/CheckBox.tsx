@@ -71,13 +71,6 @@ const CheckBox = ({ field, form, ...props }: FieldProps & InputProps) => (
         const nextValue = !form.values.keepMeSignedIn;
 
         form.setFieldValue("keepMeSignedIn", nextValue);
-        console.log("view props stringified");
-        console.log(JSON.stringify(props));
-        console.log("view form");
-        console.log(JSON.stringify(form, null, 2));
-        console.log(JSON.stringify(field.value));
-        console.log("view nextValue");
-        console.log(nextValue);
       }}
       {...props}
     />

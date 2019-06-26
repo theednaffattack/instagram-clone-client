@@ -142,7 +142,7 @@ const Feed = ({ me }) => (
                       ({ title, text, images }, index) => {
                         return (
                           <Card
-                            key={index}
+                            key={`${index} - ${title}`}
                             my={[3, 3, 3]}
                             mx={[3, 3, 3]}
                             borderRadius="15px"

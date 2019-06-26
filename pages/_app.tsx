@@ -47,7 +47,8 @@ const theme = {
   },
   borders: {
     crimson: "2px crimson dashed",
-    lime: "2px limegreen dashed"
+    lime: "2px limegreen dashed",
+    purp: "2px rebeccapurple dashed"
   }
 };
 

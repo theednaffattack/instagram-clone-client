@@ -1,5 +1,11 @@
 export type Maybe<T> = T | null;
 
+export interface GetMessagesInput {
+  sentBy: string;
+
+  user: string;
+}
+
 export interface ProductInput {
   name: string;
 }
@@ -40,9 +46,18 @@ export interface FollowUserInput {
   userIDToFollow: string;
 }
 
+export interface QuickPostSubsInput {
+  sentBy: string;
+
+  message: string;
+}
+
 export interface PasswordInput {
   password: string;
 }
+
+/** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+export type DateTime = any;
 
 /** The `Upload` scalar type represents a file upload. */
 export type Upload = any;
@@ -119,6 +134,8 @@ export type FollowUserFollowUser = {
   __typename?: "User";
 
   id: string;
+
+  firstName: string;
 };
 
 export type ForgotPasswordVariables = {
@@ -226,6 +243,44 @@ export type GetAllMyImagesGetAllMyImages = {
   uri: string;
 };
 
+export type GetGobalPostsVariables = {};
+
+export type GetGobalPostsQuery = {
+  __typename?: "Query";
+
+  getGobalPosts: Maybe<GetGobalPostsGetGobalPosts[]>;
+};
+
+export type GetGobalPostsGetGobalPosts = {
+  __typename?: "Post";
+
+  id: string;
+
+  title: Maybe<string>;
+
+  text: string;
+
+  images: Maybe<GetGobalPostsImages[]>;
+
+  user: GetGobalPostsUser;
+};
+
+export type GetGobalPostsImages = {
+  __typename?: "Image";
+
+  id: string;
+
+  uri: string;
+};
+
+export type GetGobalPostsUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
+
 export type GetThoseIFollowAndTheirPostsResolverVariables = {};
 
 export type GetThoseIFollowAndTheirPostsResolverQuery = {
@@ -254,6 +309,8 @@ export type GetThoseIFollowAndTheirPostsResolverGetThoseIFollowAndTheirPostsReso
 
 export type GetThoseIFollowAndTheirPostsResolverAmFollower = {
   __typename?: "User";
+
+  id: string;
 
   firstName: string;
 
@@ -286,6 +343,46 @@ export type HelloWorldQuery = {
   __typename?: "Query";
 
   helloWorld: string;
+};
+
+export type MyFollowerPostsVariables = {
+  data: QuickPostSubsInput;
+};
+
+export type MyFollowerPostsSubscription = {
+  __typename?: "Subscription";
+
+  newPost: MyFollowerPostsNewPost;
+};
+
+export type MyFollowerPostsNewPost = {
+  __typename?: "PostSubType";
+
+  id: string;
+
+  title: string;
+
+  text: string;
+
+  images: MyFollowerPostsImages[];
+
+  user: MyFollowerPostsUser;
+};
+
+export type MyFollowerPostsImages = {
+  __typename?: "Image";
+
+  id: string;
+
+  uri: string;
+};
+
+export type MyFollowerPostsUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
 };
 
 import * as ReactApollo from "react-apollo";
@@ -439,6 +536,7 @@ export const FollowUserDocument = gql`
   mutation FollowUser($data: FollowUserInput!) {
     followUser(data: $data) {
       id
+      firstName
     }
   }
 `;
@@ -746,6 +844,56 @@ export function GetAllMyImagesHOC<TProps, TChildProps = any>(
     GetAllMyImagesProps<TChildProps>
   >(GetAllMyImagesDocument, operationOptions);
 }
+export const GetGobalPostsDocument = gql`
+  query GetGobalPosts {
+    getGobalPosts {
+      id
+      title
+      text
+      images {
+        id
+        uri
+      }
+      user {
+        id
+        firstName
+      }
+    }
+  }
+`;
+export class GetGobalPostsComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetGobalPostsQuery, GetGobalPostsVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetGobalPostsQuery, GetGobalPostsVariables>
+        query={GetGobalPostsDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetGobalPostsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetGobalPostsQuery, GetGobalPostsVariables>
+> &
+  TChildProps;
+export function GetGobalPostsHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetGobalPostsQuery,
+        GetGobalPostsVariables,
+        GetGobalPostsProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetGobalPostsQuery,
+    GetGobalPostsVariables,
+    GetGobalPostsProps<TChildProps>
+  >(GetGobalPostsDocument, operationOptions);
+}
 export const GetThoseIFollowAndTheirPostsResolverDocument = gql`
   query GetThoseIFollowAndTheirPostsResolver {
     getThoseIFollowAndTheirPostsResolver {
@@ -755,6 +903,7 @@ export const GetThoseIFollowAndTheirPostsResolverDocument = gql`
       email
       name
       am_follower {
+        id
         firstName
         posts {
           id
@@ -855,4 +1004,62 @@ export function HelloWorldHOC<TProps, TChildProps = any>(
     HelloWorldVariables,
     HelloWorldProps<TChildProps>
   >(HelloWorldDocument, operationOptions);
+}
+export const MyFollowerPostsDocument = gql`
+  subscription MyFollowerPosts($data: QuickPostSubsInput!) {
+    newPost(data: $data) {
+      id
+      title
+      text
+      images {
+        id
+        uri
+      }
+      user {
+        id
+        firstName
+      }
+    }
+  }
+`;
+export class MyFollowerPostsComponent extends React.Component<
+  Partial<
+    ReactApollo.SubscriptionProps<
+      MyFollowerPostsSubscription,
+      MyFollowerPostsVariables
+    >
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Subscription<
+        MyFollowerPostsSubscription,
+        MyFollowerPostsVariables
+      >
+        subscription={MyFollowerPostsDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type MyFollowerPostsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<MyFollowerPostsSubscription, MyFollowerPostsVariables>
+> &
+  TChildProps;
+export function MyFollowerPostsHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        MyFollowerPostsSubscription,
+        MyFollowerPostsVariables,
+        MyFollowerPostsProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    MyFollowerPostsSubscription,
+    MyFollowerPostsVariables,
+    MyFollowerPostsProps<TChildProps>
+  >(MyFollowerPostsDocument, operationOptions);
 }

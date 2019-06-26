@@ -36,7 +36,7 @@ function CreatePostForm({
         text: "",
         title: "",
         pic: null,
-        user: me
+        user: me.id
       }}
     >
       {({ handleSubmit, setFieldValue, values }) => {

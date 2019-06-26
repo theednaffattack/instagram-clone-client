@@ -1,25 +1,15 @@
 import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
-import { Flex as FlexBase, Image, Button, Text } from "rebass";
+import { Flex as FlexBase, Text } from "rebass";
 import styled from "styled-components";
 import { borders, minHeight } from "styled-system";
-import { Field, Formik } from "formik";
-
-import {
-  CreatePostComponent,
-  CreatePostCreatePost
-} from "../../generated/apolloComponents";
-import { InputField } from "../../components/fields/InputField";
-import { FileUploadField } from "../../components/fields/FileUploadField";
 
 const Flex = styled(FlexBase)`
   ${borders}
   ${minHeight}
 `;
 
-import DragAndDrop from "./drag-and-drop";
-import Thumb from "./thumb";
 import CreatePostForm from "./create-post-form";
 
 const { log } = console;
@@ -206,7 +196,7 @@ class FileListBase extends Component<IFileListProps, FileListState> {
       text: "",
       title: "",
       pic: null,
-      user: this.props.me
+      user: this.props.me.id
     });
     this.setState({
       fileInputKey: Date.now().toString(),
@@ -267,14 +257,18 @@ class FileListBase extends Component<IFileListProps, FileListState> {
 
   render() {
     return (
-      <CreatePostForm
-        handlePost={this.handlePost}
-        handleDrop={this.handleDrop}
-        me={this.props.me}
-        createPost={this.props.mutate}
-        fileInputKey={this.state.fileInputKey}
-        setPreviewImageRef={this.setPreviewImageRef}
-      />
+      <Flex flexDirection="column">
+        <Text>{this.props.me.name}</Text>
+        <Text>{this.props.me.id}</Text>
+        <CreatePostForm
+          handlePost={this.handlePost}
+          handleDrop={this.handleDrop}
+          me={this.props.me}
+          createPost={this.props.mutate}
+          fileInputKey={this.state.fileInputKey}
+          setPreviewImageRef={this.setPreviewImageRef}
+        />
+      </Flex>
     );
   }
 }

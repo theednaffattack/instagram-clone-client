@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import gql from "graphql-tag";
-import { Mutation } from "react-apollo";
 import { Flex as FlexBase, Text } from "rebass";
 import styled from "styled-components";
 import { borders, minHeight } from "styled-system";

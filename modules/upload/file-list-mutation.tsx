@@ -5,7 +5,7 @@ interface IFileListMutation {
   me: string;
 }
 
-const FileListMutation = ({ me }: IFileListMutation) => {
+const CreatePostMutation = ({ me }: IFileListMutation) => {
   return (
     <CreatePostComponent>
       {createPost => <FileListBase me={me} mutate={createPost} />}
@@ -13,4 +13,4 @@ const FileListMutation = ({ me }: IFileListMutation) => {
   );
 };
 
-export default FileListMutation;
+export default CreatePostMutation;

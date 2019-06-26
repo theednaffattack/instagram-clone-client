@@ -29,6 +29,7 @@ const Card = styled(CardBase)`
 
 const Feed = ({ me }) => (
   <Layout title="My Feed">
+    <Heading as="h1">My Feed</Heading>
     <Heading as="h3">{me.name}</Heading>
     <Heading as="h3">{me.id}</Heading>
 

@@ -8,11 +8,10 @@ import { MeComponent } from "../generated/apolloComponents";
 
 const Feed = () => (
   <Layout title="My Feed">
-    <Heading as="h1">My Feed</Heading>
-
     <MeComponent>
       {({ data, loading, error }) => {
         if (!data || !data.me) {
+          console.log({ data });
           return null;
         }
         if (error) {

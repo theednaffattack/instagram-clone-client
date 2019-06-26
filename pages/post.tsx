@@ -1,10 +1,10 @@
 import Layout from "./../components/Layout";
 import { MeComponent } from "../generated/apolloComponents";
 import { Flex, Heading, Text } from "rebass";
-import FileListMutation from "../modules/upload/file-list-mutation";
+import CreatePostMutation from "../modules/upload/file-list-mutation";
 
 const Post = () => (
-  <Layout>
+  <Layout title="Create a post">
     <MeComponent>
       {({ data, loading, error }) => {
         if (!data || !data.me) {
@@ -30,7 +30,7 @@ const Post = () => (
           </Flex>;
         }
 
-        return <FileListMutation me={data.me} />;
+        return <CreatePostMutation me={data.me} />;
       }}
     </MeComponent>
   </Layout>

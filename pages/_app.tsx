@@ -2,8 +2,24 @@ import App, { Container } from "next/app";
 import React from "react";
 import { ApolloProvider } from "react-apollo";
 import { ThemeProvider } from "styled-components";
+import { ServerStyleSheet, createGlobalStyle } from "styled-components";
 
 import withApollo from "../lib/withApollo";
+
+// Global styles but theme- and update-able!
+const GlobalStyle = createGlobalStyle`
+html {
+  box-sizing: border-box;
+}  
+body {
+    margin: 0;
+    text-size-adjust: 100%;
+    font-family: 'Montserrat', sans-serif;
+  }
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+`;
 
 const blue = "#07c";
 
@@ -57,6 +73,7 @@ class MyApp extends App<any> {
     const { Component, pageProps, apolloClient } = this.props;
     return (
       <Container>
+        <GlobalStyle />
         <ThemeProvider theme={theme}>
           <ApolloProvider client={apolloClient}>
             <Component {...pageProps} />

@@ -7,20 +7,20 @@ import Document, {
 } from "next/document";
 import { ServerStyleSheet, createGlobalStyle } from "styled-components";
 
-// Global styles but theme- and update-able!
-const GlobalStyle = createGlobalStyle`
-html {
-  box-sizing: border-box;
-}  
-body {
-    margin: 0;
-    text-size-adjust: 100%;
-    font-family: 'Montserrat', sans-serif;
-  }
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-`;
+// // Global styles but theme- and update-able!
+// const GlobalStyle = createGlobalStyle`
+// html {
+//   box-sizing: border-box;
+// }
+// body {
+//     margin: 0;
+//     text-size-adjust: 100%;
+//     font-family: 'Montserrat', sans-serif;
+//   }
+// *, *:before, *:after {
+//   box-sizing: inherit;
+// }
+// `;
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: NextDocumentContext) {
@@ -64,7 +64,7 @@ export default class MyDocument extends Document {
           {styleTags}
         </Head>
         <body>
-          <GlobalStyle />
+          {/* <GlobalStyle /> */}
           <div className="root">{main}</div>
           <NextScript />
         </body>

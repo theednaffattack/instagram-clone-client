@@ -5,8 +5,9 @@ import { borders } from "styled-system";
 
 import { FollowUserComponent } from "../../generated/apolloComponents";
 import Layout from "../../components/Layout";
-import { GetGobalPostsComponent } from "../../generated/apolloComponents";
+import { GetGlobalPostsComponent } from "../../generated/apolloComponents";
 import { DisplayPosts } from "./DisplayPosts";
+import { GLOBAL_POSTS } from "../../graphql/user/subscriptions/GlobalPosts";
 
 const Flex = styled(FlexBase)`
   ${borders}
@@ -14,11 +15,12 @@ const Flex = styled(FlexBase)`
 
 const Feed = ({ me }) => (
   <Layout title="My Feed">
-    <GetGobalPostsComponent>
+    <GetGlobalPostsComponent>
       {({
         data: dataGlblPosts,
         error: errorGlblPosts,
-        loading: loadingGlblPosts
+        loading: loadingGlblPosts,
+        subscribeToMore: subscribeGlblPosts
       }) => {
         if (errorGlblPosts) return <div>{JSON.stringify(errorGlblPosts)}</div>;
         if (loadingGlblPosts) {
@@ -51,6 +53,21 @@ const Feed = ({ me }) => (
                       loadingFollowUser={loadingFollowUser}
                       followUser={followUser}
                       data={dataGlblPosts}
+                      subscribeGlblPosts={subscribeGlblPosts({
+                        document: GLOBAL_POSTS,
+
+                        updateQuery: (prev, { subscriptionData }) => {
+                          if (!subscriptionData.data) return prev;
+
+                          const oldItems = [...prev.getGlobalPosts!];
+                          const newItem = subscriptionData.data.globalPosts;
+                          const oldAndNew = [newItem, ...oldItems];
+                          console.log("OLD AND NEW", prev.getGlobalPosts);
+                          return Object.assign({}, prev, {
+                            getGlobalPosts: [newItem, ...prev.getGlobalPosts]
+                          });
+                        }
+                      })}
                       me={me}
                     />
                   );
@@ -60,7 +77,7 @@ const Feed = ({ me }) => (
           </Flex>
         );
       }}
-    </GetGobalPostsComponent>
+    </GetGlobalPostsComponent>
   </Layout>
 );
 

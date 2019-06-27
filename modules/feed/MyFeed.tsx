@@ -13,6 +13,8 @@ import Layout from "../../components/Layout";
 import { GetThoseIFollowAndTheirPostsResolverComponent } from "../../generated/apolloComponents";
 import { MyFollowerPosts } from "../../graphql/user/subscriptions/MyFollowerPosts";
 import ThoseIFollow from "../../modules/feed/ThoseIFollow";
+import FollowButton from "./FollowButton";
+import { updateFunctionMyFollows } from "./updateFunction";
 
 const Box = styled(BoxBase)`
   ${borders}
@@ -79,58 +81,8 @@ const Feed = ({ me }) => (
                       message: "what does this message do?"
                     }
                   },
-                  updateQuery: (prev, { subscriptionData }) => {
-                    if (!subscriptionData.data) return prev;
-                    console.log("VIEW PREV");
-                    console.log(prev);
-                    console.log("subscriptionData.data".toUpperCase());
-                    console.log(subscriptionData.data.newPost);
-                    const newFeedItem = subscriptionData.data.newPost;
-                    const oldItems = prev.getThoseIFollowAndTheirPostsResolver;
-                    const itemsToFind = prev.getThoseIFollowAndTheirPostsResolver.followers.map(
-                      peopleIFollow => {
-                        return peopleIFollow.posts.map(item => item);
-                      }
-                    );
-                    let amFollowerTransform;
-                    if (prev.getThoseIFollowAndTheirPostsResolver != null) {
-                      amFollowerTransform = prev.getThoseIFollowAndTheirPostsResolver.followers.map(
-                        peopleIFollow => {
-                          peopleIFollow.posts!.unshift(newFeedItem);
-                          return peopleIFollow;
-                        }
-                      );
-                    } else {
-                      amFollowerTransform = null;
-                    }
-
-                    // const itemsToSendBack = prev.getThoseIFollowAndTheirPostsResolver.followers.map(
-                    //   peopleIFollow => {
-                    //     let peoplePostPlusNew = peopleIFollow;
-                    //     peoplePostPlusNew.posts(newFeedItem);
-                    //     return peoplePostPlusNew;
-                    //   }
-                    // );
-                    // return prev;
-                    console.log("newFeedItem");
-                    console.log(newFeedItem);
-                    console.log("oldItems");
-                    console.log(oldItems);
-                    console.log("itemsToFind");
-                    console.log(itemsToFind);
-                    console.log("itemsToSendBack");
-                    console.log(amFollowerTransform);
-
-                    let goodItems = oldItems;
-                    goodItems.followers = amFollowerTransform;
-
-                    console.log("goodItems");
-                    console.log(goodItems);
-
-                    return Object.assign({}, prev, {
-                      getThoseIFollowAndTheirPostsResolver: goodItems
-                    });
-                  }
+                  updateQuery: (prev, { subscriptionData }) =>
+                    updateFunctionMyFollows(prev, { subscriptionData })
                 })
               }
             />
@@ -143,6 +95,7 @@ const Feed = ({ me }) => (
                         return (
                           <Card
                             key={`${index} - ${title}`}
+                            bg="white"
                             my={[3, 3, 3]}
                             mx={[3, 3, 3]}
                             borderRadius="15px"
@@ -172,6 +125,9 @@ const Feed = ({ me }) => (
                                 <Flex alignItems="center">
                                   <Heading mr="auto">{title}</Heading>
                                   {peopleIFollow.firstName}
+                                  <FollowButton bg="fuchsia">
+                                    unfollow
+                                  </FollowButton>
                                 </Flex>
                                 <Text alignSelf="end">{text}</Text>
                               </Box>

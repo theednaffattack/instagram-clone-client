@@ -243,15 +243,15 @@ export type GetAllMyImagesGetAllMyImages = {
   uri: string;
 };
 
-export type GetGobalPostsVariables = {};
+export type GetGlobalPostsVariables = {};
 
-export type GetGobalPostsQuery = {
+export type GetGlobalPostsQuery = {
   __typename?: "Query";
 
-  getGobalPosts: Maybe<GetGobalPostsGetGobalPosts[]>;
+  getGlobalPosts: Maybe<GetGlobalPostsGetGlobalPosts[]>;
 };
 
-export type GetGobalPostsGetGobalPosts = {
+export type GetGlobalPostsGetGlobalPosts = {
   __typename?: "Post";
 
   id: string;
@@ -260,12 +260,12 @@ export type GetGobalPostsGetGobalPosts = {
 
   text: string;
 
-  images: Maybe<GetGobalPostsImages[]>;
+  images: Maybe<GetGlobalPostsImages[]>;
 
-  user: GetGobalPostsUser;
+  user: GetGlobalPostsUser;
 };
 
-export type GetGobalPostsImages = {
+export type GetGlobalPostsImages = {
   __typename?: "Image";
 
   id: string;
@@ -273,7 +273,7 @@ export type GetGobalPostsImages = {
   uri: string;
 };
 
-export type GetGobalPostsUser = {
+export type GetGlobalPostsUser = {
   __typename?: "User";
 
   id: string;
@@ -304,7 +304,7 @@ export type GetThoseIFollowAndTheirPostsResolverGetThoseIFollowAndTheirPostsReso
 
   name: string;
 
-  followers: GetThoseIFollowAndTheirPostsResolverFollowers[];
+  followers: Maybe<GetThoseIFollowAndTheirPostsResolverFollowers[]>;
 };
 
 export type GetThoseIFollowAndTheirPostsResolverFollowers = {
@@ -345,6 +345,44 @@ export type HelloWorldQuery = {
   helloWorld: string;
 };
 
+export type GlobalPostsVariables = {};
+
+export type GlobalPostsSubscription = {
+  __typename?: "Subscription";
+
+  globalPosts: GlobalPostsGlobalPosts;
+};
+
+export type GlobalPostsGlobalPosts = {
+  __typename?: "PostSubType";
+
+  id: string;
+
+  title: string;
+
+  text: string;
+
+  images: GlobalPostsImages[];
+
+  user: GlobalPostsUser;
+};
+
+export type GlobalPostsImages = {
+  __typename?: "Image";
+
+  id: string;
+
+  uri: string;
+};
+
+export type GlobalPostsUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
+
 export type MyFollowerPostsVariables = {
   data: QuickPostSubsInput;
 };
@@ -352,10 +390,10 @@ export type MyFollowerPostsVariables = {
 export type MyFollowerPostsSubscription = {
   __typename?: "Subscription";
 
-  newPost: MyFollowerPostsNewPost;
+  followingPosts: MyFollowerPostsFollowingPosts;
 };
 
-export type MyFollowerPostsNewPost = {
+export type MyFollowerPostsFollowingPosts = {
   __typename?: "PostSubType";
 
   id: string;
@@ -844,9 +882,9 @@ export function GetAllMyImagesHOC<TProps, TChildProps = any>(
     GetAllMyImagesProps<TChildProps>
   >(GetAllMyImagesDocument, operationOptions);
 }
-export const GetGobalPostsDocument = gql`
-  query GetGobalPosts {
-    getGobalPosts {
+export const GetGlobalPostsDocument = gql`
+  query GetGlobalPosts {
+    getGlobalPosts {
       id
       title
       text
@@ -861,38 +899,38 @@ export const GetGobalPostsDocument = gql`
     }
   }
 `;
-export class GetGobalPostsComponent extends React.Component<
-  Partial<ReactApollo.QueryProps<GetGobalPostsQuery, GetGobalPostsVariables>>
+export class GetGlobalPostsComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetGlobalPostsQuery, GetGlobalPostsVariables>>
 > {
   render() {
     return (
-      <ReactApollo.Query<GetGobalPostsQuery, GetGobalPostsVariables>
-        query={GetGobalPostsDocument}
+      <ReactApollo.Query<GetGlobalPostsQuery, GetGlobalPostsVariables>
+        query={GetGlobalPostsDocument}
         {...(this as any)["props"] as any}
       />
     );
   }
 }
-export type GetGobalPostsProps<TChildProps = any> = Partial<
-  ReactApollo.DataProps<GetGobalPostsQuery, GetGobalPostsVariables>
+export type GetGlobalPostsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetGlobalPostsQuery, GetGlobalPostsVariables>
 > &
   TChildProps;
-export function GetGobalPostsHOC<TProps, TChildProps = any>(
+export function GetGlobalPostsHOC<TProps, TChildProps = any>(
   operationOptions:
     | ReactApollo.OperationOption<
         TProps,
-        GetGobalPostsQuery,
-        GetGobalPostsVariables,
-        GetGobalPostsProps<TChildProps>
+        GetGlobalPostsQuery,
+        GetGlobalPostsVariables,
+        GetGlobalPostsProps<TChildProps>
       >
     | undefined
 ) {
   return ReactApollo.graphql<
     TProps,
-    GetGobalPostsQuery,
-    GetGobalPostsVariables,
-    GetGobalPostsProps<TChildProps>
-  >(GetGobalPostsDocument, operationOptions);
+    GetGlobalPostsQuery,
+    GetGlobalPostsVariables,
+    GetGlobalPostsProps<TChildProps>
+  >(GetGlobalPostsDocument, operationOptions);
 }
 export const GetThoseIFollowAndTheirPostsResolverDocument = gql`
   query GetThoseIFollowAndTheirPostsResolver {
@@ -1005,9 +1043,61 @@ export function HelloWorldHOC<TProps, TChildProps = any>(
     HelloWorldProps<TChildProps>
   >(HelloWorldDocument, operationOptions);
 }
+export const GlobalPostsDocument = gql`
+  subscription GlobalPosts {
+    globalPosts {
+      id
+      title
+      text
+      images {
+        id
+        uri
+      }
+      user {
+        id
+        firstName
+      }
+    }
+  }
+`;
+export class GlobalPostsComponent extends React.Component<
+  Partial<
+    ReactApollo.SubscriptionProps<GlobalPostsSubscription, GlobalPostsVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Subscription<GlobalPostsSubscription, GlobalPostsVariables>
+        subscription={GlobalPostsDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GlobalPostsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GlobalPostsSubscription, GlobalPostsVariables>
+> &
+  TChildProps;
+export function GlobalPostsHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GlobalPostsSubscription,
+        GlobalPostsVariables,
+        GlobalPostsProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GlobalPostsSubscription,
+    GlobalPostsVariables,
+    GlobalPostsProps<TChildProps>
+  >(GlobalPostsDocument, operationOptions);
+}
 export const MyFollowerPostsDocument = gql`
   subscription MyFollowerPosts($data: QuickPostSubsInput!) {
-    newPost(data: $data) {
+    followingPosts(data: $data) {
       id
       title
       text

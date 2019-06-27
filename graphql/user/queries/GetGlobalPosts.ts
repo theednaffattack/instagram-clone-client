@@ -1,8 +1,8 @@
 import { gql } from "apollo-boost";
 
 export const GET_GLOBAL_POSTS = gql`
-  query GetGobalPosts {
-    getGobalPosts {
+  query GetGlobalPosts {
+    getGlobalPosts {
       id
       title
       text

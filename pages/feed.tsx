@@ -33,7 +33,6 @@ const Feed = () => (
             <Heading>loading...</Heading>
           </Flex>;
         }
-        console.log("view me data", data.me);
 
         return (
           <>

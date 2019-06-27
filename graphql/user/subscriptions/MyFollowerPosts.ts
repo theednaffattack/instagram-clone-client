@@ -2,7 +2,7 @@ import { gql } from "apollo-boost";
 
 export const MyFollowerPosts = gql`
   subscription MyFollowerPosts($data: QuickPostSubsInput!) {
-    newPost(data: $data) {
+    followingPosts(data: $data) {
       id
       title
       text

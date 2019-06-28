@@ -45,7 +45,6 @@ const Feed = ({ me }) => (
   <InteriorLayout title="My Feed">
     <Heading as="h1">My Feed</Heading>
     <Heading as="h3">{me.name}</Heading>
-    <Heading as="h3">{me.id}</Heading>
 
     <GetThoseIFollowAndTheirPostsResolverComponent>
       {({

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { borders } from "styled-system";
 
 import { FollowUserComponent } from "../../generated/apolloComponents";
-import Layout from "../../components/Layout";
+import InteriorLayout from "../../components/InteriorLayout";
 import { GetGlobalPostsComponent } from "../../generated/apolloComponents";
 import { DisplayPosts } from "./DisplayPosts";
 import { GLOBAL_POSTS } from "../../graphql/user/subscriptions/GlobalPosts";
@@ -33,7 +33,7 @@ export const subscribeFunction = subscribeGlblPosts => {
 };
 
 const Feed = ({ me }) => (
-  <Layout title="My Feed">
+  <InteriorLayout title="My Feed">
     <GetGlobalPostsComponent>
       {({
         data: dataGlblPosts,
@@ -47,9 +47,8 @@ const Feed = ({ me }) => (
         }
         return (
           <Flex pt={3} width={1} flexDirection="column">
-            <Heading as="h3">{me.name}</Heading>
-            <Heading as="h3">{me.id}</Heading>
             <Heading>Global Feed</Heading>
+            <Heading as="h3">{me.name}</Heading>
             <Flex
               justifyContent="center"
               width={1}
@@ -95,7 +94,7 @@ const Feed = ({ me }) => (
         );
       }}
     </GetGlobalPostsComponent>
-  </Layout>
+  </InteriorLayout>
 );
 
 export default Feed;

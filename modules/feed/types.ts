@@ -1,7 +1,8 @@
 export interface IFollowButtonProps {
   children: any;
+  data: any;
   followUser: any;
-  userId: string;
+  postUserId: string;
 }
 
 export interface IUnFollowButtonProps {

@@ -32,7 +32,6 @@ const CarsPage = () => (
 
         return (
           <>
-            {JSON.stringify(data)}
             <FileList me={data.me.id} />
           </>
         );

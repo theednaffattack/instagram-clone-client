@@ -10,15 +10,12 @@ import styled from "styled-components";
 import { borders, display, overflow } from "styled-system";
 import posed, { PoseGroup } from "react-pose";
 
-import Layout from "../../components/Layout";
+import InteriorLayout from "../../components/InteriorLayout";
 import { GetThoseIFollowAndTheirPostsResolverComponent } from "../../generated/apolloComponents";
 import { MyFollowerPosts } from "../../graphql/user/subscriptions/MyFollowerPosts";
 import ThoseIFollow from "../../modules/feed/ThoseIFollow";
 import UnFollowButton from "./UnFollowButton";
 import { updateFunctionMyFollows } from "./updateFunction";
-import { MyFeedCard } from "./MyFeedCard";
-import { FollowingList } from "./FollowingList";
-
 const Box = styled(BoxBase)`
   ${borders}
 `;
@@ -45,7 +42,7 @@ const PosedCard = posed(Card)({
 });
 
 const Feed = ({ me }) => (
-  <Layout title="My Feed">
+  <InteriorLayout title="My Feed">
     <Heading as="h1">My Feed</Heading>
     <Heading as="h3">{me.name}</Heading>
     <Heading as="h3">{me.id}</Heading>
@@ -105,7 +102,7 @@ const Feed = ({ me }) => (
         );
       }}
     </GetThoseIFollowAndTheirPostsResolverComponent>
-  </Layout>
+  </InteriorLayout>
 );
 
 export default Feed;

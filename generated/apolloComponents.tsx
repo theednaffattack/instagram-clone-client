@@ -117,11 +117,11 @@ export type CreatePostMutation = {
 export type CreatePostCreatePost = {
   __typename?: "Post";
 
-  id: string;
+  id: Maybe<string>;
 
   title: Maybe<string>;
 
-  text: string;
+  text: Maybe<string>;
 };
 
 export type FollowUserVariables = {
@@ -131,15 +131,7 @@ export type FollowUserVariables = {
 export type FollowUserMutation = {
   __typename?: "Mutation";
 
-  followUser: Maybe<FollowUserFollowUser>;
-};
-
-export type FollowUserFollowUser = {
-  __typename?: "User";
-
-  id: string;
-
-  firstName: string;
+  followUser: boolean;
 };
 
 export type ForgotPasswordVariables = {
@@ -238,15 +230,7 @@ export type UnFollowUserVariables = {
 export type UnFollowUserMutation = {
   __typename?: "Mutation";
 
-  unFollowUser: Maybe<UnFollowUserUnFollowUser>;
-};
-
-export type UnFollowUserUnFollowUser = {
-  __typename?: "User";
-
-  id: string;
-
-  firstName: string;
+  unFollowUser: boolean;
 };
 
 export type GetAllMyImagesVariables = {};
@@ -276,15 +260,15 @@ export type GetGlobalPostsQuery = {
 export type GetGlobalPostsGetGlobalPosts = {
   __typename?: "Post";
 
-  id: string;
+  id: Maybe<string>;
 
   title: Maybe<string>;
 
-  text: string;
+  text: Maybe<string>;
 
   images: Maybe<GetGlobalPostsImages[]>;
 
-  user: GetGlobalPostsUser;
+  user: Maybe<GetGlobalPostsUser>;
 };
 
 export type GetGlobalPostsImages = {
@@ -342,11 +326,11 @@ export type GetThoseIFollowAndTheirPostsResolverFollowing = {
 export type GetThoseIFollowAndTheirPostsResolverPosts = {
   __typename?: "Post";
 
-  id: string;
+  id: Maybe<string>;
 
   title: Maybe<string>;
 
-  text: string;
+  text: Maybe<string>;
 
   images: Maybe<GetThoseIFollowAndTheirPostsResolverImages[]>;
 };
@@ -372,21 +356,21 @@ export type GlobalPostsVariables = {};
 export type GlobalPostsSubscription = {
   __typename?: "Subscription";
 
-  globalPosts: GlobalPostsGlobalPosts;
+  globalPosts: Maybe<GlobalPostsGlobalPosts>;
 };
 
 export type GlobalPostsGlobalPosts = {
-  __typename?: "PostSubType";
+  __typename?: "Post";
 
-  id: string;
+  id: Maybe<string>;
 
-  title: string;
+  title: Maybe<string>;
 
-  text: string;
+  text: Maybe<string>;
 
-  images: GlobalPostsImages[];
+  images: Maybe<GlobalPostsImages[]>;
 
-  user: GlobalPostsUser;
+  user: Maybe<GlobalPostsUser>;
 };
 
 export type GlobalPostsImages = {
@@ -594,10 +578,7 @@ export function CreatePostHOC<TProps, TChildProps = any>(
 }
 export const FollowUserDocument = gql`
   mutation FollowUser($data: FollowUserInput!) {
-    followUser(data: $data) {
-      id
-      firstName
-    }
+    followUser(data: $data)
   }
 `;
 export class FollowUserComponent extends React.Component<
@@ -865,10 +846,7 @@ export function RegisterHOC<TProps, TChildProps = any>(
 }
 export const UnFollowUserDocument = gql`
   mutation UnFollowUser($data: UnFollowUserInput!) {
-    unFollowUser(data: $data) {
-      id
-      firstName
-    }
+    unFollowUser(data: $data)
   }
 `;
 export class UnFollowUserComponent extends React.Component<

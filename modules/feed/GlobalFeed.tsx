@@ -13,6 +13,25 @@ const Flex = styled(FlexBase)`
   ${borders}
 `;
 
+export const subscribeFunction = subscribeGlblPosts => {
+  try {
+    console.log("subscribe firing");
+    return subscribeGlblPosts({
+      document: GLOBAL_POSTS,
+
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const newItem = subscriptionData.data.globalPosts;
+        return Object.assign({}, prev, {
+          getGlobalPosts: [newItem, ...prev.getGlobalPosts]
+        });
+      }
+    });
+  } catch (error) {
+    return console.error(error);
+  }
+};
+
 const Feed = ({ me }) => (
   <Layout title="My Feed">
     <GetGlobalPostsComponent>
@@ -53,21 +72,18 @@ const Feed = ({ me }) => (
                       loadingFollowUser={loadingFollowUser}
                       followUser={followUser}
                       data={dataGlblPosts}
-                      subscribeGlblPosts={subscribeGlblPosts({
-                        document: GLOBAL_POSTS,
-
-                        updateQuery: (prev, { subscriptionData }) => {
-                          if (!subscriptionData.data) return prev;
-
-                          const oldItems = [...prev.getGlobalPosts!];
-                          const newItem = subscriptionData.data.globalPosts;
-                          const oldAndNew = [newItem, ...oldItems];
-                          console.log("OLD AND NEW", prev.getGlobalPosts);
-                          return Object.assign({}, prev, {
-                            getGlobalPosts: [newItem, ...prev.getGlobalPosts]
-                          });
-                        }
-                      })}
+                      subscribeGlblPosts={() =>
+                        subscribeGlblPosts({
+                          document: GLOBAL_POSTS,
+                          updateQuery: (prev, { subscriptionData }) => {
+                            if (!subscriptionData.data) return prev;
+                            const newItem = subscriptionData.data.globalPosts;
+                            return Object.assign({}, prev, {
+                              getGlobalPosts: [newItem, ...prev.getGlobalPosts]
+                            });
+                          }
+                        })
+                      }
                       me={me}
                     />
                   );

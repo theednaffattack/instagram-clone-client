@@ -9,6 +9,7 @@ import {
 } from "rebass";
 import styled from "styled-components";
 import { borders, display, overflow } from "styled-system";
+import FollowButton from "./FollowButton";
 
 const Box = styled(BoxBase)`
   ${borders}
@@ -87,22 +88,9 @@ export const DisplayCards = ({
                   flexDirection="column"
                 >
                   {post.user.firstName}
-                  <Button
-                    followUser={followUser}
-                    onClick={() =>
-                      followUser({
-                        variables: {
-                          data: {
-                            userIDToFollow: post.user.id
-                          }
-                        }
-                      })
-                    }
-                    type="button"
-                    p={0}
-                  >
+                  <FollowButton userId={post.user.id} followUser={followUser}>
                     follow
-                  </Button>
+                  </FollowButton>
                 </Flex>
               </Flex>
               <Text alignSelf="end">{post.text}</Text>
@@ -120,10 +108,11 @@ interface IDisplayPostsProps {
 
 export class DisplayPosts extends React.Component<IDisplayPostsProps, object> {
   componentDidMount() {
-    this.props.subscribeGlblPosts;
+    this.props.subscribeGlblPosts();
   }
-
   render() {
-    return <DisplayCards data={this.props.data} />;
+    return (
+      <DisplayCards followUser={this.props.followUser} data={this.props.data} />
+    );
   }
 }

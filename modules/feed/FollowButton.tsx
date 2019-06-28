@@ -15,15 +15,23 @@ export default class FollowButton extends React.Component<
   handleMutationClick({ followUser }: any) {
     console.log("some mutation click");
     console.log({ followUser });
+    followUser({
+      variables: {
+        data: {
+          userIDToFollow: this.props.userId
+        }
+      }
+    });
   }
   render() {
-    const { data, followUser } = this.props;
+    const { children, followUser, ...props } = this.props;
     return (
       <Button
         type="button"
         onClick={() => this.handleMutationClick({ followUser })}
+        {...props}
       >
-        {data ? JSON.stringify(data, null, 2) : "something"}
+        {children}
       </Button>
     );
   }

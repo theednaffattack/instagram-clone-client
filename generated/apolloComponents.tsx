@@ -46,6 +46,10 @@ export interface FollowUserInput {
   userIDToFollow: string;
 }
 
+export interface UnFollowUserInput {
+  userIDToUnFollow: string;
+}
+
 export interface QuickPostSubsInput {
   sentBy: string;
 
@@ -227,6 +231,24 @@ export type RegisterRegister = {
   name: string;
 };
 
+export type UnFollowUserVariables = {
+  data: UnFollowUserInput;
+};
+
+export type UnFollowUserMutation = {
+  __typename?: "Mutation";
+
+  unFollowUser: Maybe<UnFollowUserUnFollowUser>;
+};
+
+export type UnFollowUserUnFollowUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
+
 export type GetAllMyImagesVariables = {};
 
 export type GetAllMyImagesQuery = {
@@ -304,10 +326,10 @@ export type GetThoseIFollowAndTheirPostsResolverGetThoseIFollowAndTheirPostsReso
 
   name: string;
 
-  followers: Maybe<GetThoseIFollowAndTheirPostsResolverFollowers[]>;
+  following: Maybe<GetThoseIFollowAndTheirPostsResolverFollowing[]>;
 };
 
-export type GetThoseIFollowAndTheirPostsResolverFollowers = {
+export type GetThoseIFollowAndTheirPostsResolverFollowing = {
   __typename?: "User";
 
   id: string;
@@ -841,6 +863,53 @@ export function RegisterHOC<TProps, TChildProps = any>(
     RegisterProps<TChildProps>
   >(RegisterDocument, operationOptions);
 }
+export const UnFollowUserDocument = gql`
+  mutation UnFollowUser($data: UnFollowUserInput!) {
+    unFollowUser(data: $data) {
+      id
+      firstName
+    }
+  }
+`;
+export class UnFollowUserComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<UnFollowUserMutation, UnFollowUserVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<UnFollowUserMutation, UnFollowUserVariables>
+        mutation={UnFollowUserDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type UnFollowUserProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<UnFollowUserMutation, UnFollowUserVariables>
+> &
+  TChildProps;
+export type UnFollowUserMutationFn = ReactApollo.MutationFn<
+  UnFollowUserMutation,
+  UnFollowUserVariables
+>;
+export function UnFollowUserHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        UnFollowUserMutation,
+        UnFollowUserVariables,
+        UnFollowUserProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    UnFollowUserMutation,
+    UnFollowUserVariables,
+    UnFollowUserProps<TChildProps>
+  >(UnFollowUserDocument, operationOptions);
+}
 export const GetAllMyImagesDocument = gql`
   query GetAllMyImages {
     GetAllMyImages {
@@ -940,7 +1009,7 @@ export const GetThoseIFollowAndTheirPostsResolverDocument = gql`
       lastName
       email
       name
-      followers {
+      following {
         id
         firstName
         posts {

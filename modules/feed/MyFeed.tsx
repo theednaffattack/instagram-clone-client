@@ -8,13 +8,16 @@ import {
 } from "rebass";
 import styled from "styled-components";
 import { borders, display, overflow } from "styled-system";
+import posed, { PoseGroup } from "react-pose";
 
 import Layout from "../../components/Layout";
 import { GetThoseIFollowAndTheirPostsResolverComponent } from "../../generated/apolloComponents";
 import { MyFollowerPosts } from "../../graphql/user/subscriptions/MyFollowerPosts";
 import ThoseIFollow from "../../modules/feed/ThoseIFollow";
-import FollowButton from "./FollowButton";
+import UnFollowButton from "./UnFollowButton";
 import { updateFunctionMyFollows } from "./updateFunction";
+import { MyFeedCard } from "./MyFeedCard";
+import { FollowingList } from "./FollowingList";
 
 const Box = styled(BoxBase)`
   ${borders}
@@ -28,6 +31,18 @@ const Card = styled(CardBase)`
   ${display}
   ${overflow}
 `;
+
+const staggerDuration = 100;
+
+const Item = posed(Card)({
+  enter: { opacity: 1, delay: ({ index }) => index * staggerDuration },
+  exit: { opacity: 0 }
+});
+
+const PosedCard = posed(Card)({
+  enter: { opacity: 1, delay: ({ index }) => index * staggerDuration },
+  exit: { opacity: 0 }
+});
 
 const Feed = ({ me }) => (
   <Layout title="My Feed">
@@ -86,59 +101,6 @@ const Feed = ({ me }) => (
                 })
               }
             />
-
-            {data
-              ? data.getThoseIFollowAndTheirPostsResolver.followers.map(
-                  peopleIFollow => {
-                    return peopleIFollow.posts.map(
-                      ({ title, text, images }, index) => {
-                        return (
-                          <Card
-                            key={`${index} - ${title}`}
-                            bg="white"
-                            my={[3, 3, 3]}
-                            mx={[3, 3, 3]}
-                            borderRadius="15px"
-                            width={[1, "350px", "350px"]}
-                            // border="lime"
-                            boxShadow="0 0 16px rgba(0, 0, 0, .25)"
-                            display="flex"
-                            overflow="hidden"
-                            // style={{ overflow: "hidden" }}
-                          >
-                            <Flex width={[1, 1, 1]} flexDirection="column">
-                              <Box
-                                width={[1, 1, 1]}
-                                style={{
-                                  minHeight: "250px",
-                                  maxHeight: "250px",
-                                  overflow: "hidden", // `url(${Background})`
-                                  backgroundImage: `url(http://192.168.1.8:4000/temp/${
-                                    images[0].uri
-                                  })`,
-                                  backgroundPosition: "center",
-                                  backgroundSize: "cover",
-                                  backgroundRepeat: "no-repeat"
-                                }}
-                              />
-                              <Box p={[3, 3, 3]} pt={[1, 1, 2]}>
-                                <Flex alignItems="center">
-                                  <Heading mr="auto">{title}</Heading>
-                                  {peopleIFollow.firstName}
-                                  <FollowButton bg="fuchsia">
-                                    unfollow
-                                  </FollowButton>
-                                </Flex>
-                                <Text alignSelf="end">{text}</Text>
-                              </Box>
-                            </Flex>
-                          </Card>
-                        );
-                      }
-                    );
-                  }
-                )
-              : ""}
           </Flex>
         );
       }}

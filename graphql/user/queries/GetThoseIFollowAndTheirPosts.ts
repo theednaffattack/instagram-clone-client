@@ -8,7 +8,7 @@ export const GetThoseIFollowAndTheirPostsResolver = gql`
       lastName
       email
       name
-      followers {
+      following {
         id
         firstName
         posts {

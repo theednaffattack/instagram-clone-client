@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import { Flex, Text } from "rebass";
-import { MyFollowerPosts } from "../../graphql/user/subscriptions/MyFollowerPosts";
-
-// import { GlobalSVGGradient } from "./GlobalSVGGradient";
-
-// import { newMessageSub } from "../../graphql/message/subscriptions/NewMessage";
+import { Flex } from "rebass";
+// import { MyFollowerPosts } from "../../graphql/user/subscriptions/MyFollowerPosts";
+import { FollowingList } from "./FollowingList";
 
 interface IThoseIFollowProps {
   data: any;
@@ -18,10 +15,24 @@ export default class ThoseIFollow extends Component<
   IThoseIFollowProps,
   object
 > {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mounted: false
+    };
+  }
   componentDidMount() {
-    // this.props.subscriptionFunc(this.props.subscribeToMore);
     console.log(this.props);
     this.props.subscribeToNewPosts();
+    this.setState((prevProps, prevState) => {
+      console.log("ThoseIFollow componentDidMount");
+      console.log("prevState", prevProps);
+      console.log("prevState", prevState);
+
+      return {
+        mounted: true
+      };
+    });
   }
   render() {
     const {
@@ -34,31 +45,13 @@ export default class ThoseIFollow extends Component<
     console.log(typeof subscriptionFunc);
     console.log(subscribeToMore);
     return (
-      <Flex>
-        {/* {error ? error.message : ""} */}
-        <div>
-          {/* {Object.keys(data)} */}
-          {/* {getThoseIFollowAndTheirPostsResolver.map(
-            (message: any, index: number) => (
-              <div key={index}>
-                <Text>{message}</Text>
-              </div>
-            )
-          )} */}
-          <div
-            style={{
-              color: "white",
-              marginTop: "80px",
-              float: "left",
-              clear: "both"
-            }}
-            // ref={el => {
-            //   this.messagesEnd = el;
-            // }}
-          >
-            .
-          </div>
-        </div>
+      <Flex
+        width={[1, 1, 1]}
+        flexDirection="row"
+        justifyContent="center"
+        flexWrap="wrap"
+      >
+        <FollowingList mounted={this.state.mounted} data={this.props.data} />
       </Flex>
     );
   }

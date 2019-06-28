@@ -72,6 +72,7 @@ const Feed = ({ me }) => (
                       loadingFollowUser={loadingFollowUser}
                       followUser={followUser}
                       data={dataGlblPosts}
+                      errorGlblPosts={errorGlblPosts}
                       subscribeGlblPosts={() =>
                         subscribeGlblPosts({
                           document: GLOBAL_POSTS,

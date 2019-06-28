@@ -42,7 +42,8 @@ export const DisplayCards = ({
   data,
   errorFollowUser,
   followUser,
-  loadingFollowUser
+  loadingFollowUser,
+  errorGlblPosts
 }: IDisplayPostsProps) => {
   return data.getGlobalPosts.map((post: any, index: number) => {
     if (errorFollowUser) {
@@ -88,7 +89,12 @@ export const DisplayCards = ({
                   flexDirection="column"
                 >
                   {post.user.firstName}
-                  <FollowButton userId={post.user.id} followUser={followUser}>
+                  <FollowButton
+                    data={data}
+                    postUserId={post.user.id}
+                    followUser={followUser}
+                    errorGlblPosts={errorGlblPosts}
+                  >
                     follow
                   </FollowButton>
                 </Flex>
@@ -112,7 +118,11 @@ export class DisplayPosts extends React.Component<IDisplayPostsProps, object> {
   }
   render() {
     return (
-      <DisplayCards followUser={this.props.followUser} data={this.props.data} />
+      <DisplayCards
+        followUser={this.props.followUser}
+        errorGlblPosts={this.props.errorGlblPosts}
+        data={this.props.data}
+      />
     );
   }
 }

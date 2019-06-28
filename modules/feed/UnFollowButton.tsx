@@ -15,25 +15,17 @@ export default class UnFollowButton extends React.Component<
     this.handleMutationClick = this.handleMutationClick.bind(this);
   }
   handleMutationClick({ unFollowUser }: any) {
-    console.log("unFollow mutation click".toUpperCase());
     const oldFollowers = this.props.oldData;
 
-    console.log("oldFollowers", oldFollowers);
-    // .getThoseIFollowAndTheirPostsResolver
-    // Filter the deleted ListItem out of the cached data
-    // server returns deleted ListItem
-
-    // const newListItems = data.listItems
-    // .filter(i => i.id !== payload.data.deleteListItem.id)
-
+    // remove the logged in user from the other person's
+    // followers
     const filteredList = oldFollowers.getThoseIFollowAndTheirPostsResolver.following.filter(
       item => {
-        console.log("item.id", item);
-        console.log("unFollowUser", unFollowUser);
         return item.id !== this.props.followingId;
       }
     );
 
+    // create a new list to replace the old list in cache and UI
     const newListItems = Object.assign({}, oldFollowers, {
       getThoseIFollowAndTheirPostsResolver: {
         ...oldFollowers.getThoseIFollowAndTheirPostsResolver,
@@ -41,15 +33,8 @@ export default class UnFollowButton extends React.Component<
       }
     });
 
+    // This... is unceccesary? No time to test right now
     const finalList = Object.assign({}, newListItems);
-
-    console.log("filteredList", filteredList);
-    console.log("newListItems", newListItems);
-    console.log({
-      data: {
-        ...newListItems
-      }
-    });
 
     unFollowUser({
       variables: {
@@ -76,9 +61,9 @@ export default class UnFollowButton extends React.Component<
       <UnFollowUserComponent>
         {(unFollowUser, { called, client, data, error, loading }) => {
           if (error) return <span>error: {error}</span>;
-          if (called) {
-            return <span>{JSON.stringify(called)}...</span>;
-          }
+          // if (called) {
+          //   return <span>{JSON.stringify(called)}...</span>;
+          // }
           if (loading) {
             return <span>loading...</span>;
           }
@@ -89,7 +74,7 @@ export default class UnFollowButton extends React.Component<
               onClick={() => this.handleMutationClick({ unFollowUser })}
               {...props}
             >
-              {children}
+              unfollow
             </Button>
           );
         }}

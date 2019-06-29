@@ -27,16 +27,20 @@ const Card = styled(CardBase)`
 
 const staggerDuration = 100;
 
+interface IFollowingListProps {
+  mounted: boolean;
+  data: any;
+}
+
 const PosedCard = posed(Card)({
   enter: { opacity: 1, delay: ({ index }) => index * staggerDuration },
   exit: { opacity: 0, delay: ({ index }) => index * staggerDuration },
   invisible: { opacity: 0 }
 });
 
-export const FollowingList = ({ data, fullData, items, mounted }) => (
+export const FollowingList = ({ data, mounted }: IFollowingListProps) => (
   <PoseGroup
     delta={1}
-    items={items}
     preEnterPose="invisible"
     enterPose="enter"
     exitPose="exit"

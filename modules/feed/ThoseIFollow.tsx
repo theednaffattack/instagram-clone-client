@@ -11,11 +11,15 @@ interface IThoseIFollowProps {
   subscribeToMore: any;
 }
 
+interface IThoseIFollowState {
+  mounted: boolean;
+}
+
 export default class ThoseIFollow extends Component<
   IThoseIFollowProps,
-  object
+  IThoseIFollowState
 > {
-  constructor(props) {
+  constructor(props: IThoseIFollowProps) {
     super(props);
     this.state = {
       mounted: false
@@ -24,14 +28,8 @@ export default class ThoseIFollow extends Component<
   componentDidMount() {
     console.log(this.props);
     this.props.subscribeToNewPosts();
-    this.setState((prevProps, prevState) => {
-      console.log("ThoseIFollow componentDidMount");
-      console.log("prevState", prevProps);
-      console.log("prevState", prevState);
-
-      return {
-        mounted: true
-      };
+    this.setState({
+      mounted: true
     });
   }
   render() {

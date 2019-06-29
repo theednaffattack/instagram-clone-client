@@ -66,11 +66,21 @@ export default class FollowButton extends React.Component<
     }
   }
   render() {
-    const { children, data, followUser, ...props } = this.props;
+    const { children, data, followUser, me, ...props } = this.props;
+    console.log("CAN'T FOLLOW YOURSELF");
+    console.log(me.firstName);
+    console.log(this.props.postUserId === me.id);
+    console.log(this.props.postUserId);
+    console.log(me);
     return (
       <Button
+        disabled={this.props.postUserId === me.id ? true : false}
         type="button"
-        onClick={() => this.handleMutationClick({ followUser })}
+        onClick={
+          this.props.postUserId !== me.id
+            ? () => this.handleMutationClick({ followUser })
+            : () => console.log("null")
+        }
         {...props}
       >
         {children}

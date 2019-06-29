@@ -66,6 +66,7 @@ const Feed = ({ me }) => (
                 ) => {
                   return (
                     <DisplayPosts
+                      me={me}
                       dataFollowUser={dataFollowUser}
                       errorFollowUser={errorFollowUser}
                       loadingFollowUser={loadingFollowUser}

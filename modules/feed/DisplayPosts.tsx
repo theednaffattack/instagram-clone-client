@@ -57,6 +57,7 @@ export const DisplayCards = ({
   errorFollowUser,
   followUser,
   loadingFollowUser,
+  me,
   errorGlblPosts
 }: IDisplayPostsProps) => (
   <PoseGroup
@@ -111,6 +112,7 @@ export const DisplayCards = ({
                   >
                     {post.user.firstName}
                     <FollowButton
+                      me={me}
                       data={data}
                       postUserId={post.user.id}
                       followUser={followUser}
@@ -141,6 +143,7 @@ export class DisplayPosts extends React.Component<IDisplayPostsProps, object> {
   render() {
     return (
       <DisplayCards
+        me={this.props.me}
         followUser={this.props.followUser}
         errorGlblPosts={this.props.errorGlblPosts}
         data={this.props.data}

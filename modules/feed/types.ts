@@ -2,6 +2,7 @@ export interface IFollowButtonProps {
   children: any;
   data: any;
   followUser: any;
+  me: any;
   postUserId: string;
 }
 

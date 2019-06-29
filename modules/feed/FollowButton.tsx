@@ -32,12 +32,6 @@ export default class FollowButton extends React.Component<
             return;
           }
 
-          console.log("data".toUpperCase(), data);
-
-          // let getNewItems = this.props.data.getGlobalPosts.filter(item => {
-          //   return item.user.id === this.props.postUserId;
-          // });
-
           // Read the data from our cache for this query.
           const storeUpdateData = cache.readQuery({
             query: GetThoseIFollowAndTheirPostsResolver

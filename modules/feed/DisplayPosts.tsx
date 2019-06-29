@@ -113,7 +113,6 @@ export const DisplayCards = ({
                     {post.user.firstName}
                     <FollowButton
                       me={me}
-                      data={data}
                       postUserId={post.user.id}
                       followUser={followUser}
                       errorGlblPosts={errorGlblPosts}

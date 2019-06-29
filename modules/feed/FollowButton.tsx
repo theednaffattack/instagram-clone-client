@@ -15,8 +15,6 @@ export default class FollowButton extends React.Component<
     this.handleMutationClick = this.handleMutationClick.bind(this);
   }
   handleMutationClick({ followUser }: any) {
-    console.log("some mutation click");
-    console.log({ followUser });
     try {
       followUser({
         variables: {
@@ -25,13 +23,20 @@ export default class FollowButton extends React.Component<
           }
         },
         update: (cache: any, { data, error }: any) => {
-          // if (!data || !data.getGlobalPosts) {
-          //   return;
-          // }
+          // server returns false if "me" is already
+          // following the specified user, so we return to disallow
+          // it quickly. Another check for this happens below
+          if (error) console.error("Follow Error!", error);
 
-          let getNewItems = this.props.data.getGlobalPosts.filter(item => {
-            return item.user.id === this.props.postUserId;
-          });
+          if (!data || !data.followUser) {
+            return;
+          }
+
+          console.log("data".toUpperCase(), data);
+
+          // let getNewItems = this.props.data.getGlobalPosts.filter(item => {
+          //   return item.user.id === this.props.postUserId;
+          // });
 
           // Read the data from our cache for this query.
           const storeUpdateData = cache.readQuery({
@@ -41,11 +46,14 @@ export default class FollowButton extends React.Component<
           const globalPostData = cache.readQuery({
             query: GET_GLOBAL_POSTS
           });
-          console.log("globalPostData".toUpperCase(), globalPostData);
 
-          let myUser = getNewItems[0].user;
+          let getNewItems_too = globalPostData.getGlobalPosts.filter(item => {
+            return item.user.id === this.props.postUserId;
+          });
 
-          myUser.posts = getNewItems;
+          let myUser = getNewItems_too[0].user;
+
+          myUser.posts = getNewItems_too;
 
           let transform = {
             ...myUser
@@ -67,11 +75,7 @@ export default class FollowButton extends React.Component<
   }
   render() {
     const { children, data, followUser, me, ...props } = this.props;
-    console.log("CAN'T FOLLOW YOURSELF");
-    console.log(me.firstName);
-    console.log(this.props.postUserId === me.id);
-    console.log(this.props.postUserId);
-    console.log(me);
+
     return (
       <Button
         disabled={this.props.postUserId === me.id ? true : false}

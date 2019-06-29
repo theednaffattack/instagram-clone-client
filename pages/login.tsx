@@ -99,11 +99,7 @@ export default () => {
                         response = await login({
                           variables: data,
                           update: (cache, { data }) => {
-                            console.log("CHECK LOGIN DATA", data);
-                            console.log("CHECK LOGIN CACHE", cache);
-
                             if (!data || !data.login) {
-                              console.log("IF FAILED! CHECK LOGIN DATA", data);
                               return;
                             }
                             cache.writeQuery<MeQuery>({
@@ -113,7 +109,6 @@ export default () => {
                                 me: data.login
                               }
                             });
-                            console.log("CACHE WRITTEN!");
                           }
                         });
                       } catch (error) {
@@ -146,9 +141,8 @@ export default () => {
                         });
                         return;
                       }
-                      console.log("redirecting with next router");
+
                       Router.push("/");
-                      console.log("after router push");
                     }}
                     initialValues={{
                       email: "",

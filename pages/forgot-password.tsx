@@ -18,7 +18,7 @@ export default () => {
                 const response = await forgotPassword({
                   variables: data
                 });
-                console.log(response);
+
                 Router.push("/check-email");
               } catch (error) {
                 const displayErrors: { [key: string]: string } = {};

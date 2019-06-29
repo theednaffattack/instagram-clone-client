@@ -46,7 +46,6 @@ export default class UnFollowButton extends React.Component<
         // if (!data || !data.getThoseIFollowAndTheirPostsResolver) {
         //   return;
         // }
-        console.log("data".toUpperCase(), data);
         cache.writeQuery({
           query: GetThoseIFollowAndTheirPostsResolver,
           data: { ...finalList }

@@ -29,7 +29,6 @@ class FileList extends Component<object, FileListState> {
     };
   }
   handleDrop = (files: any) => {
-    console.log("`handleDrop` FIRING");
     let fileList = this.state.files;
     for (var i = 0; i < files.length; i++) {
       if (!files[i].name) return;

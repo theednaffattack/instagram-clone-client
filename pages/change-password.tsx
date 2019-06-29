@@ -24,7 +24,7 @@ const ChangePassword = ({ token }: { token: string }) => {
                     }
                   }
                 });
-                console.log(response);
+
                 Router.push("/");
               } catch (error) {
                 const displayErrors: { [key: string]: string } = {};

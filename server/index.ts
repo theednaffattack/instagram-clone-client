@@ -9,8 +9,6 @@ const handle = routes.getRequestHandler(app);
 
 app.prepare().then(() => {
   createServer((req, res) => {
-    // console.log("view router handler");
-    // console.log(req, res);
     handle(req, res);
   }).listen(port, (err: any) => {
     if (err) throw err;

@@ -26,7 +26,6 @@ export default class ThoseIFollow extends Component<
     };
   }
   componentDidMount() {
-    console.log(this.props);
     this.props.subscribeToNewPosts();
     this.setState({
       mounted: true
@@ -40,8 +39,7 @@ export default class ThoseIFollow extends Component<
       // subscriptionFunc,
       subscribeToMore
     } = this.props;
-    console.log(typeof subscriptionFunc);
-    console.log(subscribeToMore);
+
     return (
       <Flex
         width={[1, 1, 1]}

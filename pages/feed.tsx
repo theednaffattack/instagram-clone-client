@@ -11,7 +11,6 @@ const Feed = () => (
     <MeComponent>
       {({ data, loading, error }) => {
         if (!data || !data.me) {
-          console.log({ data });
           return null;
         }
         if (error) {

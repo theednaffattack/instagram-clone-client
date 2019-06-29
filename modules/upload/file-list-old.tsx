@@ -36,17 +36,13 @@ class FileListBase extends Component<IFileListProps, FileListState> {
     };
   }
   handleDrop = (files: any) => {
-    console.log("`handleDrop` FIRING");
-    console.log(files.length);
-    console.log(files);
     let fileList = [...this.state.files];
-    console.log("fileList", fileList);
 
     for (var i = 0; i < files.length; i++) {
       if (!files[i].name) return;
       fileList.push(files[i].name);
     }
-    console.log("fileList", fileList);
+
     this.props.mutate({
       variables: { picture: files[0] }
     });

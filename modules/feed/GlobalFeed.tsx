@@ -15,7 +15,6 @@ const Flex = styled(FlexBase)`
 
 export const subscribeFunction = subscribeGlblPosts => {
   try {
-    console.log("subscribe firing");
     return subscribeGlblPosts({
       document: GLOBAL_POSTS,
 

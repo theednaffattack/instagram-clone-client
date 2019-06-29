@@ -56,8 +56,7 @@ class DragAndDrop extends Component<IDragAndDropProps, IDragAndDropState> {
   handleDrop = e => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("`handleDrop` in drag-and-drop. files:");
-    console.log(e.dataTransfer.files[0]);
+
     this.setState({ dragging: false });
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       this.props.handleDrop(e);

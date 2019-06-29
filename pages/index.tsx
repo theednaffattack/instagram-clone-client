@@ -141,8 +141,6 @@ const IndexPage: React.FunctionComponent = () => {
                         password: "password"
                       }
                     });
-
-                    console.log(response);
                   }}
                 >
                   <Text

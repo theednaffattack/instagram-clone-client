@@ -27,8 +27,6 @@ export default class Confirm extends React.PureComponent {
       }
     });
 
-    console.log(trythis);
-
     if (trythis) {
       redirect(ctx, "/login");
     } else {

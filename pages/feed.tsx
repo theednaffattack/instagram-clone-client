@@ -42,7 +42,7 @@ const Feed = () => (
               <GlobalFeed me={data.me} />
             </Flex>
           </>
-        ); // <FileListMutation me={data.me.id} />;
+        );
       }}
     </MeComponent>
   </Layout>

@@ -24,8 +24,8 @@ const Feed = ({ me }) => (
               document: FOLLOWING_POSTS,
               variables: {
                 data: {
-                  sentBy: "35f73d05-61de-46b4-8dbf-bf1d2fd2ed38",
-                  message: "what does this message do?"
+                  sentBy: "init",
+                  message: "init"
                 }
               },
               updateQuery: (prev, { subscriptionData }) =>

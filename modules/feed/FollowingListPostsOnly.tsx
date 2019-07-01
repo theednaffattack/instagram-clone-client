@@ -34,7 +34,7 @@ interface IFollowingListProps {
 
 const PosedCard = posed(Card)({
   enter: { opacity: 1, delay: ({ index = 1 }) => index * staggerDuration },
-  exit: { opacity: 0, delay: ({ index = 1 }) => index * staggerDuration },
+  exit: { opacity: 0 },
   invisible: { opacity: 0 }
 });
 
@@ -46,6 +46,7 @@ export const FollowingList = ({ data, mounted }: IFollowingListProps) => (
       enterPose="enter"
       exitPose="exit"
       animateOnMount={true}
+      flipMove={false}
     >
       {data.myFollowingPosts &&
         data.myFollowingPosts.map((post, pIndex) => (

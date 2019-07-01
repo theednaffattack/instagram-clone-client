@@ -38,16 +38,18 @@ export default class ViewMessagesPane extends Component {
         {/* {error ? error.message : ""} */}
         <div>
           {/* {JSON.stringify(getMessageData.getAllMyMessages.mappedMessages)} */}
-          {getMessageData!.getAllMyMessages!.mappedMessages.map(
-            (message: any, index: number) => (
-              <IncomingMessageBubble
-                subscriptionsFunc={subscriptionFunc}
-                subscribeToMore={subscribeToMore}
-                key={index}
-                {...message}
-              />
-            )
-          )}
+          {getMessageData && getMessageData!.getAllMyMessages
+            ? getMessageData!.getAllMyMessages!.mappedMessages.map(
+                (message: any, index: number) => (
+                  <IncomingMessageBubble
+                    subscriptionsFunc={subscriptionFunc}
+                    subscribeToMore={subscribeToMore}
+                    key={index}
+                    {...message}
+                  />
+                )
+              )
+            : ""}
           <div
             style={{
               color: "white",

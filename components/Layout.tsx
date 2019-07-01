@@ -4,6 +4,8 @@ import { Flex as FlexBase } from "rebass";
 import { minHeight, borders } from "styled-system";
 import styled from "styled-components";
 
+import InteriorLayout from "./AuthHeader";
+
 const Flex = styled(FlexBase)`
   ${minHeight}
   ${borders}
@@ -29,6 +31,9 @@ const Layout: React.FunctionComponent<Props> = ({
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
+
+    <InteriorLayout title="My Feed" />
+
     {/* <FlexHeader color="white" as="header">
       <nav>
         <MyLink prefetch href="/" name="home">

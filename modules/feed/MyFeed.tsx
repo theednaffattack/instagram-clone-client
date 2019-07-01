@@ -1,14 +1,14 @@
 import React from "react";
 import { Heading } from "rebass";
 
-import InteriorLayout from "../../components/InteriorLayout";
+import InteriorLayout from "../../components/AuthHeader";
 import { MyFollowingPostsComponent } from "../../generated/apolloComponents";
 import { FOLLOWING_POSTS } from "../../graphql/user/subscriptions/FollowingPosts";
 import FollowingPosts from "../../modules/feed/FollowingPosts";
 import { updateFunctionMyFollows as updateFunctionMyFollows_v2 } from "./updateFuncFollowingPosts";
 
 const Feed = ({ me }) => (
-  <InteriorLayout title="My Feed">
+  <>
     <Heading as="h1">My Feed</Heading>
     <Heading as="h3">{me.name}</Heading>
 
@@ -35,7 +35,7 @@ const Feed = ({ me }) => (
         />
       )}
     </MyFollowingPostsComponent>
-  </InteriorLayout>
+  </>
 );
 
 export default Feed;

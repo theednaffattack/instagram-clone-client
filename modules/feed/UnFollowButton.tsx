@@ -3,7 +3,7 @@ import { Button } from "rebass";
 
 import { IUnFollowButtonProps } from "./types";
 import { UnFollowUserComponent } from "../../generated/apolloComponents";
-import { GetThoseIFollowAndTheirPostsResolver } from "../../graphql/user/queries/GetThoseIFollowAndTheirPosts";
+import { MY_FOLLOWING_POSTS } from "../../graphql/user/queries/MyFollowingPosts";
 
 export default class UnFollowButton extends React.Component<
   IUnFollowButtonProps,
@@ -15,27 +15,6 @@ export default class UnFollowButton extends React.Component<
     this.handleMutationClick = this.handleMutationClick.bind(this);
   }
   handleMutationClick({ unFollowUser }: any) {
-    const oldFollowers = this.props.oldData;
-
-    // remove the logged in user from the other person's
-    // followers
-    const filteredList = oldFollowers.getThoseIFollowAndTheirPostsResolver.following.filter(
-      item => {
-        return item.id !== this.props.followingId;
-      }
-    );
-
-    // create a new list to replace the old list in cache and UI
-    const newListItems = Object.assign({}, oldFollowers, {
-      getThoseIFollowAndTheirPostsResolver: {
-        ...oldFollowers.getThoseIFollowAndTheirPostsResolver,
-        following: [...filteredList]
-      }
-    });
-
-    // This... is unceccesary? No time to test right now
-    const finalList = Object.assign({}, newListItems);
-
     unFollowUser({
       variables: {
         data: {
@@ -43,12 +22,23 @@ export default class UnFollowButton extends React.Component<
         }
       },
       update: (cache: any, { data }: any) => {
-        // if (!data || !data.getThoseIFollowAndTheirPostsResolver) {
-        //   return;
-        // }
+        if (!data || data === "undefined" || data === null) {
+          return;
+        }
+
+        let currentCache = cache.readQuery({
+          query: MY_FOLLOWING_POSTS
+        });
+
+        let newArray = currentCache.myFollowingPosts.filter(
+          post => post.user.id !== this.props.followingId
+        );
+
         cache.writeQuery({
-          query: GetThoseIFollowAndTheirPostsResolver,
-          data: { ...finalList }
+          query: MY_FOLLOWING_POSTS,
+          data: {
+            myFollowingPosts: [...newArray]
+          }
         });
       }
     });
@@ -58,11 +48,8 @@ export default class UnFollowButton extends React.Component<
 
     return (
       <UnFollowUserComponent>
-        {(unFollowUser, { called, client, data, error, loading }) => {
+        {(unFollowUser, { error, loading }) => {
           if (error) return <span>error: {error}</span>;
-          // if (called) {
-          //   return <span>{JSON.stringify(called)}...</span>;
-          // }
           if (loading) {
             return <span>loading...</span>;
           }

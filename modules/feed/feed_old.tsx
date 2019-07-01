@@ -65,7 +65,7 @@ const ListFunction: NextFunctionComponent = () => (
                       >
                         <Image
                           width={[1, "700px", "700px"]}
-                          src={`http://192.168.1.8:4000/temp/${images[0].uri}`}
+                          src={`http://192.168.1.10:4000/temp/${images[0].uri}`}
                         />
                         <Box p={[3, 3, 3]}>
                           <Heading>{title}</Heading>

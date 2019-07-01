@@ -1,11 +1,12 @@
 import { gql } from "apollo-boost";
 
-export const MyFollowerPosts = gql`
-  subscription MyFollowerPosts($data: QuickPostSubsInput!) {
-    followingPosts(data: $data) {
+export const MY_FOLLOWING_POSTS = gql`
+  query MyFollowingPosts {
+    myFollowingPosts {
       id
       title
       text
+      created_at
       images {
         id
         uri

@@ -16,7 +16,7 @@ import { getMainDefinition } from "apollo-utilities";
 import { isBrowser } from "./isBrowser";
 import Router from "next/router";
 
-const myIpAddress = "192.168.1.8"; // internalIp.v4.sync();
+const myIpAddress = "192.168.1.10"; // internalIp.v4.sync();
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 

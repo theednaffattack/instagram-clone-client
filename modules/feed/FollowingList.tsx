@@ -33,81 +33,150 @@ interface IFollowingListProps {
 }
 
 const PosedCard = posed(Card)({
-  enter: { opacity: 1, delay: ({ index }) => index * staggerDuration },
-  exit: { opacity: 0, delay: ({ index }) => index * staggerDuration },
+  enter: { opacity: 1, delay: ({ index = 1 }) => index * staggerDuration },
+  exit: { opacity: 0, delay: ({ index = 1 }) => index * staggerDuration },
   invisible: { opacity: 0 }
 });
 
 export const FollowingList = ({ data, mounted }: IFollowingListProps) => (
-  <PoseGroup
-    delta={1}
-    preEnterPose="invisible"
-    enterPose="enter"
-    exitPose="exit"
-    animateOnMount={true}
-  >
-    {data
-      ? data.getThoseIFollowAndTheirPostsResolver.following.map(
-          (peopleIFollow, peopleIndex) => {
-            return peopleIFollow.posts.map(({ title, text, images }, index) => {
-              return (
-                <PosedCard
-                  index={index}
-                  pose={mounted ? "enter" : "exit"}
-                  key={`${index} - ${title}`}
-                  bg="white"
-                  my={[3, 3, 3]}
-                  mx={[3, 3, 3]}
-                  borderRadius="15px"
-                  width={[1, "350px", "350px"]}
-                  // border="lime"
-                  boxShadow="0 0 16px rgba(0, 0, 0, .25)"
-                  display="flex"
-                  overflow="hidden"
-                  style={{ opacity: 0 }}
-                >
-                  <Flex width={[1, 1, 1]} flexDirection="column">
-                    <Box
-                      width={[1, 1, 1]}
-                      style={{
-                        minHeight: "250px",
-                        maxHeight: "250px",
-                        overflow: "hidden", // `url(${Background})`
-                        backgroundImage: `url(http://192.168.1.8:4000/temp/${
-                          images[0].uri
-                        })`,
-                        backgroundPosition: "center",
-                        backgroundSize: "cover",
-                        backgroundRepeat: "no-repeat"
-                      }}
-                    />
-                    <Box p={[3, 3, 3]} pt={[1, 1, 2]}>
-                      <Flex alignItems="center">
-                        <Heading mr="auto">{title}</Heading>
+  <Flex width={1} justifyContent="center" flexDirection="row" flexWrap="wrap">
+    <PoseGroup
+      delta={1}
+      preEnterPose="invisible"
+      enterPose="enter"
+      exitPose="exit"
+      animateOnMount={true}
+    >
+      {data.getThoseIFollowAndTheirPostsResolver.following.map(person =>
+        person.posts.map((post, pIndex) => (
+          <PosedCard
+            index={pIndex}
+            pose="enter"
+            bg="white"
+            key={`${pIndex} - ${post.title}`}
+            my={[3, 3, 3]}
+            mx={[3, 3, 3]}
+            borderRadius="15px"
+            width={[1, "350px", "350px"]}
+            // border="lime"
+            boxShadow="0 0 16px rgba(0, 0, 0, .25)"
+            display="flex"
+            overflow="hidden"
+            style={{ opacity: 0 }}
+          >
+            <Flex width={[1, 1, 1]} flexDirection="column">
+              <Box
+                width={[1, 1, 1]}
+                style={{
+                  minHeight: "250px",
+                  maxHeight: "250px",
+                  overflow: "hidden", // `url(${Background})`
+                  backgroundImage: `url(http://192.168.1.10:4000/temp/${
+                    post.images[0].uri
+                  })`,
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat"
+                }}
+              />
+              <Box p={[3, 3, 3]} pt={[1, 1, 2]}>
+                <Flex alignItems="center">
+                  <Heading mr="auto">{post.title}</Heading>
 
-                        <Flex
-                          justifyContent="center"
-                          alignItems="center"
-                          flexDirection="column"
-                        >
-                          {peopleIFollow.firstName}
-                          <UnFollowButton
-                            oldData={data}
-                            followingId={peopleIFollow.id}
-                            bg="fuchsia"
-                          >
-                            unfollow
-                          </UnFollowButton>
-                        </Flex>
-                      </Flex>
-                      <Text alignSelf="end">{text}</Text>
-                    </Box>
+                  <Flex
+                    justifyContent="center"
+                    alignItems="center"
+                    flexDirection="column"
+                  >
+                    {person.firstName}
+                    <UnFollowButton
+                      oldData={data}
+                      followingId={person.id}
+                      bg="fuchsia"
+                    >
+                      unfollow
+                    </UnFollowButton>
                   </Flex>
-                </PosedCard>
+                </Flex>
+                <Text alignSelf="end">{post.text}</Text>
+              </Box>
+            </Flex>
+          </PosedCard>
+        ))
+      )}
+    </PoseGroup>
+    {/* <PoseGroup
+      delta={1}
+      preEnterPose="invisible"
+      enterPose="enter"
+      exitPose="exit"
+      animateOnMount={true}
+    >
+      {data && mounted
+        ? data.getThoseIFollowAndTheirPostsResolver.following.map(
+            (peopleIFollow, peopleIndex) => {
+              return peopleIFollow.posts.map(
+                ({ title, text, images }, index) => {
+                  return (
+                    <PosedCard
+                      index={index}
+                      pose="enter"
+                      key={`${index} - ${title}`}
+                      bg="white"
+                      my={[3, 3, 3]}
+                      mx={[3, 3, 3]}
+                      borderRadius="15px"
+                      width={[1, "350px", "350px"]}
+                      // border="lime"
+                      boxShadow="0 0 16px rgba(0, 0, 0, .25)"
+                      display="flex"
+                      overflow="hidden"
+                      style={{ opacity: 0 }}
+                    >
+                      <Flex width={[1, 1, 1]} flexDirection="column">
+                        <Box
+                          width={[1, 1, 1]}
+                          style={{
+                            minHeight: "250px",
+                            maxHeight: "250px",
+                            overflow: "hidden", // `url(${Background})`
+                            backgroundImage: `url(http://192.168.1.10:4000/temp/${
+                              images[0].uri
+                            })`,
+                            backgroundPosition: "center",
+                            backgroundSize: "cover",
+                            backgroundRepeat: "no-repeat"
+                          }}
+                        />
+                        <Box p={[3, 3, 3]} pt={[1, 1, 2]}>
+                          <Flex alignItems="center">
+                            <Heading mr="auto">{title}</Heading>
+
+                            <Flex
+                              justifyContent="center"
+                              alignItems="center"
+                              flexDirection="column"
+                            >
+                              {peopleIFollow.firstName}
+                              <UnFollowButton
+                                oldData={data}
+                                followingId={peopleIFollow.id}
+                                bg="fuchsia"
+                              >
+                                unfollow
+                              </UnFollowButton>
+                            </Flex>
+                          </Flex>
+                          <Text alignSelf="end">{text}</Text>
+                        </Box>
+                      </Flex>
+                    </PosedCard>
+                  );
+                }
               );
-            });
-          }
-        )[0]
-      : []}
-  </PoseGroup>
+            }
+          )[0]
+        : []}
+    </PoseGroup> */}
+  </Flex>
 );

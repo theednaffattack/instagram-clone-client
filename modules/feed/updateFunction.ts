@@ -15,10 +15,19 @@ export const updateFunctionMyFollows = (
   let amFollowerTransform;
 
   if (prev.getThoseIFollowAndTheirPostsResolver != null) {
-    amFollowerTransform = prev.getThoseIFollowAndTheirPostsResolver.followers.map(
+    console.log(
+      "prev.getThoseIFollowAndTheirPostsResolver",
+      prev.getThoseIFollowAndTheirPostsResolver
+    );
+
+    amFollowerTransform = prev.getThoseIFollowAndTheirPostsResolver.following.map(
       (peopleIFollow: any) => {
-        peopleIFollow.posts!.unshift(newFeedItem);
-        return peopleIFollow;
+        if (peopleIFollow.id === newFeedItem.user.id) {
+          return peopleIFollow;
+        } else {
+          peopleIFollow.posts!.unshift(newFeedItem);
+          return peopleIFollow;
+        }
       }
     );
   } else {
@@ -26,7 +35,9 @@ export const updateFunctionMyFollows = (
   }
 
   let goodItems = oldItems;
-  goodItems.followers = amFollowerTransform;
+  goodItems.following = amFollowerTransform;
+
+  console.log("goodItems", goodItems);
 
   return Object.assign({}, prev, {
     getThoseIFollowAndTheirPostsResolver: goodItems

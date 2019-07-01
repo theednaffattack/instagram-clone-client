@@ -2,8 +2,8 @@ import React from "react";
 import { Button } from "rebass";
 
 import { IFollowButtonProps } from "./types";
-import { GetThoseIFollowAndTheirPostsResolver } from "../../graphql/user/queries/GetThoseIFollowAndTheirPosts";
 import { GET_GLOBAL_POSTS } from "../../graphql/user/queries/GetGlobalPosts";
+import { MY_FOLLOWING_POSTS } from "../../graphql/user/queries/MyFollowingPosts";
 
 export default class FollowButton extends React.Component<
   IFollowButtonProps,
@@ -23,18 +23,18 @@ export default class FollowButton extends React.Component<
           }
         },
         update: (cache: any, { data, error }: any) => {
+          if (error) console.error("Follow Error!", error);
+
           // server returns false if "me" is already
           // following the specified user, so we return to disallow
           // it quickly. Another check for this happens below
-          if (error) console.error("Follow Error!", error);
-
           if (!data || !data.followUser) {
             return;
           }
 
           // Read the data from our cache for this query.
           const storeUpdateData = cache.readQuery({
-            query: GetThoseIFollowAndTheirPostsResolver
+            query: MY_FOLLOWING_POSTS
           });
 
           const globalPostData = cache.readQuery({
@@ -45,21 +45,14 @@ export default class FollowButton extends React.Component<
             return item.user.id === this.props.postUserId;
           });
 
-          let myUser = getNewItems_too[0].user;
-
-          myUser.posts = getNewItems_too;
-
-          let transform = {
-            ...myUser
-          };
-
-          storeUpdateData.getThoseIFollowAndTheirPostsResolver.following.push(
-            transform
-          );
-
           cache.writeQuery({
-            query: GetThoseIFollowAndTheirPostsResolver,
-            data: storeUpdateData
+            query: MY_FOLLOWING_POSTS,
+            data: {
+              myFollowingPosts: [
+                ...storeUpdateData.myFollowingPosts,
+                ...getNewItems_too
+              ]
+            }
           });
         }
       });
@@ -74,11 +67,11 @@ export default class FollowButton extends React.Component<
       <Button
         disabled={this.props.postUserId === me.id ? true : false}
         type="button"
-        onClick={
+        onClick={e => {
           this.props.postUserId !== me.id
-            ? () => this.handleMutationClick({ followUser })
-            : () => console.log("null")
-        }
+            ? this.handleMutationClick({ followUser })
+            : null;
+        }}
         {...props}
       >
         {children}

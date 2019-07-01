@@ -55,7 +55,7 @@ class FileListBase extends Component<IFileListProps, FileListState> {
           {this.state.files.map((file, i) => (
             <div key={i}>
               <img
-                src={`http://192.168.1.8:4000/images/${file}`}
+                src={`http://192.168.1.10:4000/images/${file}`}
                 alt="some stuff"
               />
               {file}

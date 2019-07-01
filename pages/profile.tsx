@@ -8,7 +8,7 @@ export const SeeMyImages = data => (
     {data && data.data.GetAllMyImages
       ? data.data.GetAllMyImages.map((image: any, index: number) => (
           <Card width="450px" key={index}>
-            <Image src={`http://192.168.1.8:4000/temp/${image.uri}`} />
+            <Image src={`http://192.168.1.10:4000/temp/${image.uri}`} />
 
             {image.uri}
           </Card>

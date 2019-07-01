@@ -1,6 +1,6 @@
 export type Maybe<T> = T | null;
 
-export interface GetMessagesInput {
+export interface GetMessagesFromUserInput {
   sentBy: string;
 
   user: string;
@@ -56,6 +56,10 @@ export interface QuickPostSubsInput {
   message: string;
 }
 
+export interface GetAllMyMessagesInput {
+  user: string;
+}
+
 export interface PasswordInput {
   password: string;
 }
@@ -69,6 +73,140 @@ export type Upload = any;
 // ====================================================
 // Documents
 // ====================================================
+
+export type AddNewMessageVariables = {
+  sentTo: string;
+  message: string;
+};
+
+export type AddNewMessageMutation = {
+  __typename?: "Mutation";
+
+  addNewMessage: boolean;
+};
+
+export type GetAllMyMessagesVariables = {};
+
+export type GetAllMyMessagesQuery = {
+  __typename?: "Query";
+
+  getAllMyMessages: Maybe<GetAllMyMessagesGetAllMyMessages>;
+};
+
+export type GetAllMyMessagesGetAllMyMessages = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  mappedMessages: GetAllMyMessagesMappedMessages[];
+};
+
+export type GetAllMyMessagesMappedMessages = {
+  __typename?: "Message";
+
+  id: string;
+
+  createdAt: DateTime;
+
+  updatedAt: DateTime;
+
+  message: string;
+
+  sentBy: GetAllMyMessagesSentBy;
+
+  user: GetAllMyMessagesUser;
+};
+
+export type GetAllMyMessagesSentBy = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
+
+export type GetAllMyMessagesUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
+
+export type GetMyMessagesFromUserVariables = {
+  input: GetMessagesFromUserInput;
+};
+
+export type GetMyMessagesFromUserQuery = {
+  __typename?: "Query";
+
+  getMyMessagesFromUser: Maybe<GetMyMessagesFromUserGetMyMessagesFromUser[]>;
+};
+
+export type GetMyMessagesFromUserGetMyMessagesFromUser = {
+  __typename?: "Message";
+
+  id: string;
+
+  message: string;
+
+  createdAt: DateTime;
+
+  sentBy: GetMyMessagesFromUserSentBy;
+};
+
+export type GetMyMessagesFromUserSentBy = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
+
+export type NewMessageVariables = {
+  message: string;
+  sentTo: string;
+};
+
+export type NewMessageSubscription = {
+  __typename?: "Subscription";
+
+  newMessage: NewMessageNewMessage;
+};
+
+export type NewMessageNewMessage = {
+  __typename?: "MessageSubType";
+
+  id: string;
+
+  message: Maybe<string>;
+
+  sentBy: NewMessageSentBy;
+
+  user: NewMessageUser;
+
+  createdAt: Maybe<DateTime>;
+
+  updatedAt: Maybe<DateTime>;
+};
+
+export type NewMessageSentBy = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
+
+export type NewMessageUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
 
 export type ChangePasswordVariables = {
   data: ChangePasswordInput;
@@ -266,6 +404,8 @@ export type GetGlobalPostsGetGlobalPosts = {
 
   text: Maybe<string>;
 
+  created_at: Maybe<DateTime>;
+
   images: Maybe<GetGlobalPostsImages[]>;
 
   user: Maybe<GetGlobalPostsUser>;
@@ -351,6 +491,88 @@ export type HelloWorldQuery = {
   helloWorld: string;
 };
 
+export type MyFollowingPostsVariables = {};
+
+export type MyFollowingPostsQuery = {
+  __typename?: "Query";
+
+  myFollowingPosts: Maybe<MyFollowingPostsMyFollowingPosts[]>;
+};
+
+export type MyFollowingPostsMyFollowingPosts = {
+  __typename?: "Post";
+
+  id: Maybe<string>;
+
+  title: Maybe<string>;
+
+  text: Maybe<string>;
+
+  created_at: Maybe<DateTime>;
+
+  images: Maybe<MyFollowingPostsImages[]>;
+
+  user: Maybe<MyFollowingPostsUser>;
+};
+
+export type MyFollowingPostsImages = {
+  __typename?: "Image";
+
+  id: string;
+
+  uri: string;
+};
+
+export type MyFollowingPostsUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
+
+export type FollowingPostsVariables = {
+  data: QuickPostSubsInput;
+};
+
+export type FollowingPostsSubscription = {
+  __typename?: "Subscription";
+
+  followingPosts: FollowingPostsFollowingPosts;
+};
+
+export type FollowingPostsFollowingPosts = {
+  __typename?: "PostSubType";
+
+  id: string;
+
+  title: string;
+
+  text: string;
+
+  created_at: DateTime;
+
+  images: FollowingPostsImages[];
+
+  user: FollowingPostsUser;
+};
+
+export type FollowingPostsImages = {
+  __typename?: "Image";
+
+  id: string;
+
+  uri: string;
+};
+
+export type FollowingPostsUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
+
 export type GlobalPostsVariables = {};
 
 export type GlobalPostsSubscription = {
@@ -389,46 +611,6 @@ export type GlobalPostsUser = {
   firstName: string;
 };
 
-export type MyFollowerPostsVariables = {
-  data: QuickPostSubsInput;
-};
-
-export type MyFollowerPostsSubscription = {
-  __typename?: "Subscription";
-
-  followingPosts: MyFollowerPostsFollowingPosts;
-};
-
-export type MyFollowerPostsFollowingPosts = {
-  __typename?: "PostSubType";
-
-  id: string;
-
-  title: string;
-
-  text: string;
-
-  images: MyFollowerPostsImages[];
-
-  user: MyFollowerPostsUser;
-};
-
-export type MyFollowerPostsImages = {
-  __typename?: "Image";
-
-  id: string;
-
-  uri: string;
-};
-
-export type MyFollowerPostsUser = {
-  __typename?: "User";
-
-  id: string;
-
-  firstName: string;
-};
-
 import * as ReactApollo from "react-apollo";
 import * as React from "react";
 
@@ -438,6 +620,217 @@ import gql from "graphql-tag";
 // Components
 // ====================================================
 
+export const AddNewMessageDocument = gql`
+  mutation AddNewMessage($sentTo: String!, $message: String!) {
+    addNewMessage(sentTo: $sentTo, message: $message)
+  }
+`;
+export class AddNewMessageComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<AddNewMessageMutation, AddNewMessageVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<AddNewMessageMutation, AddNewMessageVariables>
+        mutation={AddNewMessageDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type AddNewMessageProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<AddNewMessageMutation, AddNewMessageVariables>
+> &
+  TChildProps;
+export type AddNewMessageMutationFn = ReactApollo.MutationFn<
+  AddNewMessageMutation,
+  AddNewMessageVariables
+>;
+export function AddNewMessageHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        AddNewMessageMutation,
+        AddNewMessageVariables,
+        AddNewMessageProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    AddNewMessageMutation,
+    AddNewMessageVariables,
+    AddNewMessageProps<TChildProps>
+  >(AddNewMessageDocument, operationOptions);
+}
+export const GetAllMyMessagesDocument = gql`
+  query GetAllMyMessages {
+    getAllMyMessages {
+      id
+      firstName
+      mappedMessages {
+        id
+        createdAt
+        updatedAt
+        message
+        sentBy {
+          id
+          firstName
+        }
+        user {
+          id
+          firstName
+        }
+      }
+    }
+  }
+`;
+export class GetAllMyMessagesComponent extends React.Component<
+  Partial<
+    ReactApollo.QueryProps<GetAllMyMessagesQuery, GetAllMyMessagesVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetAllMyMessagesQuery, GetAllMyMessagesVariables>
+        query={GetAllMyMessagesDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetAllMyMessagesProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetAllMyMessagesQuery, GetAllMyMessagesVariables>
+> &
+  TChildProps;
+export function GetAllMyMessagesHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetAllMyMessagesQuery,
+        GetAllMyMessagesVariables,
+        GetAllMyMessagesProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetAllMyMessagesQuery,
+    GetAllMyMessagesVariables,
+    GetAllMyMessagesProps<TChildProps>
+  >(GetAllMyMessagesDocument, operationOptions);
+}
+export const GetMyMessagesFromUserDocument = gql`
+  query GetMyMessagesFromUser($input: GetMessagesFromUserInput!) {
+    getMyMessagesFromUser(input: $input) {
+      id
+      message
+      createdAt
+      sentBy {
+        id
+        firstName
+      }
+    }
+  }
+`;
+export class GetMyMessagesFromUserComponent extends React.Component<
+  Partial<
+    ReactApollo.QueryProps<
+      GetMyMessagesFromUserQuery,
+      GetMyMessagesFromUserVariables
+    >
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Query<
+        GetMyMessagesFromUserQuery,
+        GetMyMessagesFromUserVariables
+      >
+        query={GetMyMessagesFromUserDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetMyMessagesFromUserProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<
+    GetMyMessagesFromUserQuery,
+    GetMyMessagesFromUserVariables
+  >
+> &
+  TChildProps;
+export function GetMyMessagesFromUserHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetMyMessagesFromUserQuery,
+        GetMyMessagesFromUserVariables,
+        GetMyMessagesFromUserProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetMyMessagesFromUserQuery,
+    GetMyMessagesFromUserVariables,
+    GetMyMessagesFromUserProps<TChildProps>
+  >(GetMyMessagesFromUserDocument, operationOptions);
+}
+export const NewMessageDocument = gql`
+  subscription NewMessage($message: String!, $sentTo: String!) {
+    newMessage(message: $message, sentTo: $sentTo) {
+      id
+      message
+      sentBy {
+        id
+        firstName
+      }
+      user {
+        id
+        firstName
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export class NewMessageComponent extends React.Component<
+  Partial<
+    ReactApollo.SubscriptionProps<NewMessageSubscription, NewMessageVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Subscription<NewMessageSubscription, NewMessageVariables>
+        subscription={NewMessageDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type NewMessageProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<NewMessageSubscription, NewMessageVariables>
+> &
+  TChildProps;
+export function NewMessageHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        NewMessageSubscription,
+        NewMessageVariables,
+        NewMessageProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    NewMessageSubscription,
+    NewMessageVariables,
+    NewMessageProps<TChildProps>
+  >(NewMessageDocument, operationOptions);
+}
 export const ChangePasswordDocument = gql`
   mutation ChangePassword($data: ChangePasswordInput!) {
     changePassword(data: $data) {
@@ -935,6 +1328,7 @@ export const GetGlobalPostsDocument = gql`
       id
       title
       text
+      created_at
       images {
         id
         uri
@@ -1090,6 +1484,118 @@ export function HelloWorldHOC<TProps, TChildProps = any>(
     HelloWorldProps<TChildProps>
   >(HelloWorldDocument, operationOptions);
 }
+export const MyFollowingPostsDocument = gql`
+  query MyFollowingPosts {
+    myFollowingPosts {
+      id
+      title
+      text
+      created_at
+      images {
+        id
+        uri
+      }
+      user {
+        id
+        firstName
+      }
+    }
+  }
+`;
+export class MyFollowingPostsComponent extends React.Component<
+  Partial<
+    ReactApollo.QueryProps<MyFollowingPostsQuery, MyFollowingPostsVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Query<MyFollowingPostsQuery, MyFollowingPostsVariables>
+        query={MyFollowingPostsDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type MyFollowingPostsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<MyFollowingPostsQuery, MyFollowingPostsVariables>
+> &
+  TChildProps;
+export function MyFollowingPostsHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        MyFollowingPostsQuery,
+        MyFollowingPostsVariables,
+        MyFollowingPostsProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    MyFollowingPostsQuery,
+    MyFollowingPostsVariables,
+    MyFollowingPostsProps<TChildProps>
+  >(MyFollowingPostsDocument, operationOptions);
+}
+export const FollowingPostsDocument = gql`
+  subscription FollowingPosts($data: QuickPostSubsInput!) {
+    followingPosts(data: $data) {
+      id
+      title
+      text
+      created_at
+      images {
+        id
+        uri
+      }
+      user {
+        id
+        firstName
+      }
+    }
+  }
+`;
+export class FollowingPostsComponent extends React.Component<
+  Partial<
+    ReactApollo.SubscriptionProps<
+      FollowingPostsSubscription,
+      FollowingPostsVariables
+    >
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Subscription<
+        FollowingPostsSubscription,
+        FollowingPostsVariables
+      >
+        subscription={FollowingPostsDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type FollowingPostsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<FollowingPostsSubscription, FollowingPostsVariables>
+> &
+  TChildProps;
+export function FollowingPostsHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        FollowingPostsSubscription,
+        FollowingPostsVariables,
+        FollowingPostsProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    FollowingPostsSubscription,
+    FollowingPostsVariables,
+    FollowingPostsProps<TChildProps>
+  >(FollowingPostsDocument, operationOptions);
+}
 export const GlobalPostsDocument = gql`
   subscription GlobalPosts {
     globalPosts {
@@ -1141,62 +1647,4 @@ export function GlobalPostsHOC<TProps, TChildProps = any>(
     GlobalPostsVariables,
     GlobalPostsProps<TChildProps>
   >(GlobalPostsDocument, operationOptions);
-}
-export const MyFollowerPostsDocument = gql`
-  subscription MyFollowerPosts($data: QuickPostSubsInput!) {
-    followingPosts(data: $data) {
-      id
-      title
-      text
-      images {
-        id
-        uri
-      }
-      user {
-        id
-        firstName
-      }
-    }
-  }
-`;
-export class MyFollowerPostsComponent extends React.Component<
-  Partial<
-    ReactApollo.SubscriptionProps<
-      MyFollowerPostsSubscription,
-      MyFollowerPostsVariables
-    >
-  >
-> {
-  render() {
-    return (
-      <ReactApollo.Subscription<
-        MyFollowerPostsSubscription,
-        MyFollowerPostsVariables
-      >
-        subscription={MyFollowerPostsDocument}
-        {...(this as any)["props"] as any}
-      />
-    );
-  }
-}
-export type MyFollowerPostsProps<TChildProps = any> = Partial<
-  ReactApollo.DataProps<MyFollowerPostsSubscription, MyFollowerPostsVariables>
-> &
-  TChildProps;
-export function MyFollowerPostsHOC<TProps, TChildProps = any>(
-  operationOptions:
-    | ReactApollo.OperationOption<
-        TProps,
-        MyFollowerPostsSubscription,
-        MyFollowerPostsVariables,
-        MyFollowerPostsProps<TChildProps>
-      >
-    | undefined
-) {
-  return ReactApollo.graphql<
-    TProps,
-    MyFollowerPostsSubscription,
-    MyFollowerPostsVariables,
-    MyFollowerPostsProps<TChildProps>
-  >(MyFollowerPostsDocument, operationOptions);
 }

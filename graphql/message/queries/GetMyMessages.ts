@@ -5,10 +5,11 @@ export const getHotelByID = gql`
     getMyMessagesFromUser(input: $input) {
       id
       message
-      createdAt
+      created_at
       sentBy {
         id
         firstName
+        lastName
       }
     }
   }

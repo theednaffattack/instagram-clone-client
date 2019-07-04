@@ -56,7 +56,25 @@ export interface QuickPostSubsInput {
   message: string;
 }
 
+export interface AddMessageToThreadInputV2 {
+  threadId: string;
+
+  sentTo: string;
+
+  message: string;
+}
+
 export interface GetAllMyMessagesInput {
+  user: string;
+}
+
+export interface GetAllMyMessageThreadsInput {
+  user: string;
+}
+
+export interface GetMessageThreadsFromUserInput {
+  sentBy: string;
+
   user: string;
 }
 
@@ -74,6 +92,44 @@ export type Upload = any;
 // Documents
 // ====================================================
 
+export type AddMessageToThreadVariables = {
+  threadId: string;
+  sentTo: string;
+  message: string;
+};
+
+export type AddMessageToThreadMutation = {
+  __typename?: "Mutation";
+
+  addMessageToThread: AddMessageToThreadAddMessageToThread;
+};
+
+export type AddMessageToThreadAddMessageToThread = {
+  __typename?: "AddMessagePayload";
+
+  success: boolean;
+
+  message: AddMessageToThreadMessage;
+};
+
+export type AddMessageToThreadMessage = {
+  __typename?: "Message";
+
+  id: string;
+
+  message: string;
+
+  sentBy: AddMessageToThreadSentBy;
+};
+
+export type AddMessageToThreadSentBy = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
+
 export type AddNewMessageVariables = {
   sentTo: string;
   message: string;
@@ -83,6 +139,45 @@ export type AddNewMessageMutation = {
   __typename?: "Mutation";
 
   addNewMessage: boolean;
+};
+
+export type CreateMessageThreadVariables = {
+  sentTo: string;
+  message: string;
+};
+
+export type CreateMessageThreadMutation = {
+  __typename?: "Mutation";
+
+  createMessageThread: CreateMessageThreadCreateMessageThread;
+};
+
+export type CreateMessageThreadCreateMessageThread = {
+  __typename?: "Thread";
+
+  id: Maybe<string>;
+
+  messages: CreateMessageThreadMessages[];
+
+  invitees: CreateMessageThreadInvitees[];
+};
+
+export type CreateMessageThreadMessages = {
+  __typename?: "Message";
+
+  id: string;
+
+  message: string;
+};
+
+export type CreateMessageThreadInvitees = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
 };
 
 export type GetAllMyMessagesVariables = {};
@@ -100,6 +195,8 @@ export type GetAllMyMessagesGetAllMyMessages = {
 
   firstName: string;
 
+  lastName: string;
+
   mappedMessages: GetAllMyMessagesMappedMessages[];
 };
 
@@ -108,9 +205,9 @@ export type GetAllMyMessagesMappedMessages = {
 
   id: string;
 
-  createdAt: DateTime;
+  created_at: Maybe<DateTime>;
 
-  updatedAt: DateTime;
+  updated_at: Maybe<DateTime>;
 
   message: string;
 
@@ -125,6 +222,8 @@ export type GetAllMyMessagesSentBy = {
   id: string;
 
   firstName: string;
+
+  lastName: string;
 };
 
 export type GetAllMyMessagesUser = {
@@ -133,6 +232,56 @@ export type GetAllMyMessagesUser = {
   id: string;
 
   firstName: string;
+
+  lastName: string;
+};
+
+export type GetMessageThreadsVariables = {};
+
+export type GetMessageThreadsQuery = {
+  __typename?: "Query";
+
+  getMessageThreads: GetMessageThreadsGetMessageThreads[];
+};
+
+export type GetMessageThreadsGetMessageThreads = {
+  __typename?: "Thread";
+
+  id: Maybe<string>;
+
+  messages: GetMessageThreadsMessages[];
+};
+
+export type GetMessageThreadsMessages = {
+  __typename?: "Message";
+
+  id: string;
+
+  message: string;
+
+  sentBy: GetMessageThreadsSentBy;
+
+  user: GetMessageThreadsUser;
+};
+
+export type GetMessageThreadsSentBy = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
+};
+
+export type GetMessageThreadsUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
 };
 
 export type GetMyMessagesFromUserVariables = {
@@ -152,7 +301,7 @@ export type GetMyMessagesFromUserGetMyMessagesFromUser = {
 
   message: string;
 
-  createdAt: DateTime;
+  created_at: Maybe<DateTime>;
 
   sentBy: GetMyMessagesFromUserSentBy;
 };
@@ -163,6 +312,8 @@ export type GetMyMessagesFromUserSentBy = {
   id: string;
 
   firstName: string;
+
+  lastName: string;
 };
 
 export type NewMessageVariables = {
@@ -187,9 +338,9 @@ export type NewMessageNewMessage = {
 
   user: NewMessageUser;
 
-  createdAt: Maybe<DateTime>;
+  created_at: Maybe<DateTime>;
 
-  updatedAt: Maybe<DateTime>;
+  updated_at: Maybe<DateTime>;
 };
 
 export type NewMessageSentBy = {
@@ -198,6 +349,8 @@ export type NewMessageSentBy = {
   id: string;
 
   firstName: string;
+
+  lastName: string;
 };
 
 export type NewMessageUser = {
@@ -206,6 +359,8 @@ export type NewMessageUser = {
   id: string;
 
   firstName: string;
+
+  lastName: string;
 };
 
 export type ChangePasswordVariables = {
@@ -460,6 +615,8 @@ export type GetThoseIFollowAndTheirPostsResolverFollowing = {
 
   firstName: string;
 
+  lastName: string;
+
   posts: Maybe<GetThoseIFollowAndTheirPostsResolverPosts[]>;
 };
 
@@ -529,6 +686,8 @@ export type MyFollowingPostsUser = {
   id: string;
 
   firstName: string;
+
+  lastName: string;
 };
 
 export type FollowingPostsVariables = {
@@ -571,6 +730,8 @@ export type FollowingPostsUser = {
   id: string;
 
   firstName: string;
+
+  lastName: string;
 };
 
 export type GlobalPostsVariables = {};
@@ -609,6 +770,60 @@ export type GlobalPostsUser = {
   id: string;
 
   firstName: string;
+
+  lastName: string;
+};
+
+export type MessageThreadsVariables = {
+  data: AddMessageToThreadInputV2;
+};
+
+export type MessageThreadsSubscription = {
+  __typename?: "Subscription";
+
+  messageThreads: MessageThreadsMessageThreads;
+};
+
+export type MessageThreadsMessageThreads = {
+  __typename?: "AddMessagePayload";
+
+  success: boolean;
+
+  message: MessageThreadsMessage;
+};
+
+export type MessageThreadsMessage = {
+  __typename?: "Message";
+
+  id: string;
+
+  created_at: Maybe<DateTime>;
+
+  message: string;
+
+  sentBy: MessageThreadsSentBy;
+
+  user: MessageThreadsUser;
+};
+
+export type MessageThreadsSentBy = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
+};
+
+export type MessageThreadsUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
 };
 
 import * as ReactApollo from "react-apollo";
@@ -620,6 +835,77 @@ import gql from "graphql-tag";
 // Components
 // ====================================================
 
+export const AddMessageToThreadDocument = gql`
+  mutation AddMessageToThread(
+    $threadId: ID!
+    $sentTo: String!
+    $message: String!
+  ) {
+    addMessageToThread(
+      threadId: $threadId
+      sentTo: $sentTo
+      message: $message
+    ) {
+      success
+      message {
+        id
+        message
+        sentBy {
+          id
+          firstName
+        }
+      }
+    }
+  }
+`;
+export class AddMessageToThreadComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<
+      AddMessageToThreadMutation,
+      AddMessageToThreadVariables
+    >
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<
+        AddMessageToThreadMutation,
+        AddMessageToThreadVariables
+      >
+        mutation={AddMessageToThreadDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type AddMessageToThreadProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<
+    AddMessageToThreadMutation,
+    AddMessageToThreadVariables
+  >
+> &
+  TChildProps;
+export type AddMessageToThreadMutationFn = ReactApollo.MutationFn<
+  AddMessageToThreadMutation,
+  AddMessageToThreadVariables
+>;
+export function AddMessageToThreadHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        AddMessageToThreadMutation,
+        AddMessageToThreadVariables,
+        AddMessageToThreadProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    AddMessageToThreadMutation,
+    AddMessageToThreadVariables,
+    AddMessageToThreadProps<TChildProps>
+  >(AddMessageToThreadDocument, operationOptions);
+}
 export const AddNewMessageDocument = gql`
   mutation AddNewMessage($sentTo: String!, $message: String!) {
     addNewMessage(sentTo: $sentTo, message: $message)
@@ -664,23 +950,90 @@ export function AddNewMessageHOC<TProps, TChildProps = any>(
     AddNewMessageProps<TChildProps>
   >(AddNewMessageDocument, operationOptions);
 }
+export const CreateMessageThreadDocument = gql`
+  mutation CreateMessageThread($sentTo: String!, $message: String!) {
+    createMessageThread(sentTo: $sentTo, message: $message) {
+      id
+      messages {
+        id
+        message
+      }
+      invitees {
+        id
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+export class CreateMessageThreadComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<
+      CreateMessageThreadMutation,
+      CreateMessageThreadVariables
+    >
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<
+        CreateMessageThreadMutation,
+        CreateMessageThreadVariables
+      >
+        mutation={CreateMessageThreadDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type CreateMessageThreadProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<
+    CreateMessageThreadMutation,
+    CreateMessageThreadVariables
+  >
+> &
+  TChildProps;
+export type CreateMessageThreadMutationFn = ReactApollo.MutationFn<
+  CreateMessageThreadMutation,
+  CreateMessageThreadVariables
+>;
+export function CreateMessageThreadHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        CreateMessageThreadMutation,
+        CreateMessageThreadVariables,
+        CreateMessageThreadProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    CreateMessageThreadMutation,
+    CreateMessageThreadVariables,
+    CreateMessageThreadProps<TChildProps>
+  >(CreateMessageThreadDocument, operationOptions);
+}
 export const GetAllMyMessagesDocument = gql`
   query GetAllMyMessages {
     getAllMyMessages {
       id
       firstName
+      lastName
       mappedMessages {
         id
-        createdAt
-        updatedAt
+        created_at
+        updated_at
         message
         sentBy {
           id
           firstName
+          lastName
         }
         user {
           id
           firstName
+          lastName
         }
       }
     }
@@ -721,15 +1074,72 @@ export function GetAllMyMessagesHOC<TProps, TChildProps = any>(
     GetAllMyMessagesProps<TChildProps>
   >(GetAllMyMessagesDocument, operationOptions);
 }
+export const GetMessageThreadsDocument = gql`
+  query GetMessageThreads {
+    getMessageThreads {
+      id
+      messages {
+        id
+        message
+        sentBy {
+          id
+          firstName
+          lastName
+        }
+        user {
+          id
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+`;
+export class GetMessageThreadsComponent extends React.Component<
+  Partial<
+    ReactApollo.QueryProps<GetMessageThreadsQuery, GetMessageThreadsVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetMessageThreadsQuery, GetMessageThreadsVariables>
+        query={GetMessageThreadsDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetMessageThreadsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetMessageThreadsQuery, GetMessageThreadsVariables>
+> &
+  TChildProps;
+export function GetMessageThreadsHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetMessageThreadsQuery,
+        GetMessageThreadsVariables,
+        GetMessageThreadsProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetMessageThreadsQuery,
+    GetMessageThreadsVariables,
+    GetMessageThreadsProps<TChildProps>
+  >(GetMessageThreadsDocument, operationOptions);
+}
 export const GetMyMessagesFromUserDocument = gql`
   query GetMyMessagesFromUser($input: GetMessagesFromUserInput!) {
     getMyMessagesFromUser(input: $input) {
       id
       message
-      createdAt
+      created_at
       sentBy {
         id
         firstName
+        lastName
       }
     }
   }
@@ -786,13 +1196,15 @@ export const NewMessageDocument = gql`
       sentBy {
         id
         firstName
+        lastName
       }
       user {
         id
         firstName
+        lastName
       }
-      createdAt
-      updatedAt
+      created_at
+      updated_at
     }
   }
 `;
@@ -1384,6 +1796,7 @@ export const GetThoseIFollowAndTheirPostsResolverDocument = gql`
       following {
         id
         firstName
+        lastName
         posts {
           id
           title
@@ -1498,6 +1911,7 @@ export const MyFollowingPostsDocument = gql`
       user {
         id
         firstName
+        lastName
       }
     }
   }
@@ -1551,6 +1965,7 @@ export const FollowingPostsDocument = gql`
       user {
         id
         firstName
+        lastName
       }
     }
   }
@@ -1609,6 +2024,7 @@ export const GlobalPostsDocument = gql`
       user {
         id
         firstName
+        lastName
       }
     }
   }
@@ -1647,4 +2063,67 @@ export function GlobalPostsHOC<TProps, TChildProps = any>(
     GlobalPostsVariables,
     GlobalPostsProps<TChildProps>
   >(GlobalPostsDocument, operationOptions);
+}
+export const MessageThreadsDocument = gql`
+  subscription MessageThreads($data: AddMessageToThreadInput_v2!) {
+    messageThreads(data: $data) {
+      success
+      message {
+        id
+        created_at
+        message
+        sentBy {
+          id
+          firstName
+          lastName
+        }
+        user {
+          id
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+`;
+export class MessageThreadsComponent extends React.Component<
+  Partial<
+    ReactApollo.SubscriptionProps<
+      MessageThreadsSubscription,
+      MessageThreadsVariables
+    >
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Subscription<
+        MessageThreadsSubscription,
+        MessageThreadsVariables
+      >
+        subscription={MessageThreadsDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type MessageThreadsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<MessageThreadsSubscription, MessageThreadsVariables>
+> &
+  TChildProps;
+export function MessageThreadsHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        MessageThreadsSubscription,
+        MessageThreadsVariables,
+        MessageThreadsProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    MessageThreadsSubscription,
+    MessageThreadsVariables,
+    MessageThreadsProps<TChildProps>
+  >(MessageThreadsDocument, operationOptions);
 }

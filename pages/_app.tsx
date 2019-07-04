@@ -29,7 +29,19 @@ const theme = {
   colors: {
     blue,
     lightgray: "#f6f6ff",
-    text: "rgb(68, 68, 68)"
+    text: "rgb(68, 68, 68)",
+    thread_bg: "#3f3c62",
+    thread_header: "#2e2d52",
+    thread_footer: "#474b7b",
+    thread_text: "#b2b2d8",
+    thread_selected: "#373658",
+    chat_header: "#5d5c8d", //#5d5c8e
+    chat_placeholder: "#504aa4",
+    thread_placeholder: "#e1ddff",
+    chat_icon: "#ccc6f2",
+    chat_bg: "#ddddf7", //#ccc6f2
+    chat_bubble_me: "#fff",
+    chat_bubble_them: "#849ffe"
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   fonts: {

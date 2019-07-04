@@ -13,6 +13,7 @@ export const GLOBAL_POSTS = gql`
       user {
         id
         firstName
+        lastName
       }
     }
   }

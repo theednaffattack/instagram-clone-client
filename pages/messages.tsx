@@ -1,8 +1,9 @@
 import React from "react";
 
 import Layout from "../components/Layout";
-// import Layout from "../components/AuthLayoutPlain";
 import { MeComponent } from "../generated/apolloComponents";
+import ViewThreads from "../modules/messages/ViewThreads";
+// import Layout from "../components/AuthLayoutPlain";
 import MessagesPage from "../modules/messages/MessagesPage";
 // import { MyContext } from "../interfaces/MyContext";
 
@@ -21,7 +22,8 @@ export default class Messages extends React.Component {
     return (
       <Layout>
         <MeComponent>
-          {data => <MessagesPage me={data.data.id} data={data} />}
+          {/* {data => <MessagesPage me={data.data.id} data={data} />} */}
+          {data => <ViewThreads me={data.data.me.id} />}
         </MeComponent>
       </Layout>
     );

@@ -1,14 +1,20 @@
 import * as React from "react";
 import Head from "next/head";
 import { Flex as FlexBase } from "rebass";
-import { minHeight, borders } from "styled-system";
+import { maxWidth, minHeight, borders } from "styled-system";
 import styled from "styled-components";
 
-import InteriorLayout from "./AuthHeader";
+import AuthHeader from "./AuthHeader";
 
 const Flex = styled(FlexBase)`
   ${minHeight}
   ${borders}
+`;
+
+const MaxFlex = styled(FlexBase)`
+  ${minHeight}
+  ${borders}
+  ${maxWidth}
 `;
 
 type Props = {
@@ -31,59 +37,32 @@ const Layout: React.FunctionComponent<Props> = ({
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-
-    <InteriorLayout title="My Feed" />
-
-    {/* <FlexHeader color="white" as="header">
-      <nav>
-        <MyLink prefetch href="/" name="home">
-          <a>Home</a>
-        </MyLink>{" "}
-        |{" "}
-        <MyLink prefetch href="/cars" name="cars">
-          <a>Cars</a>
-        </MyLink>{" "}
-        |{" "}
-        <MyLink prefetch href="/login" name="login">
-          <a>Login</a>
-        </MyLink>{" "}
-        |{" "}
-        <MyLink prefetch href="/register" name="register">
-          <a>Register</a>
-        </MyLink>{" "}
-        |{" "}
-        <MyLink prefetch href="/hello" name="hello">
-          <a>Hello</a>
-        </MyLink>{" "}
-        |{" "}
-        <MyLink prefetch href="/forgot-password" name="forgot-password">
-          <a>Forgot Password</a>
-        </MyLink>
-        <MeComponent>
-          {({ data, loading }) => {
-            if (!data || loading || !data.me) {
-              return null;
-            }
-            return (
-              <>
-                {" "}
-                |{" "}
-                <MyLink prefetch href="/logout" name="logout">
-                  <a>Logout</a>
-                </MyLink>
-              </>
-            );
-          }}
-        </MeComponent>
-      </nav>
-    </FlexHeader> */}
-
+    <Flex
+      flexDirection="row"
+      justifyContent="center"
+      width={[1, 1, 1]}
+      px={[1, 1, 4]}
+      as="nav"
+    >
+      <MaxFlex flexDirection="column" width="860px">
+        <AuthHeader title="My Feed" />
+      </MaxFlex>
+    </Flex>
     <Flex flexDirection="column" minHeight="50vh">
       {children}
-      {/* <FlexFooter flexDirection="column" as="footer">
-        <hr />
-        <span>Made with ❤️ by Eddie Naff</span>
-      </FlexFooter> */}
+      <Flex
+        flexDirection="row"
+        justifyContent="center"
+        width={[1, 1, 1]}
+        px={[1, 1, 4]}
+        as="footer"
+      >
+        <MaxFlex flexDirection="column" width="860px">
+          <hr />
+          <AuthHeader title="My Feed" />
+          <span>Made with ❤️ by Eddie Naff</span>
+        </MaxFlex>
+      </Flex>
     </Flex>
   </Flex>
 );

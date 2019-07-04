@@ -11,6 +11,7 @@ export const GetThoseIFollowAndTheirPostsResolver = gql`
       following {
         id
         firstName
+        lastName
         posts {
           id
           title

@@ -1,7 +1,7 @@
 import * as React from "react";
 import Head from "next/head";
 import { Box, Flex as FlexBase } from "rebass";
-import { minHeight, borders } from "styled-system";
+import { maxWidth, minHeight, borders } from "styled-system";
 import styled from "styled-components";
 import Icon from "react-geomicons";
 
@@ -13,13 +13,24 @@ const Flex = styled(FlexBase)`
   ${borders}
 `;
 
+const MaxFlex = styled(FlexBase)`
+  ${minHeight}
+  ${borders}
+  ${maxWidth}
+`;
+
 type Props = {
   title?: string;
 };
 
-const AuthenticatedHeader: React.FunctionComponent = () => (
-  <Flex flexDirection="row" width={[1, 1, 1]} px={[1, 1, 4]} as="nav">
-    {/* <nav> */}
+const AuthenticatedHeader: React.FunctionComponent = (props: any) => (
+  <Flex
+    flexDirection="row"
+    justifyContent="center"
+    width={[1, 1, 1]}
+    px={[1, 1, 4]}
+    {...props}
+  >
     <MyLink color="text" mx={2} prefetch href="/" name="home">
       Home
     </MyLink>{" "}
@@ -43,14 +54,14 @@ const AuthenticatedHeader: React.FunctionComponent = () => (
     <MyLink mx={2} prefetch href="/register" name="register">
       Register
     </MyLink>{" "}
-    |{" "}
+    {/* |{" "}
     <MyLink mx={2} prefetch href="/hello" name="hello">
       Hello
-    </MyLink>{" "}
-    |{" "}
+    </MyLink>{" "} */}
+    {/* |{" "}
     <MyLink mx={2} prefetch href="/forgot-password" name="forgot-password">
       Forgot Password
-    </MyLink>
+    </MyLink> */}
     <MeComponent>
       {({ data, loading }) => {
         if (!data || loading || !data.me) {
@@ -60,21 +71,20 @@ const AuthenticatedHeader: React.FunctionComponent = () => (
           <>
             {" "}
             |{" "}
+            <MyLink mx={2} prefetch href="/logout" name="logout">
+              Logout
+            </MyLink>{" "}
+            |{" "}
             <Box pl={2} width="25px">
               <Icon name="user" fill="rgb(0, 116, 217)" />
             </Box>
             <MyLink mx={2} prefetch href="/profile" name="profile">
               Profile
-            </MyLink>{" "}
-            |{" "}
-            <MyLink mx={2} prefetch href="/logout" name="logout">
-              Logout
             </MyLink>
           </>
         );
       }}
     </MeComponent>
-    {/* </nav> */}
   </Flex>
 );
 

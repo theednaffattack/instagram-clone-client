@@ -8,13 +8,15 @@ export const newMessageSub = gql`
       sentBy {
         id
         firstName
+        lastName
       }
       user {
         id
         firstName
+        lastName
       }
-      createdAt
-      updatedAt
+      created_at
+      updated_at
     }
   }
 `;

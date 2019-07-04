@@ -87,26 +87,30 @@ export default class MessagesPage extends Component<
     });
   }
 
-  // componentDidMount() {
-  //   this.props.subscribeToNewComments();
-  // }
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  };
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   // Typical usage (don't forget to compare props):
-  //   // if (this.state.selectedMessageIndex !== prevProps.selectedMessageIndex) {
-  //   //   // this.fetchData(this.props.userID);
-  //   //   const pathNodes = Array.from(document.querySelectorAll(".messageWindow"));
-  //   //   const justOne = pathNodes[0].getBBox();
-  //   //   const arrayOfPathDimensions = pathNodes.map((node, index) => {
-  //   //     console.log("VIEW NODE DIMENSIONS");
-  //   //     console.log(node.getBBox());
-  //   //     return node.getBBox();
-  //   //   });
-  //   //   console.log(arrayOfPathDimensions);
-  //   //   console.log(Object.keys(pathNodes));
-  //   //   console.log(justOne);
-  //   // }
-  // }
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // Typical usage (don't forget to compare props):
+    // if (this.state.selectedMessageIndex !== prevProps.selectedMessageIndex) {
+    //   // this.fetchData(this.props.userID);
+    //   const pathNodes = Array.from(document.querySelectorAll(".messageWindow"));
+    //   const justOne = pathNodes[0].getBBox();
+    //   const arrayOfPathDimensions = pathNodes.map((node, index) => {
+    //     console.log("VIEW NODE DIMENSIONS");
+    //     console.log(node.getBBox());
+    //     return node.getBBox();
+    //   });
+    //   console.log(arrayOfPathDimensions);
+    //   console.log(Object.keys(pathNodes));
+    //   console.log(justOne);
+    // }
+  }
 
   render() {
     const { me } = this.props.data.data;

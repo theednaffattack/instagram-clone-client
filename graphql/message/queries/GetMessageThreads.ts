@@ -1,15 +1,11 @@
 import { gql } from "apollo-boost";
 
-export const GET_ALL_MY_MESSAGES = gql`
-  query GetAllMyMessages {
-    getAllMyMessages {
+export const GET_MESSAGE_THREADS = gql`
+  query GetMessageThreads {
+    getMessageThreads {
       id
-      firstName
-      lastName
-      mappedMessages {
+      messages {
         id
-        created_at
-        updated_at
         message
         sentBy {
           id

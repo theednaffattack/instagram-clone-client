@@ -1,7 +1,6 @@
 import React from "react";
 import { Heading } from "rebass";
 
-import InteriorLayout from "../../components/AuthHeader";
 import { MyFollowingPostsComponent } from "../../generated/apolloComponents";
 import { FOLLOWING_POSTS } from "../../graphql/user/subscriptions/FollowingPosts";
 import FollowingPosts from "../../modules/feed/FollowingPosts";

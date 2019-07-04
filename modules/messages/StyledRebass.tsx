@@ -2,7 +2,9 @@ import styled from "styled-components";
 import {
   backgroundImage,
   borders,
+  height,
   position,
+  boxShadow,
   top,
   left,
   bottom,
@@ -11,7 +13,16 @@ import {
   minHeight
 } from "styled-system";
 import React from "react";
-import { Box as BoxBase, Flex as FlexBase, Image, Text } from "rebass";
+import {
+  Box as BoxBase,
+  Card,
+  Flex as FlexBase,
+  Image,
+  Heading,
+  Text
+} from "rebass";
+
+export { Card, Image, Heading, Text };
 
 export const AbBox = styled(BoxBase)`
 ${borders}
@@ -56,8 +67,21 @@ export const Dot = styled(DotBase)`
 `;
 
 export const Flex = styled(FlexBase)`
+${boxShadow}
   ${borders}
   ${position}
+  ${minHeight}
+  ${height}
+`;
+
+export const CoverFlex = styled(FlexBase)`
+  ${borders}
+  ${position}
+  ${minHeight}
+  ${top}
+  ${right}
+  ${bottom}
+  ${left}
 `;
 
 export const Box = styled(BoxBase)`

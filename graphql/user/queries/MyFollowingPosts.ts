@@ -14,6 +14,7 @@ export const MY_FOLLOWING_POSTS = gql`
       user {
         id
         firstName
+        lastName
       }
     }
   }

@@ -236,6 +236,32 @@ export type GetAllMyMessagesUser = {
   lastName: string;
 };
 
+export type GetListToCreateThreadVariables = {};
+
+export type GetListToCreateThreadQuery = {
+  __typename?: "Query";
+
+  getListToCreateThread: Maybe<GetListToCreateThreadGetListToCreateThread>;
+};
+
+export type GetListToCreateThreadGetListToCreateThread = {
+  __typename?: "TransUserReturn";
+
+  id: string;
+
+  firstName: string;
+
+  thoseICanMessage: Maybe<GetListToCreateThreadThoseICanMessage[]>;
+};
+
+export type GetListToCreateThreadThoseICanMessage = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
+
 export type GetMessageThreadsVariables = {};
 
 export type GetMessageThreadsQuery = {
@@ -1073,6 +1099,62 @@ export function GetAllMyMessagesHOC<TProps, TChildProps = any>(
     GetAllMyMessagesVariables,
     GetAllMyMessagesProps<TChildProps>
   >(GetAllMyMessagesDocument, operationOptions);
+}
+export const GetListToCreateThreadDocument = gql`
+  query GetListToCreateThread {
+    getListToCreateThread {
+      id
+      firstName
+      thoseICanMessage {
+        id
+        firstName
+      }
+    }
+  }
+`;
+export class GetListToCreateThreadComponent extends React.Component<
+  Partial<
+    ReactApollo.QueryProps<
+      GetListToCreateThreadQuery,
+      GetListToCreateThreadVariables
+    >
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Query<
+        GetListToCreateThreadQuery,
+        GetListToCreateThreadVariables
+      >
+        query={GetListToCreateThreadDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GetListToCreateThreadProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<
+    GetListToCreateThreadQuery,
+    GetListToCreateThreadVariables
+  >
+> &
+  TChildProps;
+export function GetListToCreateThreadHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetListToCreateThreadQuery,
+        GetListToCreateThreadVariables,
+        GetListToCreateThreadProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetListToCreateThreadQuery,
+    GetListToCreateThreadVariables,
+    GetListToCreateThreadProps<TChildProps>
+  >(GetListToCreateThreadDocument, operationOptions);
 }
 export const GetMessageThreadsDocument = gql`
   query GetMessageThreads {

@@ -2,19 +2,26 @@ import styled from "styled-components";
 import {
   backgroundImage,
   borders,
-  height,
-  position,
   boxShadow,
+  color,
+  fontSize,
+  height,
+  maxHeight,
+  minHeight,
+  minWidth,
+  position,
+  space,
+  width,
   top,
-  left,
-  bottom,
   right,
-  zIndex,
-  minHeight
+  bottom,
+  left,
+  zIndex
 } from "styled-system";
 import React from "react";
 import {
   Box as BoxBase,
+  Button,
   Card,
   Flex as FlexBase,
   Image,
@@ -22,7 +29,11 @@ import {
   Text
 } from "rebass";
 
-export { Card, Image, Heading, Text };
+import { MenuDots as MenuDotsBase } from "./MenuIcon";
+import CustomIconBase from "./CustomIcon";
+import CustomIconMicBase from "./CustomIconMic";
+
+export { Button, Card, Image, Heading, Text };
 
 export const AbBox = styled(BoxBase)`
 ${borders}
@@ -32,6 +43,44 @@ ${position}
   ${bottom}
   ${left}
   ${zIndex}
+`;
+
+export const MyInput = styled.input`
+  ${borders}
+  ${color}
+  ${fontSize}
+  ${space}
+  ${width}
+
+& ::placeholder,
+::-webkit-input-placeholder {
+  color: ${props => props.theme.colors.chat_placeholder};
+}
+:-ms-input-placeholder {
+  color: red;
+}
+`;
+
+const MenuDots = styled(MenuDotsBase)`
+  ${space}
+`;
+
+export const BigLi = styled.li`
+  text-decoration: none;
+  display: inline-block;
+`;
+
+export const IconMic = styled(CustomIconMicBase)`
+  ${space}
+`;
+
+export const CustomIcon = styled(CustomIconBase)`
+  ${space}
+`;
+
+export const MinButton = styled(Button)`
+  ${minHeight}
+  ${space}
 `;
 
 export const AbWrapper = styled(FlexBase)`
@@ -85,8 +134,10 @@ export const CoverFlex = styled(FlexBase)`
 `;
 
 export const Box = styled(BoxBase)`
-  ${borders}
+  ${maxHeight}
   ${minHeight}
+  ${minWidth}
+  ${borders}
   ${position}
 `;
 

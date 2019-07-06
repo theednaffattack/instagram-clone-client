@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Flex, CoverFlex } from "./StyledRebass";
+import { CoverFlex, Flex, Text } from "./StyledRebass";
 import { MESSAGE_THREADS } from "../../graphql/user/subscriptions/MessageThreads";
 import AuthenticatedHeader from "../../components/AuthHeader";
 import ThreadBody from "./ThreadBody";
@@ -49,6 +49,7 @@ export class ViewThreadStateContainer extends React.Component<
     const selectedThreadIndex = this.props.data.getMessageThreads[
       selection.index
     ];
+
     this.setState({
       selectedThread: selection.index
     });
@@ -135,6 +136,13 @@ export class ViewThreadStateContainer extends React.Component<
 
   render() {
     const { data } = this.props;
+    const threadIndex = this.state.selectedThread;
+    const threads = this.props.data.getMessageThreads;
+
+    if (threadIndex) {
+      console.log("HELLO", threads[threadIndex]);
+    }
+
     return (
       <CoverFlex
         top={0}
@@ -151,6 +159,29 @@ export class ViewThreadStateContainer extends React.Component<
           overflow: "hidden"
         }}
       >
+        {/* works */}
+        <Text>{this.state.selectedThread}</Text>
+        {/* works */}
+        <Text>{this.props.data.getMessageThreads[0].id}</Text>
+
+        {/* DOESN'T WORK??? */}
+        <Text>
+          {this.state.selectedThread
+            ? this.props.data.getMessageThreads[this.state.selectedThread].id
+            : ""}
+        </Text>
+        <Text>
+          {this.state.selectedThread
+            ? this.props.data.getMessageThreads[
+                parseInt(this.state.selectedThread)
+              ].id
+            : ""}
+        </Text>
+        <Text>
+          {this.state.selectedThread
+            ? this.props.data.getMessageThreads[this.state.selectedThread].id
+            : ""}
+        </Text>
         <AuthenticatedHeader bg="white" />
         <Flex
           bg="white"
@@ -169,7 +200,13 @@ export class ViewThreadStateContainer extends React.Component<
           />
           <ChatBody
             dataMessageThreads={this.props.data.getMessageThreads}
-            selectedThread={this.state.selectedThread}
+            selectedThreadIndex={this.state.selectedThread}
+            selectedThreadId={
+              this.state.selectedThread === 0 || this.state.selectedThread
+                ? this.props.data.getMessageThreads[this.state.selectedThread]
+                    .id
+                : null
+            }
             handleChatMenuClick={this.handleChatMenuClick}
             me={this.props.me}
             handleEngageMicrophoneClick={this.handleEngageMicrophoneClick}

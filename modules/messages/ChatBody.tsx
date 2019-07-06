@@ -9,9 +9,14 @@ import IconAddFile from "./icon-add-file";
 import { GetListToCreateThreadComponent } from "../../generated/apolloComponents";
 
 import { IconMic, CustomIcon } from "./StyledRebass";
+import { Field } from "formik";
+import { InputField } from "../../components/fields/InputField";
+import ChatForm from "./chat-form";
+import { FileUploadField } from "../../components/fields/FileUploadField";
 
 interface IChatBodyProps {
-  selectedThread: any;
+  selectedThreadId: any;
+  selectedThreadIndex: number;
   handleChatMenuClick: any;
   me: any;
   dataMessageThreads: any;
@@ -23,7 +28,8 @@ interface IChatBodyProps {
 const ChatBody = React.forwardRef(
   (
     {
-      selectedThread,
+      selectedThreadId,
+      selectedThreadIndex,
       handleChatMenuClick,
       dataMessageThreads,
       me,
@@ -43,8 +49,7 @@ const ChatBody = React.forwardRef(
           alignItems="center"
         >
           <Flex flexDirection="column" mr="auto">
-            simmons
-            {selectedThread !== null ? (
+            {selectedThreadId !== null ? (
               <>
                 <GetListToCreateThreadComponent>
                   {({
@@ -65,7 +70,11 @@ const ChatBody = React.forwardRef(
                           }
                           loadingCreateThread={loadingCreateThread}
                           errorCreateThread={errorCreateThread}
-                          messages={dataMessageThreads[selectedThread].messages}
+                          messages={
+                            selectedThreadIndex !== null
+                              ? dataMessageThreads[selectedThreadIndex].messages
+                              : []
+                          }
                         />
                       </div>
                     );
@@ -99,8 +108,10 @@ const ChatBody = React.forwardRef(
             overflowY: "auto"
           }}
         >
-          {selectedThread !== null && selectedThread !== "undefined" ? (
-            dataMessageThreads[selectedThread].messages.map(
+          {selectedThreadIndex !== null &&
+          selectedThreadIndex !== "undefined" &&
+          selectedThreadIndex !== "" ? (
+            dataMessageThreads[selectedThreadIndex].messages.map(
               (message: any, index: number) => (
                 <MessageBox
                   key={`${index}-${message.id}-${message.__typename}`}
@@ -120,14 +131,7 @@ const ChatBody = React.forwardRef(
               border: "1px limegreen dashed",
               justifySelf: "flex-end"
             }}
-            ref={
-              ref
-              //   el
-              //   => {
-              //   passRef = el;
-              //   console.log("setting ref on element", el);
-              // }
-            }
+            ref={ref}
           />
         </Flex>
         <CoverFlex
@@ -140,16 +144,18 @@ const ChatBody = React.forwardRef(
           bg="white"
           color="thread_text"
         >
-          <MyInput
-            placeholder="Type something to send..."
-            type="text"
-            color="#504aa4"
-            border={0}
-            width={[1, 1, 1]}
-            mr="auto"
-            p={3}
-            fontSize="1em"
+          {selectedThreadId ? selectedThreadId : ""}
+          <ChatForm
+            sentTo={
+              selectedThreadIndex !== null
+                ? dataMessageThreads[selectedThreadIndex].messages[
+                    dataMessageThreads[selectedThreadIndex].messages.length - 1
+                  ].sentBy.id
+                : ""
+            }
+            threadId={selectedThreadId ? selectedThreadId : ""}
           />
+
           <MinButton
             onClick={handleUploadFileClick}
             bg="transparent"

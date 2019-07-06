@@ -12,10 +12,15 @@ export const ADD_MESSAGE_TO_THREAD = gql`
       message: $message
     ) {
       success
+      threadId
       message {
         id
         message
         sentBy {
+          id
+          firstName
+        }
+        user {
           id
           firstName
         }

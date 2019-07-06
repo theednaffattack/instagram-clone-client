@@ -109,6 +109,8 @@ export type AddMessageToThreadAddMessageToThread = {
 
   success: boolean;
 
+  threadId: string;
+
   message: AddMessageToThreadMessage;
 };
 
@@ -120,9 +122,19 @@ export type AddMessageToThreadMessage = {
   message: string;
 
   sentBy: AddMessageToThreadSentBy;
+
+  user: AddMessageToThreadUser;
 };
 
 export type AddMessageToThreadSentBy = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
+
+export type AddMessageToThreadUser = {
   __typename?: "User";
 
   id: string;
@@ -873,10 +885,15 @@ export const AddMessageToThreadDocument = gql`
       message: $message
     ) {
       success
+      threadId
       message {
         id
         message
         sentBy {
+          id
+          firstName
+        }
+        user {
           id
           firstName
         }

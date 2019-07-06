@@ -29,9 +29,10 @@ function ChatForm({ sentTo, threadId }: IChatFormProps) {
         ) => {
           return (
             <Formik
+              enableReinitialize={true}
               validateOnBlur={false}
               validateOnChange={false}
-              onSubmit={async (data, { setErrors }) => {
+              onSubmit={async (data, { setErrors, resetForm }) => {
                 let dataForSubmit = {
                   threadId,
                   sentTo,
@@ -69,6 +70,14 @@ function ChatForm({ sentTo, threadId }: IChatFormProps) {
                           query: GetMessageThreadsDocument,
                           data: myStuff
                         });
+
+                        console.log("BEFORE RESETTING FORM");
+                        resetForm({
+                          threadId,
+                          sentTo,
+                          message: ""
+                        });
+                        console.log("AFTER RESETTING FORM");
                       } else {
                         return;
                       }
@@ -103,7 +112,6 @@ function ChatForm({ sentTo, threadId }: IChatFormProps) {
                   });
                   return;
                 }
-
                 // Router.push("/");
               }}
               initialValues={{

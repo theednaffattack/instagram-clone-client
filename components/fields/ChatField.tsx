@@ -45,7 +45,7 @@ box-sizing: border-box;
 border-right: 2.5px transparent solid; */
 
   ::placeholder {
-    color: palevioletred;
+    color: #3f3c62; // #b2b2d8;
   }
 `;
 

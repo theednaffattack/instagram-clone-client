@@ -159,29 +159,6 @@ export class ViewThreadStateContainer extends React.Component<
           overflow: "hidden"
         }}
       >
-        {/* works */}
-        <Text>{this.state.selectedThread}</Text>
-        {/* works */}
-        <Text>{this.props.data.getMessageThreads[0].id}</Text>
-
-        {/* DOESN'T WORK??? */}
-        <Text>
-          {this.state.selectedThread
-            ? this.props.data.getMessageThreads[this.state.selectedThread].id
-            : ""}
-        </Text>
-        <Text>
-          {this.state.selectedThread
-            ? this.props.data.getMessageThreads[
-                parseInt(this.state.selectedThread)
-              ].id
-            : ""}
-        </Text>
-        <Text>
-          {this.state.selectedThread
-            ? this.props.data.getMessageThreads[this.state.selectedThread].id
-            : ""}
-        </Text>
         <AuthenticatedHeader bg="white" />
         <Flex
           bg="white"

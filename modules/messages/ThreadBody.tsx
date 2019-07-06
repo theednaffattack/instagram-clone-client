@@ -81,7 +81,7 @@ function ThreadBody({
           <ThreadInput
             type="text"
             border={0}
-            color="#e1ddff"
+            color="#b2b2d8"
             mr="auto"
             p={2}
             fontSize="1em"

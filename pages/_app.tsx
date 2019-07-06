@@ -36,7 +36,7 @@ const theme = {
     thread_text: "#b2b2d8",
     thread_selected: "#373658",
     chat_header: "#5d5c8d", //#5d5c8e
-    chat_placeholder: "#504aa4",
+    chat_placeholder: "#b2b2d8", // #504aa4
     thread_placeholder: "#e1ddff",
     chat_icon: "#ccc6f2",
     chat_bg: "#ddddf7", //#ccc6f2

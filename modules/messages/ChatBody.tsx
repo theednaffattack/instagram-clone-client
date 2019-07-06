@@ -144,7 +144,6 @@ const ChatBody = React.forwardRef(
           bg="white"
           color="thread_text"
         >
-          {selectedThreadId ? selectedThreadId : ""}
           <ChatForm
             sentTo={
               selectedThreadIndex !== null

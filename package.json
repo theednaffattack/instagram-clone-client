@@ -13,7 +13,9 @@
   "dependencies": {
     "@storybook/addon-knobs": "^5.0.6",
     "@storybook/theming": "^5.0.6",
+    "@types/emoji-mart": "^2.8.4",
     "@types/storybook__addon-knobs": "^4.0.5",
+    "@zeit/next-css": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "apollo-boost": "^0.1.27",
     "apollo-link-context": "^1.0.12",
@@ -22,7 +24,9 @@
     "apollo-link-ws": "^1.0.18",
     "apollo-upload-client": "^10.0.1",
     "cookie": "^0.3.1",
+    "css-loader": "^3.0.0",
     "emoji-js": "^3.4.1",
+    "emoji-mart": "^2.11.1",
     "formik": "^1.4.3",
     "graphql": "^14.1.1",
     "internal-ip": "^4.3.0",
@@ -39,6 +43,7 @@
     "react-select": "^2.4.2",
     "rebass": "^3.1.0",
     "storybook-addon-jsx": "^7.1.0",
+    "style-loader": "^0.23.1",
     "styled-components": "^4.2.0",
     "subscriptions-transport-ws": "^0.9.16",
     "yup": "^0.27.0"

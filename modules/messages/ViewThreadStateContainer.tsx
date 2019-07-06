@@ -17,12 +17,14 @@ export interface IViewThreadStateContainerProps {
 export interface IViewThreadStateContainerState {
   selectedThread: number | null;
   myThreadId: string;
+  emojiPickerVisible: boolean;
 }
 
 export class ViewThreadStateContainer extends React.Component<
   IViewThreadStateContainerProps,
   IViewThreadStateContainerState
 > {
+  messagesEnd: React.RefObject<HTMLElement>;
   constructor(props: IViewThreadStateContainerProps) {
     super(props);
 
@@ -41,7 +43,8 @@ export class ViewThreadStateContainer extends React.Component<
   }
   state = {
     selectedThread: null,
-    myThreadId: "97798d95-04d9-4147-8913-30b7124abc95"
+    myThreadId: "97798d95-04d9-4147-8913-30b7124abc95",
+    emojiPickerVisible: false
   };
 
   handleThreadSelection(selection) {
@@ -76,6 +79,9 @@ export class ViewThreadStateContainer extends React.Component<
 
   handleSelectEmojiClick() {
     console.log("handleSelectEmojiClick 🙂");
+    this.setState(prevState => ({
+      emojiPickerVisible: !prevState.emojiPickerVisible
+    }));
   }
 
   handleEngageMicrophoneClick() {
@@ -160,6 +166,7 @@ export class ViewThreadStateContainer extends React.Component<
         }}
       >
         <AuthenticatedHeader bg="white" />
+
         <Flex
           bg="white"
           flex="1 1 auto"
@@ -184,6 +191,7 @@ export class ViewThreadStateContainer extends React.Component<
                     .id
                 : null
             }
+            emojiPickerVisible={this.state.emojiPickerVisible}
             handleChatMenuClick={this.handleChatMenuClick}
             me={this.props.me}
             handleEngageMicrophoneClick={this.handleEngageMicrophoneClick}

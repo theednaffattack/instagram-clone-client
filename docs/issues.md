@@ -10,3 +10,5 @@ https://codesandbox.io/embed/typesstyled-system-colorprops-typing-wuy5f
 <u>original:</u>
 https://codesandbox.io/s/2x2jl9xz2n?from-embed
 
+Major issue loading CSS Files
+The fix: https://github.com/zeit/next-plugins/issues/392#issuecomment-475845330

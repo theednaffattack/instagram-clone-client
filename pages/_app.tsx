@@ -2,7 +2,7 @@ import App, { Container } from "next/app";
 import React from "react";
 import { ApolloProvider } from "react-apollo";
 import { ThemeProvider } from "styled-components";
-import { ServerStyleSheet, createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 import withApollo from "../lib/withApollo";
 

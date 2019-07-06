@@ -1,18 +1,18 @@
 import React from "react";
 
-import { CoverFlex, Flex, MyInput, Text } from "./StyledRebass";
+import { CoverFlex, Flex, MyInput, Text, AbWrapper } from "./StyledRebass";
 import { ChooseThreadUser } from "./ChooseThreadUser";
 import { MinButton } from "./ThreadBody";
 import { MenuDots } from "./MenuIcon";
 import { MessageBox } from "./MessageBox";
 import IconAddFile from "./icon-add-file";
 import { GetListToCreateThreadComponent } from "../../generated/apolloComponents";
-
+import { Picker } from "emoji-mart";
+import("./emoji-mart.css");
 import { IconMic, CustomIcon } from "./StyledRebass";
-import { Field } from "formik";
-import { InputField } from "../../components/fields/InputField";
 import ChatForm from "./chat-form";
-import { FileUploadField } from "../../components/fields/FileUploadField";
+
+const isBrowser = typeof window !== "undefined";
 
 interface IChatBodyProps {
   selectedThreadId: any;
@@ -23,6 +23,7 @@ interface IChatBodyProps {
   handleEngageMicrophoneClick: any;
   handleSelectEmojiClick: any;
   handleUploadFileClick: any;
+  emojiPickerVisible: boolean;
 }
 
 const ChatBody = React.forwardRef(
@@ -33,6 +34,7 @@ const ChatBody = React.forwardRef(
       handleChatMenuClick,
       dataMessageThreads,
       me,
+      emojiPickerVisible,
       handleEngageMicrophoneClick,
       handleSelectEmojiClick,
       handleUploadFileClick
@@ -145,6 +147,7 @@ const ChatBody = React.forwardRef(
           color="thread_text"
         >
           <ChatForm
+            emojiPickerVisible={emojiPickerVisible}
             sentTo={
               selectedThreadIndex !== null
                 ? dataMessageThreads[selectedThreadIndex].messages[
@@ -154,38 +157,52 @@ const ChatBody = React.forwardRef(
             }
             threadId={selectedThreadId ? selectedThreadId : ""}
           />
-
-          <MinButton
-            onClick={handleUploadFileClick}
-            bg="transparent"
-            minHeight="35px"
-            width="3.5em"
-            style={{ padding: 0 }}
-          >
-            <IconAddFile fill="#b2b2d8" size="1.4em" name="add-file" />
-          </MinButton>
-          <MinButton
-            onClick={handleSelectEmojiClick}
-            bg="transparent"
-            minHeight="35px"
-            ml={[2, 2, 2]}
-            width="3.5em"
-            style={{ padding: 0 }}
-          >
-            <CustomIcon width="1.6em" fill="#b2b2d8" />
-          </MinButton>
-          <MinButton
-            onClick={handleEngageMicrophoneClick}
-            bg="transparent"
-            borderLeft="2px #eee solid"
-            my={0}
-            mx={3}
-            minHeight="35px"
-            width="3.5em"
-            style={{ padding: 0 }}
-          >
-            <IconMic width="1.4em" fill="#b2b2d8" />
-          </MinButton>
+          <Flex border="crimson" style={{ position: "relative" }}>
+            <AbWrapper
+              width={1}
+              position="absolute"
+              right={60}
+              bottom={"100%"}
+              border="lime"
+            >
+              {emojiPickerVisible && isBrowser ? (
+                <Picker title="Pick your emoji..." />
+              ) : (
+                ""
+              )}
+            </AbWrapper>
+            <MinButton
+              onClick={handleUploadFileClick}
+              bg="transparent"
+              minHeight="35px"
+              width="3.5em"
+              style={{ padding: 0 }}
+            >
+              <IconAddFile fill="#b2b2d8" size="1.4em" name="add-file" />
+            </MinButton>
+            <MinButton
+              onClick={handleSelectEmojiClick}
+              bg="transparent"
+              minHeight="35px"
+              ml={[2, 2, 2]}
+              width="3.5em"
+              style={{ padding: 0, position: "relative" }}
+            >
+              <CustomIcon width="1.6em" fill="#b2b2d8" />
+            </MinButton>
+            <MinButton
+              onClick={handleEngageMicrophoneClick}
+              bg="transparent"
+              borderLeft="2px #eee solid"
+              my={0}
+              mx={3}
+              minHeight="35px"
+              width="3.5em"
+              style={{ padding: 0 }}
+            >
+              <IconMic width="1.4em" fill="#b2b2d8" />
+            </MinButton>
+          </Flex>
         </CoverFlex>
       </Flex>
     );

@@ -1,7 +1,11 @@
 import React from "react";
 import { Field, Formik } from "formik";
 
-import { Flex } from "./StyledRebass";
+// import { InputField } from "../../components/fields/InputField";
+// import { FileUploadField } from "../../components/fields/FileUploadField";
+import { Picker } from "emoji-mart";
+import("./emoji-mart.css");
+import { Flex, AbWrapper } from "./StyledRebass";
 import { ChatField } from "../../components/fields/ChatField";
 import { AddMessageToThreadComponent } from "../../generated/apolloComponents";
 // import { MESSAGE_THREADS } from "../../graphql/user/subscriptions/MessageThreads";
@@ -11,11 +15,12 @@ import {
 } from "../../generated/apolloComponents";
 
 interface IChatFormProps {
+  emojiPickerVisible: boolean;
   sentTo: string;
   threadId: string;
 }
 
-function ChatForm({ sentTo, threadId }: IChatFormProps) {
+function ChatForm({ emojiPickerVisible, sentTo, threadId }: IChatFormProps) {
   return (
     <>
       <AddMessageToThreadComponent>
@@ -121,7 +126,12 @@ function ChatForm({ sentTo, threadId }: IChatFormProps) {
               }}
             >
               {({ handleSubmit }) => (
-                <Flex width={[1, 1, 1]} mr="auto" alignItems="center">
+                <Flex
+                  width={[1, 1, 1]}
+                  mr="auto"
+                  alignItems="center"
+                  style={{ position: "relative" }}
+                >
                   <form
                     action=""
                     onSubmit={handleSubmit}

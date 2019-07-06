@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/eddienaff/.nvm/versions/node/v11.9.0/bin/node /Users/eddienaff/.yarn/bin/yarn.js add -D @types/react-geomicons
+  /Users/eddienaff/.nvm/versions/node/v11.9.0/bin/node /Users/eddienaff/.yarn/bin/yarn.js add @typesemoji-mart
 
 PATH: 
   /Users/eddienaff/.yarn/bin:/Users/eddienaff/.config/yarn/global/node_modules/.bin:/Users/eddienaff/.nvm/versions/node/v11.9.0/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin
@@ -14,8 +14,8 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2freact-geomicons: Not found
-      at Request.params.callback [as _callback] (/Users/eddienaff/.yarn/lib/cli.js:66255:18)
+  Error: https://registry.yarnpkg.com/@typesemoji-mart: Request "https://registry.yarnpkg.com/@typesemoji-mart" returned a 405
+      at Request.params.callback [as _callback] (/Users/eddienaff/.yarn/lib/cli.js:66264:18)
       at Request.self.callback (/Users/eddienaff/.yarn/lib/cli.js:129397:22)
       at Request.emit (events.js:197:13)
       at Request.<anonymous> (/Users/eddienaff/.yarn/lib/cli.js:130369:10)
@@ -51,6 +51,8 @@ npm manifest:
       "apollo-link-ws": "^1.0.18",
       "apollo-upload-client": "^10.0.1",
       "cookie": "^0.3.1",
+      "emoji-js": "^3.4.1",
+      "emoji-mart": "^2.11.1",
       "formik": "^1.4.3",
       "graphql": "^14.1.1",
       "internal-ip": "^4.3.0",
@@ -5920,6 +5922,25 @@ Lockfile:
     version "0.0.3"
     resolved "https://registry.yarnpkg.com/emitter-mixin/-/emitter-mixin-0.0.3.tgz#5948cb286f2e48edc3b251a7cfc1f7883396d65c"
     integrity sha1-WUjLKG8uSO3DslGnz8H3iDOW1lw=
+  
+  emoji-datasource@4.0.0:
+    version "4.0.0"
+    resolved "https://registry.yarnpkg.com/emoji-datasource/-/emoji-datasource-4.0.0.tgz#3fc9c0c2f4fb321d9291138819f6d100603d3e2f"
+    integrity sha1-P8nAwvT7Mh2SkROIGfbRAGA9Pi8=
+  
+  emoji-js@^3.4.1:
+    version "3.4.1"
+    resolved "https://registry.yarnpkg.com/emoji-js/-/emoji-js-3.4.1.tgz#422cdf184fd818a910289861ead4782db3e8dc8d"
+    integrity sha1-QizfGE/YGKkQKJhh6tR4LbPo3I0=
+    dependencies:
+      emoji-datasource "4.0.0"
+  
+  emoji-mart@^2.11.1:
+    version "2.11.1"
+    resolved "https://registry.yarnpkg.com/emoji-mart/-/emoji-mart-2.11.1.tgz#fc9330b513803c17b98c9ad289c12ab61ff05f8f"
+    integrity sha512-Hr4N56YEkaPtmojO2dfgnMLLE/d5HpnhH0+M8cw9LRHpG2EgQQaCelRad3d5qQAPHI5+K0wMc/rwM0eRo0FnUA==
+    dependencies:
+      prop-types "^15.6.0"
   
   emoji-regex@^7.0.1:
     version "7.0.3"

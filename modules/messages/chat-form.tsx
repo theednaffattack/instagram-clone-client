@@ -67,47 +67,40 @@ function ChatForm({
                 let response;
                 try {
                   response = await addMessageToThread({
-                    variables: dataForSubmit,
-                    update: (cache, { data }) => {
-                      if (!data || !data.addMessageToThread) {
-                        return;
-                      }
-                      let myStuff = cache.readQuery<GetMessageThreadsQuery>({
-                        query: GetMessageThreadsDocument
-                      });
+                    variables: dataForSubmit
+                    // update: (cache, { data }) => {
+                    //   if (!data || !data.addMessageToThread) {
+                    //     return;
+                    //   }
+                    //   let myStuff = cache.readQuery<GetMessageThreadsQuery>({
+                    //     query: GetMessageThreadsDocument
+                    //   });
 
-                      if (myStuff) {
-                        myStuff.getMessageThreads.map((thread, threadIndex) => {
-                          console.log(
-                            "data.addMessageToThread.threadId",
-                            data.addMessageToThread
-                          );
-                          console.log("thread.id", thread.id);
-                          if (data.addMessageToThread.threadId === thread.id) {
-                            return thread.messages.push(
-                              data.addMessageToThread.message
-                            );
-                          } else {
-                            return thread;
-                          }
-                        });
+                    //   if (myStuff) {
+                    //     myStuff.getMessageThreads.map((thread, threadIndex) => {
+                    //       console.log(
+                    //         "data.addMessageToThread.threadId",
+                    //         data.addMessageToThread
+                    //       );
+                    //       console.log("thread.id", thread.id);
+                    //       if (data.addMessageToThread.threadId === thread.id) {
+                    //         return thread.messages.push(
+                    //           data.addMessageToThread.message
+                    //         );
+                    //       } else {
+                    //         return thread;
+                    //       }
+                    //     });
 
-                        cache.writeQuery<GetMessageThreadsQuery>({
-                          query: GetMessageThreadsDocument,
-                          data: myStuff
-                        });
+                    //     cache.writeQuery<GetMessageThreadsQuery>({
+                    //       query: GetMessageThreadsDocument,
+                    //       data: myStuff
+                    //     });
 
-                        console.log("BEFORE RESETTING FORM");
-                        resetForm({
-                          threadId,
-                          sentTo,
-                          message: chatEmoji
-                        });
-                        console.log("AFTER RESETTING FORM");
-                      } else {
-                        return;
-                      }
-                    }
+                    //   } else {
+                    //     return;
+                    //   }
+                    // }
                   });
                 } catch (error) {
                   const displayErrors: { [key: string]: string } = {};
@@ -136,6 +129,14 @@ function ChatForm({
                   setErrors({
                     chat: "invalid character?"
                   });
+
+                  console.log("BEFORE RESETTING FORM");
+                  resetForm({
+                    threadId,
+                    sentTo,
+                    message: chatEmoji
+                  });
+                  console.log("AFTER RESETTING FORM");
                   return;
                 }
                 // Router.push("/");
@@ -180,9 +181,7 @@ function ChatForm({
                       mr="auto"
                       alignItems="center"
                       style={{ position: "relative" }}
-                      border="lime"
                     >
-                      {JSON.stringify(values)}
                       <form
                         action=""
                         onSubmit={handleSubmit}
@@ -248,13 +247,12 @@ function ChatForm({
                         />
                       </form>
                     </Flex>
-                    <Flex border="crimson" style={{ position: "relative" }}>
+                    <Flex style={{ position: "relative" }}>
                       <AbWrapper
                         width={1}
                         position="absolute"
                         right={70}
                         bottom={"100%"}
-                        border="lime"
                       >
                         {emojiPickerVisible && isBrowser ? (
                           <Picker

@@ -5,23 +5,20 @@ import { ChooseThreadUser } from "./ChooseThreadUser";
 import { MinButton } from "./ThreadBody";
 import { MenuDots } from "./MenuIcon";
 import { MessageBox } from "./MessageBox";
-import IconAddFile from "./icon-add-file";
 import { GetListToCreateThreadComponent } from "../../generated/apolloComponents";
-import { Picker } from "emoji-mart";
-import("./emoji-mart.css");
-import { IconMic, CustomIcon } from "./StyledRebass";
 import ChatForm from "./chat-form";
 
-const isBrowser = typeof window !== "undefined";
-
 interface IChatBodyProps {
+  chatEmoji: string;
+  chatInput: string;
   selectedThreadId: any;
   selectedThreadIndex: number;
   handleChatMenuClick: any;
   me: any;
   dataMessageThreads: any;
   handleEngageMicrophoneClick: any;
-  handleSelectEmojiClick: any;
+  handleOpenEmojiMenuClick: any;
+  handleChatFieldChange: any;
   handleUploadFileClick: any;
   emojiPickerVisible: boolean;
 }
@@ -29,6 +26,8 @@ interface IChatBodyProps {
 const ChatBody = React.forwardRef(
   (
     {
+      chatEmoji,
+      chatInput,
       selectedThreadId,
       selectedThreadIndex,
       handleChatMenuClick,
@@ -36,8 +35,9 @@ const ChatBody = React.forwardRef(
       me,
       emojiPickerVisible,
       handleEngageMicrophoneClick,
-      handleSelectEmojiClick,
-      handleUploadFileClick
+      handleOpenEmojiMenuClick,
+      handleUploadFileClick,
+      handleChatFieldChange
     }: IChatBodyProps,
     ref
   ) => {
@@ -125,6 +125,7 @@ const ChatBody = React.forwardRef(
           ) : (
             <Text fontSize="2em">no thread index selected</Text>
           )}
+          {chatEmoji}
           <div
             style={{
               color: "black",
@@ -147,7 +148,13 @@ const ChatBody = React.forwardRef(
           color="thread_text"
         >
           <ChatForm
+            chatEmoji={chatEmoji}
+            chatInput={chatInput}
+            handleChatFieldChange={handleChatFieldChange}
             emojiPickerVisible={emojiPickerVisible}
+            handleEngageMicrophoneClick={handleEngageMicrophoneClick}
+            handleOpenEmojiMenuClick={handleOpenEmojiMenuClick}
+            handleUploadFileClick={handleUploadFileClick}
             sentTo={
               selectedThreadIndex !== null
                 ? dataMessageThreads[selectedThreadIndex].messages[
@@ -157,52 +164,6 @@ const ChatBody = React.forwardRef(
             }
             threadId={selectedThreadId ? selectedThreadId : ""}
           />
-          <Flex border="crimson" style={{ position: "relative" }}>
-            <AbWrapper
-              width={1}
-              position="absolute"
-              right={60}
-              bottom={"100%"}
-              border="lime"
-            >
-              {emojiPickerVisible && isBrowser ? (
-                <Picker title="Pick your emoji..." />
-              ) : (
-                ""
-              )}
-            </AbWrapper>
-            <MinButton
-              onClick={handleUploadFileClick}
-              bg="transparent"
-              minHeight="35px"
-              width="3.5em"
-              style={{ padding: 0 }}
-            >
-              <IconAddFile fill="#b2b2d8" size="1.4em" name="add-file" />
-            </MinButton>
-            <MinButton
-              onClick={handleSelectEmojiClick}
-              bg="transparent"
-              minHeight="35px"
-              ml={[2, 2, 2]}
-              width="3.5em"
-              style={{ padding: 0, position: "relative" }}
-            >
-              <CustomIcon width="1.6em" fill="#b2b2d8" />
-            </MinButton>
-            <MinButton
-              onClick={handleEngageMicrophoneClick}
-              bg="transparent"
-              borderLeft="2px #eee solid"
-              my={0}
-              mx={3}
-              minHeight="35px"
-              width="3.5em"
-              style={{ padding: 0 }}
-            >
-              <IconMic width="1.4em" fill="#b2b2d8" />
-            </MinButton>
-          </Flex>
         </CoverFlex>
       </Flex>
     );

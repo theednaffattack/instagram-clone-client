@@ -18,6 +18,8 @@ export interface IViewThreadStateContainerState {
   selectedThread: number | null;
   myThreadId: string;
   emojiPickerVisible: boolean;
+  chatInput: string;
+  chatEmoji: string;
 }
 
 export class ViewThreadStateContainer extends React.Component<
@@ -34,17 +36,19 @@ export class ViewThreadStateContainer extends React.Component<
       this
     );
     this.handleUploadFileClick = this.handleUploadFileClick.bind(this);
-    this.handleSelectEmojiClick = this.handleSelectEmojiClick.bind(this);
     this.handleUploadFileClick = this.handleUploadFileClick.bind(this);
     this.handleChatMenuClick = this.handleChatMenuClick.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
+    this.handleOpenEmojiMenuClick = this.handleOpenEmojiMenuClick.bind(this);
 
     this.messagesEnd = React.createRef();
   }
   state = {
     selectedThread: null,
     myThreadId: "97798d95-04d9-4147-8913-30b7124abc95",
-    emojiPickerVisible: false
+    emojiPickerVisible: false,
+    chatInput: "",
+    chatEmoji: ""
   };
 
   handleThreadSelection(selection) {
@@ -77,7 +81,7 @@ export class ViewThreadStateContainer extends React.Component<
     console.log("handleUploadFileClick");
   }
 
-  handleSelectEmojiClick() {
+  handleOpenEmojiMenuClick() {
     console.log("handleSelectEmojiClick 🙂");
     this.setState(prevState => ({
       emojiPickerVisible: !prevState.emojiPickerVisible
@@ -184,6 +188,8 @@ export class ViewThreadStateContainer extends React.Component<
           />
           <ChatBody
             dataMessageThreads={this.props.data.getMessageThreads}
+            chatEmoji={this.state.chatEmoji}
+            chatInput={this.state.chatInput}
             selectedThreadIndex={this.state.selectedThread}
             selectedThreadId={
               this.state.selectedThread === 0 || this.state.selectedThread
@@ -195,7 +201,9 @@ export class ViewThreadStateContainer extends React.Component<
             handleChatMenuClick={this.handleChatMenuClick}
             me={this.props.me}
             handleEngageMicrophoneClick={this.handleEngageMicrophoneClick}
+            handleOpenEmojiMenuClick={this.handleOpenEmojiMenuClick}
             handleSelectEmojiClick={this.handleSelectEmojiClick}
+            handleChatFieldChange={this.handleChatFieldChange}
             handleUploadFileClick={this.handleUploadFileClick}
             ref={this.messagesEnd}
           />

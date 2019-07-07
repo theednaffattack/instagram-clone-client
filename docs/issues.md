@@ -12,3 +12,6 @@ https://codesandbox.io/s/2x2jl9xz2n?from-embed
 
 Major issue loading CSS Files
 The fix: https://github.com/zeit/next-plugins/issues/392#issuecomment-475845330
+
+Formik InputProps
+From: https://stackoverflow.com/questions/52869318/react-formik-field-onchange-event-handle

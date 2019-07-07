@@ -52,6 +52,7 @@ border-right: 2.5px transparent solid; */
 export const ChatField = ({
   field,
   form: { errors, touched },
+  onChange,
   ...props
 }: FieldProps & InputProps) => {
   const errorMessage = touched[field.name] && errors[field.name];
@@ -73,6 +74,7 @@ export const ChatField = ({
         my={2}
         letterSpacing=".1em"
         {...field}
+        onChange={onChange}
         {...props}
       />
       {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}

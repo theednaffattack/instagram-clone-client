@@ -1,6 +1,6 @@
 import React from "react";
 import { Field, Formik } from "formik";
-
+import uuidv4 from "uuid/v4";
 import { Flex, AbWrapper, MinButton } from "./StyledRebass";
 
 import IconAddFile from "./icon-add-file";
@@ -20,6 +20,7 @@ export const inputStyles = {
 
 interface IChatFormProps {
   chatEmoji: string;
+  disabled: boolean;
   emojiPickerVisible: boolean;
   sentTo: string;
   threadId: string;
@@ -94,12 +95,11 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
 
     return await Promise.all(
       this.state.files.map(async myFile => {
-        console.log("what does myFile look like?", myFile);
         return await fetch(myFile)
           .then(r => r.blob())
           .then(
             blobFile =>
-              new File([blobFile], "fileNameGoesHere", {
+              new File([blobFile], uuidv4(), {
                 type: "image/png"
               })
           );
@@ -108,8 +108,9 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
   }
 
   onFilesAdded(evt: any) {
-    evt && evt.preventDefault ? evt.preventDefault() : null;
     if (this.props.disabled) return;
+
+    evt && evt.preventDefault ? evt.preventDefault() : null;
 
     let array;
 
@@ -181,6 +182,7 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
   render() {
     const {
       chatEmoji,
+      disabled,
       emojiPickerVisible,
       handleChatFieldChange,
       handleEngageMicrophoneClick,
@@ -361,6 +363,7 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
                             color="#504aa4"
                             border={0}
                             fontSize="1.1em"
+                            disabled={disabled}
                             component={ChatField}
                             onChange={e => {
                               // alert(e);
@@ -445,6 +448,7 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
                             type="file"
                             onChange={this.onFilesAdded}
                             style={inputStyles}
+                            disabled={disabled}
                             multiple
                           />
                           <IconAddFile
@@ -454,7 +458,7 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
                           />
                         </MinButton>
                         <MinButton
-                          onClick={handleOpenEmojiMenuClick}
+                          onClick={disabled ? null : handleOpenEmojiMenuClick}
                           bg="transparent"
                           minHeight="35px"
                           ml={[2, 2, 2]}
@@ -464,7 +468,9 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
                           <CustomIcon width="1.6em" fill="#b2b2d8" />
                         </MinButton>
                         <MinButton
-                          onClick={handleEngageMicrophoneClick}
+                          onClick={
+                            disabled ? null : handleEngageMicrophoneClick
+                          }
                           bg="transparent"
                           borderLeft="2px #eee solid"
                           my={0}

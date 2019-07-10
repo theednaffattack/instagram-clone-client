@@ -201,6 +201,11 @@ export class ViewThreadStateContainer extends React.Component<
                     .id
                 : null
             }
+            disabled={
+              this.state.selectedThread === 0 || this.state.selectedThread
+                ? false
+                : true
+            }
             emojiPickerVisible={this.state.emojiPickerVisible}
             handleChatMenuClick={this.handleChatMenuClick}
             me={this.props.me}

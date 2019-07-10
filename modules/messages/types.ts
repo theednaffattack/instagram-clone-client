@@ -30,6 +30,7 @@ export interface MessagePageState {
 }
 
 export interface IChatBodyProps {
+  disabled: boolean;
   chatEmoji: string;
   chatInput: string;
   selectedThreadId: any;

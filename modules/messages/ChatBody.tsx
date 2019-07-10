@@ -14,6 +14,7 @@ const ChatBody = React.forwardRef(
     {
       chatEmoji,
       chatInput,
+      disabled,
       selectedThreadId,
       selectedThreadIndex,
       handleChatMenuClick,
@@ -135,6 +136,7 @@ const ChatBody = React.forwardRef(
           color="thread_text"
         >
           <ChatForm
+            disabled={disabled}
             chatEmoji={chatEmoji}
             chatInput={chatInput}
             handleChatFieldChange={handleChatFieldChange}

@@ -442,6 +442,7 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
                           minHeight="35px"
                           width="3.5em"
                           style={{ padding: 0 }}
+                          mb={2}
                         >
                           <input
                             ref={this.fileInputRef}
@@ -462,6 +463,7 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
                           bg="transparent"
                           minHeight="35px"
                           ml={[2, 2, 2]}
+                          mb={2}
                           width="3.5em"
                           style={{ padding: 0, position: "relative" }}
                         >
@@ -473,7 +475,7 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
                           }
                           bg="transparent"
                           borderLeft="2px #eee solid"
-                          my={0}
+                          mb={2}
                           mx={3}
                           minHeight="35px"
                           width="3.5em"

@@ -111,7 +111,7 @@ const ChatBody = React.forwardRef(
               )
             )
           ) : (
-            <Text fontSize="2em">no thread index selected</Text>
+            <Text fontSize="2em">select a thread to view messages</Text>
           )}
           {chatEmoji}
           <div
@@ -129,7 +129,7 @@ const ChatBody = React.forwardRef(
           position="absolute"
           width={[1, 1, 1 / 2]}
           bottom={0}
-          alignItems="center"
+          alignItems="flex-end"
           p={0}
           flexDirection="row"
           bg="white"

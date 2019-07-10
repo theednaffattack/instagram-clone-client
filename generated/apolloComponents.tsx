@@ -62,6 +62,8 @@ export interface AddMessageToThreadInputV2 {
   sentTo: string;
 
   message: string;
+
+  images?: Maybe<Upload[]>;
 }
 
 export interface GetAllMyMessagesInput {
@@ -96,6 +98,7 @@ export type AddMessageToThreadVariables = {
   threadId: string;
   sentTo: string;
   message: string;
+  images?: Maybe<Upload[]>;
 };
 
 export type AddMessageToThreadMutation = {
@@ -112,6 +115,8 @@ export type AddMessageToThreadAddMessageToThread = {
   threadId: string;
 
   message: AddMessageToThreadMessage;
+
+  user: AddMessageToThread_User;
 };
 
 export type AddMessageToThreadMessage = {
@@ -121,9 +126,19 @@ export type AddMessageToThreadMessage = {
 
   message: string;
 
+  images: Maybe<AddMessageToThreadImages[]>;
+
   sentBy: AddMessageToThreadSentBy;
 
   user: AddMessageToThreadUser;
+};
+
+export type AddMessageToThreadImages = {
+  __typename?: "Image";
+
+  id: string;
+
+  uri: string;
 };
 
 export type AddMessageToThreadSentBy = {
@@ -135,6 +150,14 @@ export type AddMessageToThreadSentBy = {
 };
 
 export type AddMessageToThreadUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+};
+
+export type AddMessageToThread_User = {
   __typename?: "User";
 
   id: string;
@@ -297,9 +320,19 @@ export type GetMessageThreadsMessages = {
 
   message: string;
 
+  images: Maybe<GetMessageThreadsImages[]>;
+
   sentBy: GetMessageThreadsSentBy;
 
   user: GetMessageThreadsUser;
+};
+
+export type GetMessageThreadsImages = {
+  __typename?: "Image";
+
+  id: string;
+
+  uri: string;
 };
 
 export type GetMessageThreadsSentBy = {
@@ -839,9 +872,19 @@ export type MessageThreadsMessage = {
 
   message: string;
 
+  images: Maybe<MessageThreadsImages[]>;
+
   sentBy: MessageThreadsSentBy;
 
   user: MessageThreadsUser;
+};
+
+export type MessageThreadsImages = {
+  __typename?: "Image";
+
+  id: string;
+
+  uri: string;
 };
 
 export type MessageThreadsSentBy = {
@@ -878,17 +921,23 @@ export const AddMessageToThreadDocument = gql`
     $threadId: ID!
     $sentTo: String!
     $message: String!
+    $images: [Upload]
   ) {
     addMessageToThread(
       threadId: $threadId
       sentTo: $sentTo
       message: $message
+      images: $images
     ) {
       success
       threadId
       message {
         id
         message
+        images {
+          id
+          uri
+        }
         sentBy {
           id
           firstName
@@ -897,6 +946,10 @@ export const AddMessageToThreadDocument = gql`
           id
           firstName
         }
+      }
+      user {
+        id
+        firstName
       }
     }
   }
@@ -1180,6 +1233,10 @@ export const GetMessageThreadsDocument = gql`
       messages {
         id
         message
+        images {
+          id
+          uri
+        }
         sentBy {
           id
           firstName
@@ -2171,6 +2228,10 @@ export const MessageThreadsDocument = gql`
         id
         created_at
         message
+        images {
+          id
+          uri
+        }
         sentBy {
           id
           firstName

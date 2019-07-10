@@ -12,7 +12,7 @@ interface IChatBodyProps {
   chatEmoji: string;
   chatInput: string;
   selectedThreadId: any;
-  selectedThreadIndex: number;
+  selectedThreadIndex: number | null;
   handleChatMenuClick: any;
   me: any;
   dataMessageThreads: any;
@@ -73,7 +73,8 @@ const ChatBody = React.forwardRef(
                           loadingCreateThread={loadingCreateThread}
                           errorCreateThread={errorCreateThread}
                           messages={
-                            selectedThreadIndex !== null
+                            dataMessageThreads &&
+                            dataMessageThreads[selectedThreadIndex]
                               ? dataMessageThreads[selectedThreadIndex].messages
                               : []
                           }
@@ -131,7 +132,7 @@ const ChatBody = React.forwardRef(
               color: "black",
               float: "left",
               clear: "both",
-              border: "1px limegreen dashed",
+              // border: "1px limegreen dashed",
               justifySelf: "flex-end"
             }}
             ref={ref}
@@ -148,6 +149,10 @@ const ChatBody = React.forwardRef(
           color="thread_text"
         >
           <ChatForm
+            files={[
+              "https://source.unsplash.com/random/200x300",
+              "https://source.unsplash.com/random/200x300"
+            ]}
             chatEmoji={chatEmoji}
             chatInput={chatInput}
             handleChatFieldChange={handleChatFieldChange}

@@ -97,7 +97,10 @@ export class ViewThreadStateContainer extends React.Component<
   }
 
   componentDidMount() {
-    this.props.threadIdList.map(threadIdThing =>
+    const threadIdList = this.props.data.getMessageThreads.map(
+      thread => thread.id
+    );
+    threadIdList.map(threadIdThing =>
       this.props.subscribeToMore(
         // subscribeToMore(
         {
@@ -110,6 +113,7 @@ export class ViewThreadStateContainer extends React.Component<
             }
           },
           updateQuery: (prev: any, { subscriptionData }: any) => {
+            console.log("subscriptionData".toUpperCase(), subscriptionData);
             if (!subscriptionData.data) return prev;
 
             let newMessageThreads = prev.getMessageThreads.map(
@@ -149,9 +153,10 @@ export class ViewThreadStateContainer extends React.Component<
     const threadIndex = this.state.selectedThread;
     const threads = this.props.data.getMessageThreads;
 
-    if (threadIndex) {
-      console.log("HELLO", threads[threadIndex]);
-    }
+    const selectedThreadId = 0;
+    // this.state.selectedThread
+    //   ? this.props.data.getMessageThreads[this.state.selectedThread].id
+    //   : null;
 
     return (
       <CoverFlex
@@ -186,6 +191,8 @@ export class ViewThreadStateContainer extends React.Component<
             selectedThread={this.state.selectedThread}
             handleThreadAddThreadClick={this.handleThreadAddThreadClick}
           />
+          {/* {JSON.stringify(data.getMessageThreads[2])} */}
+
           <ChatBody
             dataMessageThreads={this.props.data.getMessageThreads}
             chatEmoji={this.state.chatEmoji}

@@ -4,6 +4,7 @@ import { space } from "styled-system";
 import styled from "styled-components";
 
 import { Card, Flex, Text } from "./StyledRebass";
+import { Image } from "rebass";
 
 const Icon = styled(IconBase)`
   ${space}
@@ -55,6 +56,11 @@ export function MessageBox(props: any) {
         width={1}
         boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
       >
+        {props.message.images.length > 0 ? (
+          <Image src={`${props.message.images[0].uri}`} />
+        ) : (
+          ""
+        )}
         <Text>{props.message.created_at}</Text>
         <Text>{props.message.message}</Text>
       </Card>

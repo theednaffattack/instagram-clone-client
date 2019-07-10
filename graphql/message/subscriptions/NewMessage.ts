@@ -5,6 +5,7 @@ export const newMessageSub = gql`
     newMessage(message: $message, sentTo: $sentTo) {
       id
       message
+
       sentBy {
         id
         firstName

@@ -8,6 +8,10 @@ export const MESSAGE_THREADS = gql`
         id
         created_at
         message
+        images {
+          id
+          uri
+        }
         sentBy {
           id
           firstName

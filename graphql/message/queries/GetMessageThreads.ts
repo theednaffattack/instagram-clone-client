@@ -7,6 +7,10 @@ export const GET_MESSAGE_THREADS = gql`
       messages {
         id
         message
+        images {
+          id
+          uri
+        }
         sentBy {
           id
           firstName

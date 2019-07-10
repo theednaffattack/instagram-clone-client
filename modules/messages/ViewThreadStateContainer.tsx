@@ -113,7 +113,6 @@ export class ViewThreadStateContainer extends React.Component<
             }
           },
           updateQuery: (prev: any, { subscriptionData }: any) => {
-            console.log("subscriptionData".toUpperCase(), subscriptionData);
             if (!subscriptionData.data) return prev;
 
             let newMessageThreads = prev.getMessageThreads.map(
@@ -191,7 +190,6 @@ export class ViewThreadStateContainer extends React.Component<
             selectedThread={this.state.selectedThread}
             handleThreadAddThreadClick={this.handleThreadAddThreadClick}
           />
-          {/* {JSON.stringify(data.getMessageThreads[2])} */}
 
           <ChatBody
             dataMessageThreads={this.props.data.getMessageThreads}

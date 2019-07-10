@@ -13,7 +13,7 @@ export default class ImagePreview extends Component<
   render() {
     const { files } = this.props;
     return (
-      <Flex width={[1]} border="lime">
+      <Flex width={[1]}>
         {files
           ? files.map((imageFile: any, index: number) => {
               return (

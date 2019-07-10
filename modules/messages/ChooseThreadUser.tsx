@@ -27,12 +27,12 @@ const LiContent = styled(ListBase)`
   width: 100%;
 `;
 
-interface IChooseThreadUserState {
+export interface IChooseThreadUserState {
   open: boolean;
   accordionIndex: number | null;
 }
 
-interface IChooseThreadUserProps {
+export interface IChooseThreadUserProps {
   messages: any[];
   dataCreateThread: any;
   loadingCreateThread: any;
@@ -58,7 +58,6 @@ export class ChooseThreadUser extends React.Component<
       errorCreateThread
     } = this.props;
 
-    console.log("CHOOSETHREADUSER MOUNTED!");
     return (
       <Fragment>
         <Heading

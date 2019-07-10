@@ -7,21 +7,7 @@ import { MenuDots } from "./MenuIcon";
 import { MessageBox } from "./MessageBox";
 import { GetListToCreateThreadComponent } from "../../generated/apolloComponents";
 import ChatForm from "./chat-form";
-
-interface IChatBodyProps {
-  chatEmoji: string;
-  chatInput: string;
-  selectedThreadId: any;
-  selectedThreadIndex: number | null;
-  handleChatMenuClick: any;
-  me: any;
-  dataMessageThreads: any;
-  handleEngageMicrophoneClick: any;
-  handleOpenEmojiMenuClick: any;
-  handleChatFieldChange: any;
-  handleUploadFileClick: any;
-  emojiPickerVisible: boolean;
-}
+import { IChatBodyProps } from "./types";
 
 const ChatBody = React.forwardRef(
   (
@@ -149,10 +135,6 @@ const ChatBody = React.forwardRef(
           color="thread_text"
         >
           <ChatForm
-            files={[
-              "https://source.unsplash.com/random/200x300",
-              "https://source.unsplash.com/random/200x300"
-            ]}
             chatEmoji={chatEmoji}
             chatInput={chatInput}
             handleChatFieldChange={handleChatFieldChange}

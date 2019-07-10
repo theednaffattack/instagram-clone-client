@@ -82,7 +82,6 @@ export class ViewThreadStateContainer extends React.Component<
   }
 
   handleOpenEmojiMenuClick() {
-    console.log("handleSelectEmojiClick 🙂");
     this.setState(prevState => ({
       emojiPickerVisible: !prevState.emojiPickerVisible
     }));

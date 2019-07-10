@@ -94,6 +94,7 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
 
     return await Promise.all(
       this.state.files.map(async myFile => {
+        console.log("what does myFile look like?", myFile);
         return await fetch(myFile)
           .then(r => r.blob())
           .then(
@@ -182,7 +183,6 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
       chatEmoji,
       emojiPickerVisible,
       handleChatFieldChange,
-      files,
       handleEngageMicrophoneClick,
       handleOpenEmojiMenuClick,
       handleUploadFileClick,
@@ -193,12 +193,13 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
       <>
         <AddMessageToThreadComponent>
           {(
-            addMessageToThread,
-            {
-              data: dataAddMessage,
-              error: errorAddMessage,
-              loading: loadingAddMessage
-            }
+            addMessageToThread
+            // ,
+            // {
+            //   data: dataAddMessage,
+            //   error: errorAddMessage,
+            //   loading: loadingAddMessage
+            // }
           ) => {
             return (
               <Formik
@@ -220,7 +221,6 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
                   //   );
 
                   let myFiles = await this.makeBlobUrls();
-                  log("myFiles".toUpperCase(), myFiles);
                   // log("life".toUpperCase(), file);
 
                   let dataForSubmit = {
@@ -234,6 +234,8 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
                   try {
                     response = await addMessageToThread({
                       variables: dataForSubmit
+                      // we don't update here because of subscriptions
+
                       // update: (cache, { data }) => {
                       //   if (!data || !data.addMessageToThread) {
                       //     return;
@@ -304,7 +306,6 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
                     });
                     return;
                   }
-                  // Router.push("/");
                 }}
                 initialValues={{
                   threadId,

@@ -28,3 +28,18 @@ export interface MessagePageState {
   selectedMessageType: string;
   selectedMessageId: string | null;
 }
+
+export interface IChatBodyProps {
+  chatEmoji: string;
+  chatInput: string;
+  selectedThreadId: any;
+  selectedThreadIndex: number | null;
+  handleChatMenuClick: any;
+  me: any;
+  dataMessageThreads: any;
+  handleEngageMicrophoneClick: any;
+  handleOpenEmojiMenuClick: any;
+  handleChatFieldChange: any;
+  handleUploadFileClick: any;
+  emojiPickerVisible: boolean;
+}

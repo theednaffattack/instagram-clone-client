@@ -56,7 +56,7 @@ export function MessageBox(props: any) {
         width={1}
         boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
       >
-        {props.message.images.length > 0 ? (
+        {props.message.images && props.message.images.length > 0 ? (
           <Image src={`${props.message.images[0].uri}`} />
         ) : (
           ""

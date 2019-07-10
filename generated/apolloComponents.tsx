@@ -318,6 +318,8 @@ export type GetMessageThreadsMessages = {
 
   id: string;
 
+  created_at: Maybe<DateTime>;
+
   message: string;
 
   images: Maybe<GetMessageThreadsImages[]>;
@@ -1232,6 +1234,7 @@ export const GetMessageThreadsDocument = gql`
       id
       messages {
         id
+        created_at
         message
         images {
           id

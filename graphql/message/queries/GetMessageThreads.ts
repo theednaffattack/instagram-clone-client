@@ -6,6 +6,7 @@ export const GET_MESSAGE_THREADS = gql`
       id
       messages {
         id
+        created_at
         message
         images {
           id

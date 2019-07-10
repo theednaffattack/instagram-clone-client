@@ -2,6 +2,7 @@ import React from "react";
 import IconBase from "react-geomicons";
 import { space } from "styled-system";
 import styled from "styled-components";
+import distanceInWords from "date-fns/distance_in_words";
 
 import { Card, Flex, Text } from "./StyledRebass";
 import { Image } from "rebass";
@@ -61,7 +62,12 @@ export function MessageBox(props: any) {
         ) : (
           ""
         )}
-        <Text>{props.message.created_at}</Text>
+        <Text mt={2}>
+          {distanceInWords(
+            Date.now(),
+            new Date(Date.parse(props.message.created_at))
+          )}
+        </Text>
         <Text>{props.message.message}</Text>
       </Card>
       {props.me !== props.message.user.id ? (
@@ -69,7 +75,7 @@ export function MessageBox(props: any) {
           height="40px"
           width="40px"
           mt={2}
-          ml={3}
+          // mx={3}
           bg="thread_footer"
           alignItems="center"
           justifyContent="center"

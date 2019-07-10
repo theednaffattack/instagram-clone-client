@@ -71,6 +71,7 @@ export const ChatField = ({
         color="text"
         borderRadius={0}
         p={2}
+        pl={3}
         my={2}
         letterSpacing=".1em"
         {...field}

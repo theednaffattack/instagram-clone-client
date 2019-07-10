@@ -337,7 +337,7 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
                   };
 
                   return (
-                    <>
+                    <Flex width={[1, 1, 1]}>
                       <Flex
                         width={[1, 1, 1]}
                         mr="auto"
@@ -346,145 +346,149 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
                         style={{ position: "relative" }}
                       >
                         <ImagePreview files={this.state.files} />
+                        <Flex width={[1, 1, 1]}>
+                          <form
+                            action=""
+                            onSubmit={handleSubmit}
+                            style={{ width: "100%" }}
+                          >
+                            <button type="submit" style={{ display: "none" }} />
+                            <Field
+                              id="message"
+                              name="message"
+                              label="message"
+                              placeholder="Type something to send..."
+                              type="text"
+                              width="100%"
+                              color="#504aa4"
+                              border={0}
+                              fontSize="1.1em"
+                              disabled={disabled}
+                              component={ChatField}
+                              onChange={e => {
+                                // alert(e);
+                                myChange(e);
+                                // handleChatFieldChange(values.message);
+                                // setFormValues({
+                                //   ...formValues,
+                                //   [fieldName]: targetEl.value
+                                // });
+                                // return handleChange(e);
+                              }}
+                              // onChange={e => {
+                              //   myChange(e);
+                              //   return handleChange(e);
+                              // }}
 
-                        <form
-                          action=""
-                          onSubmit={handleSubmit}
-                          style={{ width: "100%" }}
-                        >
-                          <button type="submit" style={{ display: "none" }} />
-                          <Field
-                            id="message"
-                            name="message"
-                            label="message"
-                            placeholder="Type something to send..."
-                            type="text"
-                            width="100%"
-                            color="#504aa4"
-                            border={0}
-                            fontSize="1.1em"
-                            disabled={disabled}
-                            component={ChatField}
-                            onChange={e => {
-                              // alert(e);
-                              myChange(e);
-                              // handleChatFieldChange(values.message);
-                              // setFormValues({
-                              //   ...formValues,
-                              //   [fieldName]: targetEl.value
-                              // });
-                              // return handleChange(e);
-                            }}
-                            // onChange={e => {
-                            //   myChange(e);
-                            //   return handleChange(e);
-                            // }}
-
-                            // onChange={onChange}
-                            // InputProps={{ onChange: onChange }}
-                          />
-
-                          <Field
-                            id="sentTo"
-                            name="sentTo"
-                            label="sentTo"
-                            value={sentTo}
-                            placeholder="Send to..."
-                            type="hidden"
-                            width="100%"
-                            color="#504aa4"
-                            border={0}
-                            fontSize="1.1em"
-                            component={ChatField}
-                          />
-
-                          <Field
-                            id="threadId"
-                            name="threadId"
-                            label="threadId"
-                            value={threadId}
-                            placeholder="Thread ID..."
-                            type="hidden"
-                            width="100%"
-                            color="#504aa4"
-                            border={0}
-                            fontSize="1.1em"
-                            component={ChatField}
-                          />
-                        </form>
-                      </Flex>
-                      <Flex style={{ position: "relative" }}>
-                        <AbWrapper
-                          width={1}
-                          position="absolute"
-                          right={70}
-                          bottom={"100%"}
-                        >
-                          {emojiPickerVisible && isBrowser ? (
-                            <Picker
-                              onSelect={
-                                emoji =>
-                                  setFieldValue(
-                                    "message",
-                                    values.message + emoji.native
-                                  )
-                                // handleSelectEmojiClick({ item: emoji })
-                              }
-                              title="Pick your emoji..."
+                              // onChange={onChange}
+                              // InputProps={{ onChange: onChange }}
                             />
-                          ) : (
-                            ""
-                          )}
-                        </AbWrapper>
-                        <MinButton
-                          onClick={this.openFileDialog}
-                          bg="transparent"
-                          minHeight="35px"
-                          width="3.5em"
-                          style={{ padding: 0 }}
-                          mb={2}
-                        >
-                          <input
-                            ref={this.fileInputRef}
-                            type="file"
-                            onChange={this.onFilesAdded}
-                            style={inputStyles}
-                            disabled={disabled}
-                            multiple
-                          />
-                          <IconAddFile
-                            fill="#b2b2d8"
-                            size="1.4em"
-                            name="add-file"
-                          />
-                        </MinButton>
-                        <MinButton
-                          onClick={disabled ? null : handleOpenEmojiMenuClick}
-                          bg="transparent"
-                          minHeight="35px"
-                          ml={[2, 2, 2]}
-                          mb={2}
-                          width="3.5em"
-                          style={{ padding: 0, position: "relative" }}
-                        >
-                          <CustomIcon width="1.6em" fill="#b2b2d8" />
-                        </MinButton>
-                        <MinButton
-                          onClick={
-                            disabled ? null : handleEngageMicrophoneClick
-                          }
-                          bg="transparent"
-                          borderLeft="2px #eee solid"
-                          mb={2}
-                          mx={3}
-                          minHeight="35px"
-                          width="3.5em"
-                          style={{ padding: 0 }}
-                        >
-                          <IconMic width="1.4em" fill="#b2b2d8" />
-                        </MinButton>
+
+                            <Field
+                              id="sentTo"
+                              name="sentTo"
+                              label="sentTo"
+                              value={sentTo}
+                              placeholder="Send to..."
+                              type="hidden"
+                              width="100%"
+                              color="#504aa4"
+                              border={0}
+                              fontSize="1.1em"
+                              component={ChatField}
+                            />
+
+                            <Field
+                              id="threadId"
+                              name="threadId"
+                              label="threadId"
+                              value={threadId}
+                              placeholder="Thread ID..."
+                              type="hidden"
+                              width="100%"
+                              color="#504aa4"
+                              border={0}
+                              fontSize="1.1em"
+                              component={ChatField}
+                            />
+                          </form>
+
+                          <Flex style={{ position: "relative" }}>
+                            <AbWrapper
+                              width={1}
+                              position="absolute"
+                              right={70}
+                              bottom={"100%"}
+                            >
+                              {emojiPickerVisible && isBrowser ? (
+                                <Picker
+                                  onSelect={
+                                    emoji =>
+                                      setFieldValue(
+                                        "message",
+                                        values.message + emoji.native
+                                      )
+                                    // handleSelectEmojiClick({ item: emoji })
+                                  }
+                                  title="Pick your emoji..."
+                                />
+                              ) : (
+                                ""
+                              )}
+                            </AbWrapper>
+                            <MinButton
+                              onClick={this.openFileDialog}
+                              bg="transparent"
+                              minHeight="35px"
+                              width="3.5em"
+                              style={{ padding: 0 }}
+                              // mb={2}
+                            >
+                              <input
+                                ref={this.fileInputRef}
+                                type="file"
+                                onChange={this.onFilesAdded}
+                                style={inputStyles}
+                                disabled={disabled}
+                                multiple
+                              />
+                              <IconAddFile
+                                fill="#b2b2d8"
+                                size="1.4em"
+                                name="add-file"
+                              />
+                            </MinButton>
+                            <MinButton
+                              onClick={
+                                disabled ? null : handleOpenEmojiMenuClick
+                              }
+                              bg="transparent"
+                              minHeight="35px"
+                              ml={[2, 2, 2]}
+                              // mb={2}
+                              width="3.5em"
+                              style={{ padding: 0, position: "relative" }}
+                            >
+                              <CustomIcon width="1.6em" fill="#b2b2d8" />
+                            </MinButton>
+                            <MinButton
+                              onClick={
+                                disabled ? null : handleEngageMicrophoneClick
+                              }
+                              bg="transparent"
+                              borderLeft="2px #eee solid"
+                              // mb={2}
+                              mx={3}
+                              minHeight="35px"
+                              width="3.5em"
+                              style={{ padding: 0 }}
+                            >
+                              <IconMic width="1.4em" fill="#b2b2d8" />
+                            </MinButton>
+                          </Flex>
+                        </Flex>
                       </Flex>
-                    </>
+                    </Flex>
                   );
                 }}
               </Formik>

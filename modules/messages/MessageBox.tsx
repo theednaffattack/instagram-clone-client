@@ -70,11 +70,14 @@ export function MessageBox(props: any) {
           p={3}
           color="thread_selected"
         >
-          <Text mt={2}>
-            {distanceInWords(
-              Date.now(),
-              new Date(Date.parse(props.message.created_at))
-            )}
+          <Text color="#b2b2d8" fontSize="0.9em" mt={2} mb={1}>
+            <em>
+              {" "}
+              {distanceInWords(
+                Date.now(),
+                new Date(Date.parse(props.message.created_at))
+              )}
+            </em>
           </Text>
           <Text>{props.message.message}</Text>
         </Box>

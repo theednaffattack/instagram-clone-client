@@ -40,8 +40,8 @@ const theme = {
     thread_placeholder: "#e1ddff",
     chat_icon: "#ccc6f2",
     chat_bg: "#ddddf7", //#ccc6f2
-    chat_bubble_me: "#fff",
-    chat_bubble_them: "#849ffe"
+    chat_bubble_me: "#849ffe",
+    chat_bubble_them: "#fff"
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   fonts: {

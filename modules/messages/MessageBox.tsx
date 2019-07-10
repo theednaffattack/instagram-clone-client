@@ -4,7 +4,7 @@ import { space } from "styled-system";
 import styled from "styled-components";
 import distanceInWords from "date-fns/distance_in_words";
 
-import { Card, Flex, Text } from "./StyledRebass";
+import { Card, Flex, Text, Box } from "./StyledRebass";
 import { Image } from "rebass";
 
 const Icon = styled(IconBase)`
@@ -27,18 +27,20 @@ export function MessageBox(props: any) {
       width={4 / 5}
     >
       {props.me === props.message.user.id ? (
-        <Flex
-          height="40px"
-          width="40px"
-          mt={2}
-          mr={3}
-          bg="thread_footer"
-          alignItems="center"
-          justifyContent="center"
-          boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
-          style={{ borderRadius: "50%" }}
-        >
-          <Icon size="2em" name="user" fill="white" />
+        <Flex mr={3} flexDirection="column" alignItems="center">
+          <Flex
+            height="40px"
+            width="40px"
+            my={2}
+            bg="thread_footer"
+            alignItems="center"
+            justifyContent="center"
+            boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
+            style={{ borderRadius: "50%" }}
+          >
+            <Icon size="2em" name="user" fill="white" />
+          </Flex>
+          <Text color="text">{props.message.user.firstName}</Text>
         </Flex>
       ) : (
         ""
@@ -46,7 +48,7 @@ export function MessageBox(props: any) {
       <Card
         my={2}
         p={3}
-        color={props.me === props.message.user.id ? "thread_selected" : "white"}
+        color={props.me === props.message.user.id ? "white" : "thread_selected"}
         bg={
           props.me === props.message.user.id
             ? "chat_bubble_me"
@@ -62,29 +64,38 @@ export function MessageBox(props: any) {
         ) : (
           ""
         )}
-        <Text mt={2}>
-          {distanceInWords(
-            Date.now(),
-            new Date(Date.parse(props.message.created_at))
-          )}
-        </Text>
-        <Text>{props.message.message}</Text>
+
+        <Box
+          bg={props.me === props.message.user.id ? "white" : "transparent"}
+          p={3}
+          color="thread_selected"
+        >
+          <Text mt={2}>
+            {distanceInWords(
+              Date.now(),
+              new Date(Date.parse(props.message.created_at))
+            )}
+          </Text>
+          <Text>{props.message.message}</Text>
+        </Box>
       </Card>
       {props.me !== props.message.user.id ? (
-        <Flex
-          height="40px"
-          width="40px"
-          mt={2}
-          // mx={3}
-          bg="thread_footer"
-          alignItems="center"
-          justifyContent="center"
-          boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
-          style={{
-            borderRadius: "50%"
-          }}
-        >
-          <Icon size="2em" name="user" fill="white" />
+        <Flex ml={3} flexDirection="column" alignItems="center">
+          <Flex
+            height="40px"
+            width="40px"
+            my={2}
+            bg="thread_footer"
+            alignItems="center"
+            justifyContent="center"
+            boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
+            style={{
+              borderRadius: "50%"
+            }}
+          >
+            <Icon size="2em" name="user" fill="white" />
+          </Flex>
+          <Text color="text">{props.message.user.firstName}</Text>
         </Flex>
       ) : (
         ""

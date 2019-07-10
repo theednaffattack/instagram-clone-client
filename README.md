@@ -3,13 +3,23 @@
 ## User Stories
 
 - [x] User can register for an account storing their name, email/username and password then login to the app using their credentials
+
 - [x] User can create a post and store images to the server (Preferably in a database)
+
 - [x] User has a profile that displays all the images they have uploaded
+
 - [x] User can follow other users
+
 - [x] User can see other users posts (people who the user follows)
+
 - [x] User can see a global feed of images
+
 - [x] The feed auth refreshes when a new post is added (You can use Web Sockets)
-- [ ] User can send messages to other users
+
+  ## Bonus Stories
+
+- [x] User can send messages to other users
+
 - [ ] User can create a story for followers
 
 ## NextJS Typescript Starter

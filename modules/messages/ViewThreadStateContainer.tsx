@@ -64,14 +64,13 @@ export class ViewThreadStateContainer extends React.Component<
     const selectedThreadIndex = this.props.data.getMessageThreads[
       selection.index
     ];
-    console.log({ selection });
+
     this.setState({
       selectedThread: selection.index
     });
   }
 
   handleAddInviteeToThread({ user }: any) {
-    console.log("handleAddInviteeToThread, user", user);
     this.setState(prevState => ({
       newThreadInvitees: prevState.newThreadInvitees.concat(user)
     }));
@@ -97,7 +96,6 @@ export class ViewThreadStateContainer extends React.Component<
   }
 
   handleThreadAddThreadClick() {
-    console.log("handleThreadAddThreadClick");
     this.setState(prevState => ({
       showMessagingAddressBook: !prevState.showMessagingAddressBook,
       selectedThread: null
@@ -232,7 +230,9 @@ export class ViewThreadStateContainer extends React.Component<
             showMessagingAddressBook={this.state.showMessagingAddressBook}
             handleThreadAddThreadClick={this.handleThreadAddThreadClick}
             disabled={
-              this.state.selectedThread === 0 || this.state.selectedThread
+              this.state.selectedThread === 0 ||
+              this.state.newThreadInvitees.length > 0 ||
+              this.state.selectedThread
                 ? false
                 : true
             }

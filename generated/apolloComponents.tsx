@@ -179,6 +179,7 @@ export type AddNewMessageMutation = {
 export type CreateMessageThreadVariables = {
   sentTo: string;
   message: string;
+  images?: Maybe<Upload[]>;
 };
 
 export type CreateMessageThreadMutation = {
@@ -1099,8 +1100,12 @@ export function AddNewMessageHOC<TProps, TChildProps = any>(
   >(AddNewMessageDocument, operationOptions);
 }
 export const CreateMessageThreadDocument = gql`
-  mutation CreateMessageThread($sentTo: String!, $message: String!) {
-    createMessageThread(sentTo: $sentTo, message: $message) {
+  mutation CreateMessageThread(
+    $sentTo: String!
+    $message: String!
+    $images: [Upload]
+  ) {
+    createMessageThread(sentTo: $sentTo, message: $message, images: $images) {
       id
       invitees {
         id

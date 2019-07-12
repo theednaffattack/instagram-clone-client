@@ -62,6 +62,8 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
   }
 
   openFileDialog() {
+    console.log("openFileDialog this.props", this.props);
+    console.log("this.fileInputRef", this.fileInputRef);
     if (this.props.disabled) return;
     if (this.fileInputRef && this.fileInputRef.current) {
       this.fileInputRef.current.click();

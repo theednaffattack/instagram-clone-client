@@ -12,10 +12,6 @@ const Icon = styled(IconBase)`
   ${space}
 `;
 
-// const Box = styled(BoxBase)`
-//   ${height}
-// `;
-
 export function MessageBox(props: any) {
   return (
     <Flex
@@ -90,17 +86,6 @@ export function MessageBox(props: any) {
       ) : (
         ""
       )}
-
-      {/* <Flex
-        bg={props.me === props.message.user.id ? "chat_bubble_me" : "yellow"}
-        // border={props.me === props.message.user.id ? "purp" : "crimson"}
-        ml={props.me !== props.message.user.id ? "auto" : 0}
-        mr={props.me === props.message.user.id ? "auto" : 0}
-        width={1 / 2}
-      >
-        <Text>{props.message.created_at}</Text>
-        <Text>{props.message.message}</Text>
-      </Flex> */}
     </Flex>
   );
 }

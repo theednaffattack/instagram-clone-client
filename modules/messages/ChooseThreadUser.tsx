@@ -61,9 +61,6 @@ export class ChooseThreadUser extends React.Component<
       messages
     } = this.props;
 
-    const lastMessenger = messages[messages.length - 1];
-    console.log("view last messenger".toUpperCase(), messages);
-
     return (
       <Fragment>
         <Heading

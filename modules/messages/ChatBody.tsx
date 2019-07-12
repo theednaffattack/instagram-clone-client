@@ -42,25 +42,14 @@ const ChatBody = React.forwardRef(
     }: IChatBodyProps,
     ref
   ) => {
-    console.log(
-      "some stuff",
-      selectedThreadIndex &&
-        dataMessageThreads &&
-        dataMessageThreads[selectedThreadIndex]
-        ? dataMessageThreads[selectedThreadIndex].messages[
-            dataMessageThreads[selectedThreadIndex].messages.length - 1
-          ].sentBy
-        : []
-    );
-
-    const getSentby =
-      selectedThreadIndex &&
-      dataMessageThreads &&
-      dataMessageThreads[selectedThreadIndex]
-        ? dataMessageThreads[selectedThreadIndex].messages[
-            dataMessageThreads[selectedThreadIndex].messages.length - 1
-          ].sentBy.firstName
-        : "";
+    // const getSentby =
+    //   selectedThreadIndex &&
+    //   dataMessageThreads &&
+    //   dataMessageThreads[selectedThreadIndex]
+    //     ? dataMessageThreads[selectedThreadIndex].messages[
+    //         dataMessageThreads[selectedThreadIndex].messages.length - 1
+    //       ].sentBy.firstName
+    //     : "";
 
     const getNewInvitees =
       newThreadInvitees && newThreadInvitees[0]
@@ -78,7 +67,6 @@ const ChatBody = React.forwardRef(
           ))
         : "";
 
-    console.log("some other stuff", getSentby);
     return (
       // CHAT
       <Flex width={[1, 1, 1 / 2]} flexDirection="column" alignItems="center">

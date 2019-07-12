@@ -23,6 +23,7 @@ interface IChatFormProps {
   handleUploadFileClick: any;
   newThreadInvitees: any[];
   selectedThreadId: string;
+  handleThreadSelection: any;
 }
 
 interface IChatFormState {
@@ -182,6 +183,7 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
       disabled,
       emojiPickerVisible,
       handleChatFieldChange,
+      handleThreadSelection,
       handleEngageMicrophoneClick,
       handleOpenEmojiMenuClick,
       handleUploadFileClick,
@@ -214,6 +216,7 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
             handleClearFilePreview={this.handleClearFilePreview}
             newThreadDisabled={newThreadDisabled}
             files={this.state.files}
+            handleThreadSelection={handleThreadSelection}
             openFileDialog={this.openFileDialog}
             fileInputRef={this.fileInputRef}
             onFilesAdded={this.onFilesAdded}

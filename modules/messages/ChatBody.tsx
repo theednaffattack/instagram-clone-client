@@ -23,6 +23,7 @@ const ChatBody = React.forwardRef(
       chatInput,
       disabled,
       handleThreadAddThreadClick,
+      handleThreadSelection,
       handleAddInviteeToThread,
       handleRemoveInviteeToThread,
       selectedThreadId,
@@ -159,7 +160,8 @@ const ChatBody = React.forwardRef(
         >
           {selectedThreadIndex !== null &&
           selectedThreadIndex !== "undefined" &&
-          selectedThreadIndex !== "" ? (
+          selectedThreadIndex !== "" &&
+          dataMessageThreads[selectedThreadIndex] ? (
             dataMessageThreads[selectedThreadIndex].messages.map(
               (message: any, index: number) => (
                 <MessageBox
@@ -174,7 +176,10 @@ const ChatBody = React.forwardRef(
               {!showMessagingAddressBook ? (
                 <Text fontSize="2em">select a thread to view messages</Text>
               ) : (
-                <Text fontSize="2em">New Message Thread</Text>
+                <Text fontSize="2em">
+                  New Message Thread ({dataMessageThreads.length} - IDX:{" "}
+                  {selectedThreadIndex})
+                </Text>
               )}
               <div>
                 {/* Load on demand */}
@@ -211,6 +216,7 @@ const ChatBody = React.forwardRef(
           color="thread_text"
         >
           <ChatForm
+            handleThreadSelection={handleThreadSelection}
             disabled={disabled}
             chatEmoji={chatEmoji}
             chatInput={chatInput}
@@ -221,7 +227,8 @@ const ChatBody = React.forwardRef(
             handleUploadFileClick={handleUploadFileClick}
             selectedThreadId={selectedThreadId}
             sentTo={
-              selectedThreadIndex !== null
+              selectedThreadIndex !== null &&
+              dataMessageThreads[selectedThreadIndex]
                 ? dataMessageThreads[selectedThreadIndex].messages[
                     dataMessageThreads[selectedThreadIndex].messages.length - 1
                   ].sentBy.id

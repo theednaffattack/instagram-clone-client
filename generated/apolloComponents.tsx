@@ -195,8 +195,6 @@ export type CreateMessageThreadCreateMessageThread = {
   invitees: CreateMessageThreadInvitees[];
 
   messages: CreateMessageThreadMessages[];
-
-  invitees: CreateMessageThread_Invitees[];
 };
 
 export type CreateMessageThreadInvitees = {
@@ -214,10 +212,36 @@ export type CreateMessageThreadMessages = {
 
   id: string;
 
+  created_at: Maybe<DateTime>;
+
   message: string;
+
+  images: Maybe<CreateMessageThreadImages[]>;
+
+  sentBy: CreateMessageThreadSentBy;
+
+  user: CreateMessageThreadUser;
 };
 
-export type CreateMessageThread_Invitees = {
+export type CreateMessageThreadImages = {
+  __typename?: "Image";
+
+  id: string;
+
+  uri: string;
+};
+
+export type CreateMessageThreadSentBy = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
+};
+
+export type CreateMessageThreadUser = {
   __typename?: "User";
 
   id: string;
@@ -1085,12 +1109,22 @@ export const CreateMessageThreadDocument = gql`
       }
       messages {
         id
+        created_at
         message
-      }
-      invitees {
-        id
-        firstName
-        lastName
+        images {
+          id
+          uri
+        }
+        sentBy {
+          id
+          firstName
+          lastName
+        }
+        user {
+          id
+          firstName
+          lastName
+        }
       }
     }
   }

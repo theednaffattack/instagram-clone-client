@@ -64,7 +64,7 @@ export class ViewThreadStateContainer extends React.Component<
     const selectedThreadIndex = this.props.data.getMessageThreads[
       selection.index
     ];
-
+    console.log({ selection });
     this.setState({
       selectedThread: selection.index
     });
@@ -249,6 +249,7 @@ export class ViewThreadStateContainer extends React.Component<
             handleOpenEmojiMenuClick={this.handleOpenEmojiMenuClick}
             handleSelectEmojiClick={this.handleSelectEmojiClick}
             handleChatFieldChange={this.handleChatFieldChange}
+            handleThreadSelection={this.handleThreadSelection}
             handleUploadFileClick={this.handleUploadFileClick}
             ref={this.messagesEnd}
           />

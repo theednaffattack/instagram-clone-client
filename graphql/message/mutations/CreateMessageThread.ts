@@ -11,12 +11,22 @@ export const CREATE_MESSAGE_THREAD = gql`
       }
       messages {
         id
+        created_at
         message
-      }
-      invitees {
-        id
-        firstName
-        lastName
+        images {
+          id
+          uri
+        }
+        sentBy {
+          id
+          firstName
+          lastName
+        }
+        user {
+          id
+          firstName
+          lastName
+        }
       }
     }
   }

@@ -4,7 +4,11 @@ import { Formik, Field } from "formik";
 import { Picker } from "emoji-mart";
 import("./emoji-mart.css");
 
-import { CreateMessageThreadComponent } from "../../generated/apolloComponents";
+import {
+  CreateMessageThreadComponent,
+  GetMessageThreadsDocument,
+  GetMessageThreadsQuery
+} from "../../generated/apolloComponents";
 import { Flex, AbWrapper, MinButton, IconMic } from "./StyledRebass";
 import ImagePreview from "./ImagePreview";
 import { ChatField } from "../../components/fields/ChatField";
@@ -24,7 +28,7 @@ export interface ICreateThreadAndAddMessageToThreadProps {
   threadId: string | null;
   newThreadInvitees: any[];
   selectedThreadId: string;
-
+  handleThreadSelection: any;
   handleClearFilePreview: any;
   files: any[];
   openFileDialog: any;
@@ -44,6 +48,7 @@ function CreateThreadAndAddMessageToThread({
   sentTo,
   threadId,
   newThreadInvitees,
+  handleThreadSelection,
   handleClearFilePreview,
   files,
   openFileDialog,
@@ -112,45 +117,42 @@ function CreateThreadAndAddMessageToThread({
               }
 
               let response;
+              let myStuff;
 
               try {
                 response = await createMessageThread({
-                  variables: dataForSubmitting
+                  variables: dataForSubmitting,
                   // we don't update here because of subscriptions
 
-                  // update: (cache, { data }) => {
-                  //   if (!data || !data.addMessageToThread) {
-                  //     return;
-                  //   }
-                  //   let myStuff = cache.readQuery<GetMessageThreadsQuery>({
-                  //     query: GetMessageThreadsDocument
-                  //   });
+                  update: (cache, { data }) => {
+                    if (!data || !data.createMessageThread) {
+                      return;
+                    }
+                    myStuff = cache.readQuery<GetMessageThreadsQuery>({
+                      query: GetMessageThreadsDocument
+                    });
 
-                  //   if (myStuff) {
-                  //     myStuff.getMessageThreads.map((thread, threadIndex) => {
-                  //       console.log(
-                  //         "data.addMessageToThread.threadId",
-                  //         data.addMessageToThread
-                  //       );
-                  //       console.log("thread.id", thread.id);
-                  //       if (data.addMessageToThread.threadId === thread.id) {
-                  //         return thread.messages.push(
-                  //           data.addMessageToThread.message
-                  //         );
-                  //       } else {
-                  //         return thread;
-                  //       }
-                  //     });
+                    if (myStuff) {
+                      myStuff.getMessageThreads.push(data.createMessageThread);
+                      // myStuff.getMessageThreads.map((thread, threadIndex) => {
+                      //   console.log("thread.id", thread.id);
+                      //   if (data.createMessageThread.id === thread.id) {
+                      //     return thread.messages.push(
+                      //       data.createMessageThread.
+                      //     );
+                      //   } else {
+                      //     return thread;
+                      //   }
+                      // });
 
-                  //     cache.writeQuery<GetMessageThreadsQuery>({
-                  //       query: GetMessageThreadsDocument,
-                  //       data: myStuff
-                  //     });
-
-                  //   } else {
-                  //     return;
-                  //   }
-                  // }
+                      cache.writeQuery<GetMessageThreadsQuery>({
+                        query: GetMessageThreadsDocument,
+                        data: myStuff
+                      });
+                    } else {
+                      return;
+                    }
+                  }
                 });
               } catch (error) {
                 const displayErrors: { [key: string]: string } = {};
@@ -181,10 +183,18 @@ function CreateThreadAndAddMessageToThread({
                 // });
 
                 handleClearFilePreview();
+
                 resetForm({
                   sentTo,
                   message: chatEmoji
                 });
+
+                let newIndex;
+
+                if (myStuff && myStuff.getMessageThreads) {
+                  newIndex = myStuff.getMessageThreads.length - 1;
+                  handleThreadSelection({ index: newIndex });
+                }
                 return;
               }
             }}

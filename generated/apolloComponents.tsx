@@ -192,9 +192,21 @@ export type CreateMessageThreadCreateMessageThread = {
 
   id: Maybe<string>;
 
+  invitees: CreateMessageThreadInvitees[];
+
   messages: CreateMessageThreadMessages[];
 
-  invitees: CreateMessageThreadInvitees[];
+  invitees: CreateMessageThread_Invitees[];
+};
+
+export type CreateMessageThreadInvitees = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
 };
 
 export type CreateMessageThreadMessages = {
@@ -205,7 +217,7 @@ export type CreateMessageThreadMessages = {
   message: string;
 };
 
-export type CreateMessageThreadInvitees = {
+export type CreateMessageThread_Invitees = {
   __typename?: "User";
 
   id: string;
@@ -295,6 +307,8 @@ export type GetListToCreateThreadThoseICanMessage = {
   id: string;
 
   firstName: string;
+
+  lastName: string;
 };
 
 export type GetMessageThreadsVariables = {};
@@ -310,7 +324,19 @@ export type GetMessageThreadsGetMessageThreads = {
 
   id: Maybe<string>;
 
+  invitees: GetMessageThreadsInvitees[];
+
   messages: GetMessageThreadsMessages[];
+};
+
+export type GetMessageThreadsInvitees = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
 };
 
 export type GetMessageThreadsMessages = {
@@ -1052,6 +1078,11 @@ export const CreateMessageThreadDocument = gql`
   mutation CreateMessageThread($sentTo: String!, $message: String!) {
     createMessageThread(sentTo: $sentTo, message: $message) {
       id
+      invitees {
+        id
+        firstName
+        lastName
+      }
       messages {
         id
         message
@@ -1180,6 +1211,7 @@ export const GetListToCreateThreadDocument = gql`
       thoseICanMessage {
         id
         firstName
+        lastName
       }
     }
   }
@@ -1232,6 +1264,11 @@ export const GetMessageThreadsDocument = gql`
   query GetMessageThreads {
     getMessageThreads {
       id
+      invitees {
+        id
+        firstName
+        lastName
+      }
       messages {
         id
         created_at

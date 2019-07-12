@@ -38,13 +38,23 @@ export const ThreadInput = styled.input`
 }
 `;
 
+interface IThreadBodyProps {
+  data: any;
+  handleThreadMenuClick: any;
+  selectedThreadIndex: any;
+  handleThreadSelection: any;
+  handleThreadAddThreadClick: any;
+  selectedThread: any;
+}
+
 function ThreadBody({
   data,
   handleThreadMenuClick,
+  selectedThreadIndex,
   handleThreadSelection,
   handleThreadAddThreadClick,
   selectedThread
-}) {
+}: IThreadBodyProps) {
   return (
     <Flex
       bg="thread_bg"

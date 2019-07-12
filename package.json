@@ -36,6 +36,7 @@
     "polished": "^3.2.0",
     "react": "^16.7.0",
     "react-apollo": "^2.4.0",
+    "react-audio-recorder": "^2.2.0",
     "react-docgen-typescript-loader": "^3.1.0",
     "react-dom": "^16.7.0",
     "react-geomicons": "^3.0.0-0",

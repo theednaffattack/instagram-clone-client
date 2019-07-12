@@ -35,7 +35,12 @@ export interface IChatBodyProps {
   chatInput: string;
   selectedThreadId: any;
   selectedThreadIndex: number | null;
+  handleThreadAddThreadClick: any;
+  showMessagingAddressBook: any;
   handleChatMenuClick: any;
+  handleAddInviteeToThread: any;
+  handleRemoveInviteeToThread: any;
+  newThreadInvitees: any;
   me: any;
   dataMessageThreads: any;
   handleEngageMicrophoneClick: any;
@@ -43,4 +48,5 @@ export interface IChatBodyProps {
   handleChatFieldChange: any;
   handleUploadFileClick: any;
   emojiPickerVisible: boolean;
+  newThreadDisabled: boolean;
 }

@@ -20,6 +20,8 @@ export interface IViewThreadStateContainerState {
   emojiPickerVisible: boolean;
   chatInput: string;
   chatEmoji: string;
+  showMessagingAddressBook: boolean;
+  newThreadInvitees: any[];
 }
 
 export class ViewThreadStateContainer extends React.Component<
@@ -40,6 +42,10 @@ export class ViewThreadStateContainer extends React.Component<
     this.handleChatMenuClick = this.handleChatMenuClick.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
     this.handleOpenEmojiMenuClick = this.handleOpenEmojiMenuClick.bind(this);
+    this.handleAddInviteeToThread = this.handleAddInviteeToThread.bind(this);
+    this.handleRemoveInviteeToThread = this.handleRemoveInviteeToThread.bind(
+      this
+    );
 
     this.messagesEnd = React.createRef();
   }
@@ -48,7 +54,9 @@ export class ViewThreadStateContainer extends React.Component<
     myThreadId: "97798d95-04d9-4147-8913-30b7124abc95",
     emojiPickerVisible: false,
     chatInput: "",
-    chatEmoji: ""
+    chatEmoji: "",
+    showMessagingAddressBook: false,
+    newThreadInvitees: []
   };
 
   handleThreadSelection(selection) {
@@ -60,6 +68,21 @@ export class ViewThreadStateContainer extends React.Component<
     this.setState({
       selectedThread: selection.index
     });
+  }
+
+  handleAddInviteeToThread({ user }: any) {
+    console.log("handleAddInviteeToThread, user", user);
+    this.setState(prevState => ({
+      newThreadInvitees: prevState.newThreadInvitees.concat(user)
+    }));
+  }
+
+  handleRemoveInviteeToThread({ user }: any) {
+    this.setState(prevState => ({
+      newThreadInvitees: prevState.newThreadInvitees.filter(invitee => {
+        return invitee.id !== user.id;
+      })
+    }));
   }
 
   scrollToBottom = () => {
@@ -75,6 +98,10 @@ export class ViewThreadStateContainer extends React.Component<
 
   handleThreadAddThreadClick() {
     console.log("handleThreadAddThreadClick");
+    this.setState(prevState => ({
+      showMessagingAddressBook: !prevState.showMessagingAddressBook,
+      selectedThread: null
+    }));
   }
 
   handleUploadFileClick() {
@@ -184,6 +211,7 @@ export class ViewThreadStateContainer extends React.Component<
         >
           <ThreadBody
             data={data}
+            selectedThreadIndex={this.state.selectedThread}
             handleThreadMenuClick={this.handleThreadMenuClick}
             handleThreadSelection={this.handleThreadSelection}
             selectedThread={this.state.selectedThread}
@@ -201,13 +229,21 @@ export class ViewThreadStateContainer extends React.Component<
                     .id
                 : null
             }
+            showMessagingAddressBook={this.state.showMessagingAddressBook}
+            handleThreadAddThreadClick={this.handleThreadAddThreadClick}
             disabled={
               this.state.selectedThread === 0 || this.state.selectedThread
                 ? false
                 : true
             }
+            newThreadDisabled={
+              this.state.newThreadInvitees.length > 0 ? false : true
+            }
             emojiPickerVisible={this.state.emojiPickerVisible}
             handleChatMenuClick={this.handleChatMenuClick}
+            handleAddInviteeToThread={this.handleAddInviteeToThread}
+            handleRemoveInviteeToThread={this.handleRemoveInviteeToThread}
+            newThreadInvitees={this.state.newThreadInvitees}
             me={this.props.me}
             handleEngageMicrophoneClick={this.handleEngageMicrophoneClick}
             handleOpenEmojiMenuClick={this.handleOpenEmojiMenuClick}

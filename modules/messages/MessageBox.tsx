@@ -6,6 +6,7 @@ import distanceInWords from "date-fns/distance_in_words";
 
 import { Card, Flex, Text, Box } from "./StyledRebass";
 import { Image } from "rebass";
+import UserProfileImage from "./UserProfileImage";
 
 const Icon = styled(IconBase)`
   ${space}
@@ -27,21 +28,7 @@ export function MessageBox(props: any) {
       width={4 / 5}
     >
       {props.me === props.message.user.id ? (
-        <Flex mr={3} flexDirection="column" alignItems="center">
-          <Flex
-            height="40px"
-            width="40px"
-            my={2}
-            bg="thread_footer"
-            alignItems="center"
-            justifyContent="center"
-            boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
-            style={{ borderRadius: "50%" }}
-          >
-            <Icon size="2em" name="user" fill="white" />
-          </Flex>
-          <Text color="text">{props.message.user.firstName}</Text>
-        </Flex>
+        <UserProfileImage flexDirection="column" user={props.message.user} />
       ) : (
         ""
       )}

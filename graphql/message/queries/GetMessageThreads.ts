@@ -4,6 +4,12 @@ export const GET_MESSAGE_THREADS = gql`
   query GetMessageThreads {
     getMessageThreads {
       id
+
+      invitees {
+        id
+        firstName
+        lastName
+      }
       messages {
         id
         created_at

@@ -1,6 +1,8 @@
 import React from "react";
 
-import { CoverFlex, Flex, MyInput, Text, AbWrapper } from "./StyledRebass";
+import dynamic from "next/dynamic";
+
+import { CoverFlex, Flex, Text } from "./StyledRebass";
 import { ChooseThreadUser } from "./ChooseThreadUser";
 import { MinButton } from "./ThreadBody";
 import { MenuDots } from "./MenuIcon";
@@ -8,6 +10,11 @@ import { MessageBox } from "./MessageBox";
 import { GetListToCreateThreadComponent } from "../../generated/apolloComponents";
 import ChatForm from "./chat-form";
 import { IChatBodyProps } from "./types";
+import UserProfileImage from "./UserProfileImage";
+
+const AddressBookMutation = dynamic({
+  loader: () => import("./AddressBookMutation") as any
+});
 
 const ChatBody = React.forwardRef(
   (
@@ -15,19 +22,62 @@ const ChatBody = React.forwardRef(
       chatEmoji,
       chatInput,
       disabled,
+      handleThreadAddThreadClick,
+      handleAddInviteeToThread,
+      handleRemoveInviteeToThread,
       selectedThreadId,
       selectedThreadIndex,
+      showMessagingAddressBook,
       handleChatMenuClick,
       dataMessageThreads,
       me,
       emojiPickerVisible,
+      newThreadInvitees,
       handleEngageMicrophoneClick,
       handleOpenEmojiMenuClick,
       handleUploadFileClick,
-      handleChatFieldChange
+      handleChatFieldChange,
+      newThreadDisabled
     }: IChatBodyProps,
     ref
   ) => {
+    console.log(
+      "some stuff",
+      selectedThreadIndex &&
+        dataMessageThreads &&
+        dataMessageThreads[selectedThreadIndex]
+        ? dataMessageThreads[selectedThreadIndex].messages[
+            dataMessageThreads[selectedThreadIndex].messages.length - 1
+          ].sentBy
+        : []
+    );
+
+    const getSentby =
+      selectedThreadIndex &&
+      dataMessageThreads &&
+      dataMessageThreads[selectedThreadIndex]
+        ? dataMessageThreads[selectedThreadIndex].messages[
+            dataMessageThreads[selectedThreadIndex].messages.length - 1
+          ].sentBy.firstName
+        : "";
+
+    const getNewInvitees =
+      newThreadInvitees && newThreadInvitees[0]
+        ? newThreadInvitees.map((person: any, index: number) => (
+            <UserProfileImage
+              handleRemoveInviteeToThread={handleRemoveInviteeToThread}
+              key={index}
+              color="#b2b2d8"
+              user={person}
+            />
+            // <Heading key={index}>
+            //   <Icon mx={2} name="user" fill="white" size=".8em" />
+            //   {person.firstName} {person.lastName}
+            // </Heading>
+          ))
+        : "";
+
+    console.log("some other stuff", getSentby);
     return (
       // CHAT
       <Flex width={[1, 1, 1 / 2]} flexDirection="column" alignItems="center">
@@ -37,8 +87,8 @@ const ChatBody = React.forwardRef(
           width={[1, 1, 1]}
           alignItems="center"
         >
-          <Flex flexDirection="column" mr="auto">
-            {selectedThreadId !== null ? (
+          <Flex width={[1, 1, 1]} flexDirection="column" mr="auto">
+            {selectedThreadId === null ? (
               <>
                 <GetListToCreateThreadComponent>
                   {({
@@ -50,23 +100,32 @@ const ChatBody = React.forwardRef(
                     // if (loading) return <div>loading...</div>;
                     // return <div>hello data{JSON.stringify(data)}</div>;
                     return (
-                      <div>
-                        <ChooseThreadUser
-                          dataCreateThread={
-                            dataCreateThread.getListToCreateThread &&
-                            dataCreateThread.getListToCreateThread
-                              .thoseICanMessage
-                          }
-                          loadingCreateThread={loadingCreateThread}
-                          errorCreateThread={errorCreateThread}
-                          messages={
-                            dataMessageThreads &&
-                            dataMessageThreads[selectedThreadIndex]
-                              ? dataMessageThreads[selectedThreadIndex].messages
-                              : []
-                          }
-                        />
-                      </div>
+                      <Flex width={[1, 1, 1]} flexDirection="row">
+                        {selectedThreadIndex && dataCreateThread ? (
+                          <ChooseThreadUser
+                            dataCreateThread={
+                              dataCreateThread.getListToCreateThread &&
+                              dataCreateThread.getListToCreateThread
+                                .thoseICanMessage
+                            }
+                            loadingCreateThread={loadingCreateThread}
+                            errorCreateThread={errorCreateThread}
+                            messages={
+                              dataMessageThreads &&
+                              dataMessageThreads[selectedThreadIndex]
+                                ? dataMessageThreads[selectedThreadIndex]
+                                    .messages
+                                : []
+                            }
+                          />
+                        ) : (
+                          <>
+                            {newThreadInvitees && newThreadInvitees[0]
+                              ? getNewInvitees
+                              : ""}
+                          </>
+                        )}
+                      </Flex>
                     );
                   }}
                 </GetListToCreateThreadComponent>
@@ -111,7 +170,23 @@ const ChatBody = React.forwardRef(
               )
             )
           ) : (
-            <Text fontSize="2em">select a thread to view messages</Text>
+            <>
+              {!showMessagingAddressBook ? (
+                <Text fontSize="2em">select a thread to view messages</Text>
+              ) : (
+                <Text fontSize="2em">New Message Thread</Text>
+              )}
+              <div>
+                {/* Load on demand */}
+                {showMessagingAddressBook && (
+                  <AddressBookMutation
+                    handleAddInviteeToThread={handleAddInviteeToThread}
+                    dataMessageThreads={dataMessageThreads}
+                    selectedThreadIndex={selectedThreadIndex}
+                  />
+                )}
+              </div>
+            </>
           )}
           {chatEmoji}
           <div
@@ -144,6 +219,7 @@ const ChatBody = React.forwardRef(
             handleEngageMicrophoneClick={handleEngageMicrophoneClick}
             handleOpenEmojiMenuClick={handleOpenEmojiMenuClick}
             handleUploadFileClick={handleUploadFileClick}
+            selectedThreadId={selectedThreadId}
             sentTo={
               selectedThreadIndex !== null
                 ? dataMessageThreads[selectedThreadIndex].messages[
@@ -152,6 +228,8 @@ const ChatBody = React.forwardRef(
                 : ""
             }
             threadId={selectedThreadId ? selectedThreadId : ""}
+            newThreadInvitees={newThreadInvitees}
+            newThreadDisabled={newThreadDisabled}
           />
         </CoverFlex>
       </Flex>

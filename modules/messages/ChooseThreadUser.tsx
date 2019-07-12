@@ -3,6 +3,7 @@ import posed from "react-pose";
 import styled from "styled-components";
 
 import { Heading, Text, Flex } from "./StyledRebass";
+import { Button } from "rebass";
 
 const ContentBase = posed.div({
   closed: { height: 0 },
@@ -37,6 +38,7 @@ export interface IChooseThreadUserProps {
   dataCreateThread: any;
   loadingCreateThread: any;
   errorCreateThread: any;
+  handleAddInviteeToThread: any;
 }
 
 export class ChooseThreadUser extends React.Component<
@@ -52,11 +54,15 @@ export class ChooseThreadUser extends React.Component<
   render() {
     const { open } = this.state;
     const {
-      messages,
       dataCreateThread,
       loadingCreateThread,
-      errorCreateThread
+      errorCreateThread,
+      handleAddInviteeToThread,
+      messages
     } = this.props;
+
+    const lastMessenger = messages[messages.length - 1];
+    console.log("view last messenger".toUpperCase(), messages);
 
     return (
       <Fragment>
@@ -71,27 +77,40 @@ export class ChooseThreadUser extends React.Component<
               open: !open
             })
           }
-        >
-          {messages
-            ? `${messages[0].user.firstName} ${messages[0].user.lastName}`
-            : "blah"}
-        </Heading>
+        />
         <Flex width={[1, 1, 1]} flexDirection="column">
-          <Content className="content" pose={open ? "open" : "closed"}>
-            {loadingCreateThread ? <Text>not loading</Text> : ""}
-            {errorCreateThread ? <Text>no error</Text> : ""}
-            {dataCreateThread ? (
-              dataCreateThread.map(person => (
-                // <pre key={person.id}>{JSON.stringify(person, null, 2)}</pre>
+          {/* <Content className="content" pose={open ? "open" : "closed"}> */}
+          {loadingCreateThread ? <Text>not loading</Text> : ""}
+          {errorCreateThread ? <Text>no error</Text> : ""}
+          {dataCreateThread ? (
+            dataCreateThread.map((person, index) => (
+              // <pre key={person.id}>{JSON.stringify(person, null, 2)}</pre>
 
-                <Text key={`select-msg-receiver_${person.id}`}>
-                  {person.firstName} {person.LastName}
+              <Flex
+                border="2px #b2b2d8 solid"
+                key={`select-msg-receiver_${index}`}
+                alignItems="center"
+                width={["300px", "300px", "300px"]}
+                p={2}
+                my={1}
+                bg="white"
+              >
+                <Text fontSize="1.8em" width={[2 / 3, 2 / 3, 2 / 3]} mr="auto">
+                  {person.firstName} {person.lastName}
                 </Text>
-              ))
-            ) : (
-              <Text>no data</Text>
-            )}
-          </Content>
+                <Button
+                  onClick={() => handleAddInviteeToThread({ user: person })}
+                  type="button"
+                  bg="#736eab"
+                >
+                  +
+                </Button>
+              </Flex>
+            ))
+          ) : (
+            <Text>no data</Text>
+          )}
+          {/* </Content> */}
         </Flex>
       </Fragment>
     );

@@ -1,7 +1,15 @@
+// import AudioRecorder from "react-audio-recorder";
+import dynamic from "next/dynamic";
+
 import Layout from "../components/Layout";
 import { MeComponent } from "../generated/apolloComponents";
 import { Flex, Heading, Text } from "rebass";
 import DropZone from "../modules/messages/DropZone";
+import { isBrowser } from "../lib/isBrowser";
+
+const AudioRecorder = dynamic(() => import("react-audio-recorder") as any, {
+  ssr: false
+});
 
 const DropPage = () => (
   <Layout>
@@ -30,7 +38,16 @@ const DropPage = () => (
           </Flex>;
         }
 
-        return <DropZone onFilesAdded={console.log} me={data.me} />;
+        return (
+          <Flex>
+            <DropZone onFilesAdded={console.log} me={data.me} />
+            {isBrowser && typeof window.navigator !== "undefined" ? (
+              <AudioRecorder />
+            ) : (
+              ""
+            )}
+          </Flex>
+        );
       }}
     </MeComponent>
   </Layout>

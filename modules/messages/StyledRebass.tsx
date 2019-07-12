@@ -29,11 +29,17 @@ import {
   Text
 } from "rebass";
 
+import IconBase from "react-geomicons";
+
 import { MenuDots as MenuDotsBase } from "./MenuIcon";
 import CustomIconBase from "./CustomIcon";
 import CustomIconMicBase from "./CustomIconMic";
 
 export { Button, Card, Image, Heading, Text };
+
+export const Icon = styled(IconBase)`
+  ${space}
+`;
 
 export const AbBox = styled(BoxBase)`
 ${borders}

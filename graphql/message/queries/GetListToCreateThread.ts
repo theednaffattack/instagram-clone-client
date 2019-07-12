@@ -8,6 +8,7 @@ export const GET_ALL_MY_MESSAGES = gql`
       thoseICanMessage {
         id
         firstName
+        lastName
       }
     }
   }

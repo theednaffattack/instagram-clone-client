@@ -6,6 +6,7 @@ import { ViewThreadStateContainer } from "./ViewThreadStateContainer";
 
 export interface IViewThreadsProps {
   me: any;
+  data: any;
 }
 
 function ViewThreads(props: IViewThreadsProps) {

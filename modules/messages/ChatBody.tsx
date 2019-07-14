@@ -100,10 +100,13 @@ const ChatBody = React.forwardRef(
                             loadingCreateThread={loadingCreateThread}
                             errorCreateThread={errorCreateThread}
                             messages={
-                              dataMessageThreads &&
-                              dataMessageThreads[selectedThreadIndex]
-                                ? dataMessageThreads[selectedThreadIndex]
-                                    .messages
+                              dataMessageThreads.getMessageThreads &&
+                              dataMessageThreads.getMessageThreads[
+                                selectedThreadIndex
+                              ]
+                                ? dataMessageThreads.getMessageThreads[
+                                    selectedThreadIndex
+                                  ].messages
                                 : []
                             }
                           />
@@ -149,24 +152,27 @@ const ChatBody = React.forwardRef(
           {selectedThreadIndex !== null &&
           selectedThreadIndex !== "undefined" &&
           selectedThreadIndex !== "" &&
-          dataMessageThreads[selectedThreadIndex] ? (
-            dataMessageThreads[selectedThreadIndex].messages.map(
-              (message: any, index: number) => (
-                <MessageBox
-                  key={`${index}-${message.id}-${message.__typename}`}
-                  message={message}
-                  me={me}
-                />
-              )
-            )
+          dataMessageThreads.getMessageThreads[selectedThreadIndex] ? (
+            dataMessageThreads.getMessageThreads[
+              selectedThreadIndex
+            ].messages.map((message: any, index: number) => (
+              <MessageBox
+                key={`${index}-${message.id}-${message.__typename}`}
+                message={message}
+                me={me}
+              />
+            ))
           ) : (
             <>
               {!showMessagingAddressBook ? (
                 <Text fontSize="2em">select a thread to view messages</Text>
               ) : (
                 <Text fontSize="2em">
-                  New Message Thread ({dataMessageThreads.length} - IDX:{" "}
-                  {selectedThreadIndex})
+                  {JSON.stringify(dataMessageThreads)}
+                  New Message Thread (
+                  {dataMessageThreads &&
+                    dataMessageThreads.getMessageThreads.length}{" "}
+                  - IDX: {selectedThreadIndex})
                 </Text>
               )}
               <div>
@@ -216,9 +222,12 @@ const ChatBody = React.forwardRef(
             selectedThreadId={selectedThreadId}
             sentTo={
               selectedThreadIndex !== null &&
-              dataMessageThreads[selectedThreadIndex]
-                ? dataMessageThreads[selectedThreadIndex].messages[
-                    dataMessageThreads[selectedThreadIndex].messages.length - 1
+              dataMessageThreads.getMessageThreads &&
+              dataMessageThreads.getMessageThreads[selectedThreadIndex]
+                ? dataMessageThreads.getMessageThreads[selectedThreadIndex]
+                    .messages[
+                    dataMessageThreads.getMessageThreads[selectedThreadIndex]
+                      .messages.length - 1
                   ].sentBy.id
                 : ""
             }

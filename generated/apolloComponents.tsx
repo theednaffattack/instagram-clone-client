@@ -594,28 +594,6 @@ export type LogoutMutation = {
   logout: boolean;
 };
 
-export type MeVariables = {};
-
-export type MeQuery = {
-  __typename?: "Query";
-
-  me: Maybe<MeMe>;
-};
-
-export type MeMe = {
-  __typename?: "User";
-
-  firstName: string;
-
-  lastName: string;
-
-  email: string;
-
-  name: string;
-
-  id: string;
-};
-
 export type RegisterVariables = {
   data: RegisterInput;
 };
@@ -648,6 +626,28 @@ export type UnFollowUserMutation = {
   __typename?: "Mutation";
 
   unFollowUser: boolean;
+};
+
+export type MeVariables = {};
+
+export type MeQuery = {
+  __typename?: "Query";
+
+  me: Maybe<MeMe>;
+};
+
+export type MeMe = {
+  __typename?: "User";
+
+  firstName: string;
+
+  lastName: string;
+
+  email: string;
+
+  name: string;
+
+  id: string;
 };
 
 export type GetAllMyImagesVariables = {};
@@ -770,6 +770,28 @@ export type HelloWorldQuery = {
   __typename?: "Query";
 
   helloWorld: string;
+};
+
+export type AuthorizedMeVariables = {};
+
+export type AuthorizedMeQuery = {
+  __typename?: "Query";
+
+  me: Maybe<AuthorizedMeMe>;
+};
+
+export type AuthorizedMeMe = {
+  __typename?: "User";
+
+  firstName: string;
+
+  lastName: string;
+
+  email: string;
+
+  name: string;
+
+  id: string;
 };
 
 export type MyFollowingPostsVariables = {};
@@ -1792,50 +1814,6 @@ export function LogoutHOC<TProps, TChildProps = any>(
     LogoutProps<TChildProps>
   >(LogoutDocument, operationOptions);
 }
-export const MeDocument = gql`
-  query Me {
-    me {
-      firstName
-      lastName
-      email
-      name
-      id
-    }
-  }
-`;
-export class MeComponent extends React.Component<
-  Partial<ReactApollo.QueryProps<MeQuery, MeVariables>>
-> {
-  render() {
-    return (
-      <ReactApollo.Query<MeQuery, MeVariables>
-        query={MeDocument}
-        {...(this as any)["props"] as any}
-      />
-    );
-  }
-}
-export type MeProps<TChildProps = any> = Partial<
-  ReactApollo.DataProps<MeQuery, MeVariables>
-> &
-  TChildProps;
-export function MeHOC<TProps, TChildProps = any>(
-  operationOptions:
-    | ReactApollo.OperationOption<
-        TProps,
-        MeQuery,
-        MeVariables,
-        MeProps<TChildProps>
-      >
-    | undefined
-) {
-  return ReactApollo.graphql<
-    TProps,
-    MeQuery,
-    MeVariables,
-    MeProps<TChildProps>
-  >(MeDocument, operationOptions);
-}
 export const RegisterDocument = gql`
   mutation Register($data: RegisterInput!) {
     register(data: $data) {
@@ -1927,6 +1905,50 @@ export function UnFollowUserHOC<TProps, TChildProps = any>(
     UnFollowUserVariables,
     UnFollowUserProps<TChildProps>
   >(UnFollowUserDocument, operationOptions);
+}
+export const MeDocument = gql`
+  query me {
+    me {
+      firstName
+      lastName
+      email
+      name
+      id
+    }
+  }
+`;
+export class MeComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<MeQuery, MeVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<MeQuery, MeVariables>
+        query={MeDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type MeProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<MeQuery, MeVariables>
+> &
+  TChildProps;
+export function MeHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        MeQuery,
+        MeVariables,
+        MeProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    MeQuery,
+    MeVariables,
+    MeProps<TChildProps>
+  >(MeDocument, operationOptions);
 }
 export const GetAllMyImagesDocument = gql`
   query GetAllMyImages {
@@ -2131,6 +2153,50 @@ export function HelloWorldHOC<TProps, TChildProps = any>(
     HelloWorldVariables,
     HelloWorldProps<TChildProps>
   >(HelloWorldDocument, operationOptions);
+}
+export const AuthorizedMeDocument = gql`
+  query AuthorizedMe {
+    me {
+      firstName
+      lastName
+      email
+      name
+      id
+    }
+  }
+`;
+export class AuthorizedMeComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<AuthorizedMeQuery, AuthorizedMeVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<AuthorizedMeQuery, AuthorizedMeVariables>
+        query={AuthorizedMeDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type AuthorizedMeProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<AuthorizedMeQuery, AuthorizedMeVariables>
+> &
+  TChildProps;
+export function AuthorizedMeHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        AuthorizedMeQuery,
+        AuthorizedMeVariables,
+        AuthorizedMeProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    AuthorizedMeQuery,
+    AuthorizedMeVariables,
+    AuthorizedMeProps<TChildProps>
+  >(AuthorizedMeDocument, operationOptions);
 }
 export const MyFollowingPostsDocument = gql`
   query MyFollowingPosts {

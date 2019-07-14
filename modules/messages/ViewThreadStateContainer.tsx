@@ -121,46 +121,48 @@ export class ViewThreadStateContainer extends React.Component<
   }
 
   componentDidMount() {
-    const threadIdList = this.props.data.getMessageThreads.map(
-      thread => thread.id
-    );
-    threadIdList.map(threadIdThing =>
-      this.props.subscribeToMore(
-        // subscribeToMore(
-        {
-          document: MESSAGE_THREADS,
-          variables: {
-            data: {
-              threadId: threadIdThing,
-              sentTo: "0a8c2ccf-114f-4c3f-99b0-07d83bc668e5",
-              message: "hi bob"
-            }
-          },
-          updateQuery: (prev: any, { subscriptionData }: any) => {
-            if (!subscriptionData.data) return prev;
-
-            let newMessageThreads = prev.getMessageThreads.map(
-              (messageThread: any) => {
-                // do stuff
-                let messageThreadTrans = messageThread;
-                if (threadIdThing === messageThread.id) {
-                  messageThreadTrans.messages.push(
-                    subscriptionData.data.messageThreads.message
-                  );
-                } else {
-                  return messageThreadTrans;
-                }
+    let threadIdList;
+    if (this.props.data.getMessageThreads) {
+      threadIdList = this.props.data.getMessageThreads.map(thread => thread.id);
+      threadIdList.map(threadIdThing =>
+        this.props.subscribeToMore(
+          // subscribeToMore(
+          {
+            document: MESSAGE_THREADS,
+            variables: {
+              data: {
+                threadId: threadIdThing,
+                sentTo: "0a8c2ccf-114f-4c3f-99b0-07d83bc668e5",
+                message: "hi bob"
               }
-            );
-            if (!newMessageThreads) {
-              throw Error("No message threads in previous cache!");
+            },
+            updateQuery: (prev: any, { subscriptionData }: any) => {
+              if (!subscriptionData.data) return prev;
+
+              let newMessageThreads = prev.getMessageThreads.map(
+                (messageThread: any) => {
+                  // do stuff
+                  let messageThreadTrans = messageThread;
+                  if (threadIdThing === messageThread.id) {
+                    messageThreadTrans.messages.push(
+                      subscriptionData.data.messageThreads.message
+                    );
+                  } else {
+                    return messageThreadTrans;
+                  }
+                }
+              );
+              if (!newMessageThreads) {
+                throw Error("No message threads in previous cache!");
+              }
+              return prev;
             }
-            return prev;
           }
-        }
-        // )
-      )
-    );
+          // )
+        )
+      );
+    }
+
     if (this.messagesEnd.current) {
       this.scrollToBottom();
     }
@@ -173,10 +175,10 @@ export class ViewThreadStateContainer extends React.Component<
 
   render() {
     const { data } = this.props;
-    const threadIndex = this.state.selectedThread;
-    const threads = this.props.data.getMessageThreads;
+    // const threadIndex = this.state.selectedThread;
+    // const threads = this.props.data.getMessageThreads;
 
-    const selectedThreadId = 0;
+    // const selectedThreadId = 0;
     // this.state.selectedThread
     //   ? this.props.data.getMessageThreads[this.state.selectedThread].id
     //   : null;
@@ -217,12 +219,15 @@ export class ViewThreadStateContainer extends React.Component<
           />
 
           <ChatBody
-            dataMessageThreads={this.props.data.getMessageThreads}
+            loadingMessageThreads={this.props.loading}
+            dataMessageThreads={this.props.data}
             chatEmoji={this.state.chatEmoji}
             chatInput={this.state.chatInput}
             selectedThreadIndex={this.state.selectedThread}
             selectedThreadId={
-              this.state.selectedThread === 0 || this.state.selectedThread
+              (this.state.selectedThread === 0 &&
+                this.props.data.getMessageThreads) ||
+              (this.state.selectedThread && this.props.data.getMessageThreads)
                 ? this.props.data.getMessageThreads[this.state.selectedThread]
                     .id
                 : null

@@ -41,8 +41,11 @@ function AddressBookMutation({
                   errorCreateThread={errorCreateThread}
                   messages={
                     dataMessageThreads &&
-                    dataMessageThreads[selectedThreadIndex]
-                      ? dataMessageThreads[selectedThreadIndex].messages
+                    dataMessageThreads.getMessageThreads &&
+                    dataMessageThreads.getMessageThreads[selectedThreadIndex]
+                      ? dataMessageThreads.getMessageThreads[
+                          selectedThreadIndex
+                        ].messages
                       : []
                   }
                 />

@@ -88,6 +88,7 @@ export default class MessagesPage extends Component<
   }
 
   scrollToBottom = () => {
+    // console.log("DO I HAVE A REF?", this.messagesEnd.current);
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   };
 

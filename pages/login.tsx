@@ -15,7 +15,7 @@ import { InputField } from "../components/fields/InputField";
 import Layout from "../components/Layout";
 import { LoginComponent, MeQuery } from "../generated/apolloComponents";
 import { Router } from "../server/routes";
-import { meQuery } from "../graphql/user/mutations/Me";
+import { meQuery } from "../graphql/user/queries/Me";
 import { SignUpLink } from "../components/SignUpLink/SignUpLink";
 import { CheckBox } from "../components/fields/CheckBox";
 

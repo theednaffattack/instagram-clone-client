@@ -24,9 +24,11 @@ export function MessageBox(props: any) {
       width={4 / 5}
     >
       {props.me === props.message.sentBy.id ? (
-        // <div>{JSON.stringify(props.message)}</div>
-
-        <UserProfileImage flexDirection="column" user={props.message.sentBy} />
+        <UserProfileImage
+          isMe={props.me === props.message.sentBy.id}
+          flexDirection="column"
+          user={props.message.sentBy}
+        />
       ) : (
         ""
       )}
@@ -70,24 +72,29 @@ export function MessageBox(props: any) {
         </Box>
       </Card>
       {props.me !== props.message.sentBy.id ? (
-        <Flex ml={3} flexDirection="column" alignItems="center">
-          <Flex
-            height="40px"
-            width="40px"
-            my={2}
-            bg="thread_footer"
-            alignItems="center"
-            justifyContent="center"
-            boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
-            style={{
-              borderRadius: "50%"
-            }}
-          >
-            <Icon size="2em" name="user" fill="white" />
-          </Flex>
-          <Text color="text">{props.message.sentBy.firstName}</Text>
-        </Flex>
+        <UserProfileImage
+          flexDirection="column"
+          isMe={props.me === props.message.sentBy.id}
+          user={props.message.sentBy}
+        />
       ) : (
+        // <Flex ml={3} flexDirection="column" alignItems="center">
+        //   <Flex
+        //     height="40px"
+        //     width="40px"
+        //     my={2}
+        //     bg="thread_footer"
+        //     alignItems="center"
+        //     justifyContent="center"
+        //     boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
+        //     style={{
+        //       borderRadius: "50%"
+        //     }}
+        //   >
+        //     <Icon size="2em" name="user" fill="white" />
+        //   </Flex>
+        //   <Text color="text">{props.message.sentBy.firstName}</Text>
+        // </Flex>
         ""
       )}
     </Flex>

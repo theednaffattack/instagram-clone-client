@@ -2,15 +2,28 @@ import React from "react";
 
 import { Button, Flex, Icon, Text } from "./StyledRebass";
 
+interface IUserProfileImage {
+  user: any;
+  flexDirection: string;
+  color: string;
+  handleRemoveInviteeToThread: any;
+  isMe: boolean;
+}
+
 function UserProfileImage({
   user,
   flexDirection,
   color,
-  handleRemoveInviteeToThread
-}: any) {
+  handleRemoveInviteeToThread,
+  isMe
+}: IUserProfileImage) {
+  const isMeLeftMargin = isMe ? 0 : 3;
+  const isMeRightMargin = isMe ? 3 : 0;
   return (
     <Flex
-      mr={3}
+      // mr={3}
+      ml={isMeLeftMargin}
+      mr={isMeRightMargin}
       flexDirection={flexDirection ? flexDirection : "row"}
       alignItems="center"
     >

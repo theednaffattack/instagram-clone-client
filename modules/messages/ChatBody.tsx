@@ -69,7 +69,11 @@ const ChatBody = React.forwardRef(
 
     return (
       // CHAT
-      <Flex width={[1, 1, 1 / 2]} flexDirection="column" alignItems="center">
+      <Flex
+        width={[4 / 5, 4 / 5, 4 / 5]}
+        flexDirection="column"
+        alignItems="center"
+      >
         <Flex
           flex="0 0 auto"
           bg="chat_header"
@@ -168,7 +172,6 @@ const ChatBody = React.forwardRef(
                 <Text fontSize="2em">select a thread to view messages</Text>
               ) : (
                 <Text fontSize="2em">
-                  {JSON.stringify(dataMessageThreads)}
                   New Message Thread (
                   {dataMessageThreads &&
                     dataMessageThreads.getMessageThreads.length}{" "}
@@ -201,7 +204,7 @@ const ChatBody = React.forwardRef(
         </Flex>
         <CoverFlex
           position="absolute"
-          width={[1, 1, 1 / 2]}
+          width={[1, 1, 4 / 5]}
           bottom={0}
           alignItems="flex-end"
           p={0}

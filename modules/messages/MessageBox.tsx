@@ -19,26 +19,30 @@ export function MessageBox(props: any) {
       flexDirection="row"
       my={2}
       p={3}
-      ml={props.me !== props.message.user.id ? "auto" : 0}
-      mr={props.me === props.message.user.id ? "auto" : 0}
+      ml={props.me !== props.message.sentBy.id ? "auto" : 0}
+      mr={props.me === props.message.sentBy.id ? "auto" : 0}
       width={4 / 5}
     >
-      {props.me === props.message.user.id ? (
-        <UserProfileImage flexDirection="column" user={props.message.user} />
+      {props.me === props.message.sentBy.id ? (
+        // <div>{JSON.stringify(props.message)}</div>
+
+        <UserProfileImage flexDirection="column" user={props.message.sentBy} />
       ) : (
         ""
       )}
       <Card
         my={2}
         p={3}
-        color={props.me === props.message.user.id ? "white" : "thread_selected"}
+        color={
+          props.me === props.message.sentBy.id ? "white" : "thread_selected"
+        }
         bg={
-          props.me === props.message.user.id
+          props.me === props.message.sentBy.id
             ? "chat_bubble_me"
             : "chat_bubble_them"
         }
-        ml={props.me !== props.message.user.id ? "auto" : 0}
-        mr={props.me === props.message.user.id ? "auto" : 0}
+        ml={props.me !== props.message.sentBy.id ? "auto" : 0}
+        mr={props.me === props.message.sentBy.id ? "auto" : 0}
         width={1}
         boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
       >
@@ -49,7 +53,7 @@ export function MessageBox(props: any) {
         )}
 
         <Box
-          bg={props.me === props.message.user.id ? "white" : "transparent"}
+          bg={props.me === props.message.sentBy.id ? "white" : "transparent"}
           p={3}
           color="thread_selected"
         >
@@ -65,7 +69,7 @@ export function MessageBox(props: any) {
           <Text>{props.message.message}</Text>
         </Box>
       </Card>
-      {props.me !== props.message.user.id ? (
+      {props.me !== props.message.sentBy.id ? (
         <Flex ml={3} flexDirection="column" alignItems="center">
           <Flex
             height="40px"
@@ -81,7 +85,7 @@ export function MessageBox(props: any) {
           >
             <Icon size="2em" name="user" fill="white" />
           </Flex>
-          <Text color="text">{props.message.user.firstName}</Text>
+          <Text color="text">{props.message.sentBy.firstName}</Text>
         </Flex>
       ) : (
         ""

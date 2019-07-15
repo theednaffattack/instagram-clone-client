@@ -60,7 +60,7 @@ function ThreadBody({
       bg="thread_bg"
       flex="1 1 auto"
       flexDirection="column"
-      width={[1, 1, 1 / 2]}
+      width={[1 / 5, 1 / 5, 1 / 5]}
     >
       <Flex bg="thread_header" flexDirection="column">
         <Flex alignItems="center">
@@ -135,7 +135,7 @@ function ThreadBody({
       </Flex>
       <CoverFlex
         position="absolute"
-        width={[1, 1, 1 / 2]}
+        width={[1, 1, 1 / 5]}
         bottom={0}
         p={3}
         justifySelf="flex-end"

@@ -1,12 +1,13 @@
 import * as React from "react";
-import Head from "next/head";
+// import Head from "next/head";
 import { Box, Flex as FlexBase } from "rebass";
 import { maxWidth, minHeight, borders } from "styled-system";
 import styled from "styled-components";
 import Icon from "react-geomicons";
 
 import { MeComponent } from "../generated/apolloComponents";
-import MyLink from "./Link";
+// import MessagesNavLink from "./Link";
+import MessagesNavLink from "./MessagesNavLink";
 
 const Flex = styled(FlexBase)`
   ${minHeight}
@@ -31,37 +32,37 @@ const AuthenticatedHeader: React.FunctionComponent = (props: any) => (
     px={[1, 1, 4]}
     {...props}
   >
-    <MyLink color="text" mx={2} prefetch href="/" name="home">
+    <MessagesNavLink color="text" mx={2} prefetch href="/" name="home">
       Home
-    </MyLink>{" "}
+    </MessagesNavLink>{" "}
     |{" "}
-    <MyLink mx={2} prefetch href="/feed" name="feed">
+    <MessagesNavLink mx={2} prefetch href="/feed" name="feed">
       Feed
-    </MyLink>{" "}
+    </MessagesNavLink>{" "}
     |{" "}
-    <MyLink mx={2} prefetch href="/post" name="post">
+    <MessagesNavLink mx={2} prefetch href="/post" name="post">
       Post
-    </MyLink>{" "}
+    </MessagesNavLink>{" "}
     |{" "}
-    <MyLink mx={2} prefetch href="/messages" name="messages">
+    <MessagesNavLink mx={2} prefetch href="/messages" name="messages">
       Messages
-    </MyLink>{" "}
+    </MessagesNavLink>{" "}
     |{" "}
-    <MyLink mx={2} prefetch href="/login" name="login">
+    <MessagesNavLink mx={2} prefetch href="/login" name="login">
       Login
-    </MyLink>{" "}
+    </MessagesNavLink>{" "}
     |{" "}
-    <MyLink mx={2} prefetch href="/register" name="register">
+    <MessagesNavLink mx={2} prefetch href="/register" name="register">
       Register
-    </MyLink>{" "}
+    </MessagesNavLink>{" "}
     {/* |{" "}
-    <MyLink mx={2} prefetch href="/hello" name="hello">
+    <MessagesNavLink mx={2} prefetch href="/hello" name="hello">
       Hello
-    </MyLink>{" "} */}
+    </MessagesNavLink>{" "} */}
     {/* |{" "}
-    <MyLink mx={2} prefetch href="/forgot-password" name="forgot-password">
+    <MessagesNavLink mx={2} prefetch href="/forgot-password" name="forgot-password">
       Forgot Password
-    </MyLink> */}
+    </MessagesNavLink> */}
     <MeComponent>
       {({ data, loading }) => {
         if (!data || loading || !data.me) {
@@ -71,16 +72,16 @@ const AuthenticatedHeader: React.FunctionComponent = (props: any) => (
           <>
             {" "}
             |{" "}
-            <MyLink mx={2} prefetch href="/logout" name="logout">
+            <MessagesNavLink mx={2} prefetch href="/logout" name="logout">
               Logout
-            </MyLink>{" "}
+            </MessagesNavLink>{" "}
             |{" "}
             <Box pl={2} width="25px">
               <Icon name="user" fill="rgb(0, 116, 217)" />
             </Box>
-            <MyLink mx={2} prefetch href="/profile" name="profile">
+            <MessagesNavLink mx={2} prefetch href="/profile" name="profile">
               Profile
-            </MyLink>
+            </MessagesNavLink>
           </>
         );
       }}

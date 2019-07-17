@@ -4,7 +4,6 @@ import Icon from "react-geomicons";
 import { Flex, Text } from "./StyledRebass";
 
 export function LastMessage({ message }) {
-  console.log("lastMessage message", message.messages.length);
   return (
     <Flex width={[1, 1, 1]}>
       <Flex ml={3} flexDirection="column" justifyContent="center">

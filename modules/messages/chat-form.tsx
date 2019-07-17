@@ -62,8 +62,6 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
   }
 
   openFileDialog() {
-    console.log("openFileDialog this.props", this.props);
-    console.log("this.fileInputRef", this.fileInputRef);
     if (this.props.disabled) return;
     if (this.fileInputRef && this.fileInputRef.current) {
       this.fileInputRef.current.click();
@@ -83,17 +81,9 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
   }
 
   async makeBlobUrls() {
-    // return someArray.map(file => {
-    //   const quickFile: createdFile = new Blob([file], { type: "image/png" });
-    //   quickFile.name = "myFakeyFile.png";
-    // });
     const self = this;
-    console.log("VIEW SELF", self);
-    console.log("VIEW THIS", this);
-    // console.log(this.state.files)
 
     return await Promise.all(
-      // this.state.files.map(async myFile => {
       self.state.files.map(async myFile => {
         return await fetch(myFile)
           .then(r => r.blob())
@@ -212,6 +202,7 @@ class ChatForm extends React.Component<IChatFormProps, IChatFormState> {
             handleOpenEmojiMenuClick={handleOpenEmojiMenuClick}
             sentTo={sentTo}
             threadId={threadId}
+            newThreadInvitees={newThreadInvitees}
           />
         ) : (
           <CreateThreadAndAddMessageToThread

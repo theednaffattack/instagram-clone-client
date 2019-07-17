@@ -5,8 +5,14 @@ export const CREATE_MESSAGE_THREAD = gql`
     $sentTo: String!
     $message: String!
     $images: [Upload]
+    $invitees: [ID!]!
   ) {
-    createMessageThread(sentTo: $sentTo, message: $message, images: $images) {
+    createMessageThread(
+      sentTo: $sentTo
+      message: $message
+      images: $images
+      invitees: $invitees
+    ) {
       id
       invitees {
         id

@@ -30,6 +30,7 @@ export interface IAddMessageToThreadProps {
   fileInputRef: any;
   onFilesAdded: any;
   makeBlobUrls: any;
+  newThreadInvitees: any[];
 }
 
 const isBrowser = typeof window !== "undefined";
@@ -48,7 +49,8 @@ function AddMessageToThread({
   openFileDialog,
   fileInputRef,
   onFilesAdded,
-  makeBlobUrls
+  makeBlobUrls,
+  newThreadInvitees
 }: IAddMessageToThreadProps) {
   return (
     <AddMessageToThreadComponent>
@@ -96,6 +98,7 @@ function AddMessageToThread({
                 dataForSubmitting = {
                   threadId,
                   sentTo,
+                  invitees: newThreadInvitees.map(person => person.id),
                   message: data.message,
                   images: [...someFiles]
                 };
@@ -103,6 +106,7 @@ function AddMessageToThread({
                 dataForSubmitting = {
                   threadId,
                   sentTo,
+                  invitees: newThreadInvitees.map(person => person.id),
                   message: data.message
                 };
               }
@@ -345,7 +349,7 @@ function AddMessageToThread({
                         >
                           <CustomIcon width="1.6em" fill="#b2b2d8" />
                         </MinButton>
-                        <MinButton
+                        {/* <MinButton
                           onClick={
                             disabled ? null : handleEngageMicrophoneClick
                           }
@@ -358,7 +362,7 @@ function AddMessageToThread({
                           style={{ padding: 0 }}
                         >
                           <IconMic width="1.4em" fill="#b2b2d8" />
-                        </MinButton>
+                        </MinButton> */}
                       </Flex>
                     </Flex>
                   </Flex>

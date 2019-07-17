@@ -5,15 +5,22 @@ export const ADD_MESSAGE_TO_THREAD = gql`
     $threadId: ID!
     $sentTo: String!
     $message: String!
+    $invitees: [ID!]!
     $images: [Upload]
   ) {
     addMessageToThread(
       threadId: $threadId
       sentTo: $sentTo
       message: $message
+      invitees: $invitees
       images: $images
     ) {
       success
+      invitees {
+        id
+        firstName
+        lastName
+      }
       threadId
       message {
         id

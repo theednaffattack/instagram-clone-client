@@ -11,6 +11,7 @@ import { GetListToCreateThreadComponent } from "../../generated/apolloComponents
 import ChatForm from "./chat-form";
 import { IChatBodyProps } from "./types";
 import UserProfileImage from "./UserProfileImage";
+import AuthenticatedHeader from "../../components/AuthHeader";
 
 const AddressBookMutation = dynamic({
   loader: () => import("./AddressBookMutation") as any
@@ -59,6 +60,7 @@ const ChatBody = React.forwardRef(
               key={index}
               color="#b2b2d8"
               user={person}
+              buttonThing={true}
             />
             // <Heading key={index}>
             //   <Icon mx={2} name="user" fill="white" size=".8em" />
@@ -74,6 +76,7 @@ const ChatBody = React.forwardRef(
         flexDirection="column"
         alignItems="center"
       >
+        <AuthenticatedHeader bg="#5d5c8d" />
         <Flex
           flex="0 0 auto"
           bg="chat_header"
@@ -81,6 +84,22 @@ const ChatBody = React.forwardRef(
           alignItems="center"
         >
           <Flex width={[1, 1, 1]} flexDirection="column" mr="auto">
+            <Flex>
+              {selectedThreadIndex
+                ? dataMessageThreads.getMessageThreads[
+                    selectedThreadIndex
+                  ].invitees.map((person, index) => (
+                    <UserProfileImage
+                      handleRemoveInviteeToThread={handleRemoveInviteeToThread}
+                      key={index}
+                      color="#b2b2d8"
+                      user={person}
+                      buttonThing={false}
+                    />
+                  ))
+                : ""}
+            </Flex>
+
             {selectedThreadId === null ? (
               <>
                 <GetListToCreateThreadComponent>
@@ -144,7 +163,7 @@ const ChatBody = React.forwardRef(
         </Flex>
         <Flex
           flexDirection="column"
-          justifyContent="center"
+          justifyContent={selectedThreadIndex ? "flex-end" : "center"} // HERE
           alignItems="center"
           width={[1, 1, 1]}
           flex="1 1 auto"
@@ -171,12 +190,7 @@ const ChatBody = React.forwardRef(
               {!showMessagingAddressBook ? (
                 <Text fontSize="2em">select a thread to view messages</Text>
               ) : (
-                <Text fontSize="2em">
-                  New Message Thread (
-                  {dataMessageThreads &&
-                    dataMessageThreads.getMessageThreads.length}{" "}
-                  - IDX: {selectedThreadIndex})
-                </Text>
+                <Text fontSize="2em">New Message Thread</Text>
               )}
               <div>
                 {/* Load on demand */}
@@ -185,6 +199,7 @@ const ChatBody = React.forwardRef(
                     handleAddInviteeToThread={handleAddInviteeToThread}
                     dataMessageThreads={dataMessageThreads}
                     selectedThreadIndex={selectedThreadIndex}
+                    buttonThing={true}
                   />
                 )}
               </div>
@@ -197,7 +212,9 @@ const ChatBody = React.forwardRef(
               float: "left",
               clear: "both",
               // border: "1px limegreen dashed",
-              justifySelf: "flex-end"
+              width: "100%"
+              // justifySelf: "flex-end",
+              // height: "300px"
             }}
             ref={ref}
           />
@@ -235,7 +252,12 @@ const ChatBody = React.forwardRef(
                 : ""
             }
             threadId={selectedThreadId ? selectedThreadId : ""}
-            newThreadInvitees={newThreadInvitees}
+            newThreadInvitees={
+              selectedThreadIndex
+                ? dataMessageThreads.getMessageThreads[selectedThreadIndex]
+                    .invitees
+                : []
+            }
             newThreadDisabled={newThreadDisabled}
           />
         </CoverFlex>

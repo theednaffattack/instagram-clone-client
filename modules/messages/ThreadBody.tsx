@@ -12,6 +12,7 @@ import {
 
 import { Button, Flex, Heading, Text, CoverFlex } from "./StyledRebass";
 import { MappedThreads } from "./OtherFunctions";
+import { Box } from "rebass";
 
 export const Icon = styled(IconBase)`
   ${space}
@@ -28,6 +29,8 @@ export const ThreadInput = styled.input`
   ${fontSize}
   ${space}
   ${width}
+
+  box-sizing: border-box;
 
 /* ::placeholder, */
 &::-webkit-input-placeholder {
@@ -81,16 +84,20 @@ function ThreadBody({
           </MinButton>
         </Flex>
         <Flex
-          p={0}
+          // p={0}
+          // pr={3}
           bg="thread_bg"
           borderBottom="1px rgba(255,255,255, 0.2) solid"
           alignItems="center"
         >
-          <Icon mx={3} name="search" fill="#b2b2d8" />
+          <Box mx={3}>
+            <Icon name="search" fill="#b2b2d8" />
+          </Box>
 
           <ThreadInput
-            type="text"
             border={0}
+            type="text"
+            width={[1, 1, 1]}
             color="#b2b2d8"
             mr="auto"
             p={2}
@@ -103,8 +110,8 @@ function ThreadBody({
             width="45px"
             //   minHeight="35px"
             //   border="lime"
-            mr={3}
             p={0}
+            mr={2}
             color="#b2b2d8"
             fontSize="2em"
             fontWeight="200"

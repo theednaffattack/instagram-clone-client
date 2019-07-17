@@ -2,7 +2,6 @@ import React from "react";
 
 import { CoverFlex, Flex, Text } from "./StyledRebass";
 import { MESSAGE_THREADS } from "../../graphql/user/subscriptions/MessageThreads";
-import AuthenticatedHeader from "../../components/AuthHeader";
 import ThreadBody from "./ThreadBody";
 import ChatBody from "./ChatBody";
 
@@ -21,7 +20,7 @@ export interface IViewThreadStateContainerState {
   chatInput: string;
   chatEmoji: string;
   showMessagingAddressBook: boolean;
-  newThreadInvitees: any[];
+  newThreadInvitees: string[];
 }
 
 export class ViewThreadStateContainer extends React.Component<
@@ -37,7 +36,6 @@ export class ViewThreadStateContainer extends React.Component<
     this.handleThreadAddThreadClick = this.handleThreadAddThreadClick.bind(
       this
     );
-    this.handleUploadFileClick = this.handleUploadFileClick.bind(this);
     this.handleUploadFileClick = this.handleUploadFileClick.bind(this);
     this.handleChatMenuClick = this.handleChatMenuClick.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
@@ -60,14 +58,16 @@ export class ViewThreadStateContainer extends React.Component<
   };
 
   handleThreadSelection(selection) {
-    const { data } = this.props;
-    const selectedThreadIndex = this.props.data.getMessageThreads[
-      selection.index
-    ];
+    // const { data } = this.props;
+    // const selectedThreadIndex = this.props.data.getMessageThreads[
+    //   selection.index
+    // ];
 
-    this.setState({
-      selectedThread: selection.index
-    });
+    this.setState(prevState => ({
+      selectedThread: selection.index,
+      showMessagingAddressBook: !prevState.showMessagingAddressBook,
+      newThreadInvitees: []
+    }));
   }
 
   handleAddInviteeToThread({ user }: any) {
@@ -133,7 +133,11 @@ export class ViewThreadStateContainer extends React.Component<
               data: {
                 threadId: threadIdThing,
                 sentTo: "0a8c2ccf-114f-4c3f-99b0-07d83bc668e5",
-                message: "hi bob"
+                message: "hi bob",
+                invitees: [
+                  "0a8c2ccf-114f-4c3f-99b0-07d83bc668e5",
+                  "5102bae2-5000-42f1-986a-58e8f8506971"
+                ]
               }
             },
             updateQuery: (prev: any, { subscriptionData }: any) => {
@@ -191,7 +195,7 @@ export class ViewThreadStateContainer extends React.Component<
         left={0}
         bg="black"
         color="thread_text"
-        position="fixed"
+        position="absolute"
         // width={[1, 1, 1]}
         flexDirection="column"
         pb="49px"
@@ -199,8 +203,6 @@ export class ViewThreadStateContainer extends React.Component<
           overflow: "hidden"
         }}
       >
-        <AuthenticatedHeader bg="white" />
-
         <Flex
           bg="white"
           flex="1 1 auto"

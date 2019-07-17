@@ -61,6 +61,8 @@ export interface AddMessageToThreadInputV2 {
 
   sentTo: string;
 
+  invitees: string[];
+
   message: string;
 
   images?: Maybe<Upload[]>;
@@ -98,6 +100,7 @@ export type AddMessageToThreadVariables = {
   threadId: string;
   sentTo: string;
   message: string;
+  invitees: string[];
   images?: Maybe<Upload[]>;
 };
 
@@ -112,11 +115,23 @@ export type AddMessageToThreadAddMessageToThread = {
 
   success: boolean;
 
+  invitees: AddMessageToThreadInvitees[];
+
   threadId: string;
 
   message: AddMessageToThreadMessage;
 
   user: AddMessageToThread_User;
+};
+
+export type AddMessageToThreadInvitees = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
 };
 
 export type AddMessageToThreadMessage = {
@@ -180,6 +195,7 @@ export type CreateMessageThreadVariables = {
   sentTo: string;
   message: string;
   images?: Maybe<Upload[]>;
+  invitees: string[];
 };
 
 export type CreateMessageThreadMutation = {
@@ -341,7 +357,7 @@ export type GetMessageThreadsVariables = {};
 export type GetMessageThreadsQuery = {
   __typename?: "Query";
 
-  getMessageThreads: GetMessageThreadsGetMessageThreads[];
+  getMessageThreads: Maybe<GetMessageThreadsGetMessageThreads[]>;
 };
 
 export type GetMessageThreadsGetMessageThreads = {
@@ -628,28 +644,6 @@ export type UnFollowUserMutation = {
   unFollowUser: boolean;
 };
 
-export type MeVariables = {};
-
-export type MeQuery = {
-  __typename?: "Query";
-
-  me: Maybe<MeMe>;
-};
-
-export type MeMe = {
-  __typename?: "User";
-
-  firstName: string;
-
-  lastName: string;
-
-  email: string;
-
-  name: string;
-
-  id: string;
-};
-
 export type GetAllMyImagesVariables = {};
 
 export type GetAllMyImagesQuery = {
@@ -772,15 +766,15 @@ export type HelloWorldQuery = {
   helloWorld: string;
 };
 
-export type AuthorizedMeVariables = {};
+export type MeVariables = {};
 
-export type AuthorizedMeQuery = {
+export type MeQuery = {
   __typename?: "Query";
 
-  me: Maybe<AuthorizedMeMe>;
+  me: Maybe<MeMe>;
 };
 
-export type AuthorizedMeMe = {
+export type MeMe = {
   __typename?: "User";
 
   firstName: string;
@@ -996,15 +990,22 @@ export const AddMessageToThreadDocument = gql`
     $threadId: ID!
     $sentTo: String!
     $message: String!
+    $invitees: [ID!]!
     $images: [Upload]
   ) {
     addMessageToThread(
       threadId: $threadId
       sentTo: $sentTo
       message: $message
+      invitees: $invitees
       images: $images
     ) {
       success
+      invitees {
+        id
+        firstName
+        lastName
+      }
       threadId
       message {
         id
@@ -1126,8 +1127,14 @@ export const CreateMessageThreadDocument = gql`
     $sentTo: String!
     $message: String!
     $images: [Upload]
+    $invitees: [ID!]!
   ) {
-    createMessageThread(sentTo: $sentTo, message: $message, images: $images) {
+    createMessageThread(
+      sentTo: $sentTo
+      message: $message
+      images: $images
+      invitees: $invitees
+    ) {
       id
       invitees {
         id
@@ -1906,50 +1913,6 @@ export function UnFollowUserHOC<TProps, TChildProps = any>(
     UnFollowUserProps<TChildProps>
   >(UnFollowUserDocument, operationOptions);
 }
-export const MeDocument = gql`
-  query me {
-    me {
-      firstName
-      lastName
-      email
-      name
-      id
-    }
-  }
-`;
-export class MeComponent extends React.Component<
-  Partial<ReactApollo.QueryProps<MeQuery, MeVariables>>
-> {
-  render() {
-    return (
-      <ReactApollo.Query<MeQuery, MeVariables>
-        query={MeDocument}
-        {...(this as any)["props"] as any}
-      />
-    );
-  }
-}
-export type MeProps<TChildProps = any> = Partial<
-  ReactApollo.DataProps<MeQuery, MeVariables>
-> &
-  TChildProps;
-export function MeHOC<TProps, TChildProps = any>(
-  operationOptions:
-    | ReactApollo.OperationOption<
-        TProps,
-        MeQuery,
-        MeVariables,
-        MeProps<TChildProps>
-      >
-    | undefined
-) {
-  return ReactApollo.graphql<
-    TProps,
-    MeQuery,
-    MeVariables,
-    MeProps<TChildProps>
-  >(MeDocument, operationOptions);
-}
 export const GetAllMyImagesDocument = gql`
   query GetAllMyImages {
     GetAllMyImages {
@@ -2154,8 +2117,8 @@ export function HelloWorldHOC<TProps, TChildProps = any>(
     HelloWorldProps<TChildProps>
   >(HelloWorldDocument, operationOptions);
 }
-export const AuthorizedMeDocument = gql`
-  query AuthorizedMe {
+export const MeDocument = gql`
+  query me {
     me {
       firstName
       lastName
@@ -2165,38 +2128,38 @@ export const AuthorizedMeDocument = gql`
     }
   }
 `;
-export class AuthorizedMeComponent extends React.Component<
-  Partial<ReactApollo.QueryProps<AuthorizedMeQuery, AuthorizedMeVariables>>
+export class MeComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<MeQuery, MeVariables>>
 > {
   render() {
     return (
-      <ReactApollo.Query<AuthorizedMeQuery, AuthorizedMeVariables>
-        query={AuthorizedMeDocument}
+      <ReactApollo.Query<MeQuery, MeVariables>
+        query={MeDocument}
         {...(this as any)["props"] as any}
       />
     );
   }
 }
-export type AuthorizedMeProps<TChildProps = any> = Partial<
-  ReactApollo.DataProps<AuthorizedMeQuery, AuthorizedMeVariables>
+export type MeProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<MeQuery, MeVariables>
 > &
   TChildProps;
-export function AuthorizedMeHOC<TProps, TChildProps = any>(
+export function MeHOC<TProps, TChildProps = any>(
   operationOptions:
     | ReactApollo.OperationOption<
         TProps,
-        AuthorizedMeQuery,
-        AuthorizedMeVariables,
-        AuthorizedMeProps<TChildProps>
+        MeQuery,
+        MeVariables,
+        MeProps<TChildProps>
       >
     | undefined
 ) {
   return ReactApollo.graphql<
     TProps,
-    AuthorizedMeQuery,
-    AuthorizedMeVariables,
-    AuthorizedMeProps<TChildProps>
-  >(AuthorizedMeDocument, operationOptions);
+    MeQuery,
+    MeVariables,
+    MeProps<TChildProps>
+  >(MeDocument, operationOptions);
 }
 export const MyFollowingPostsDocument = gql`
   query MyFollowingPosts {

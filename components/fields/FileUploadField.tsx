@@ -57,8 +57,6 @@ export const FileUploadField = ({
   ...props
 }: FieldProps & InputProps) => {
   const errorMessage = touched[field.name] && errors[field.name];
-  console.log("field", field);
-  console.log("props", props);
 
   return (
     <>

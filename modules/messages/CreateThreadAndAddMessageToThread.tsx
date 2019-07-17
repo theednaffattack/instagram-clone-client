@@ -86,6 +86,7 @@ const CreateThreadAndAddMessageToThread = React.forwardRef(
                   let someFiles = await makeBlobUrls();
                   dataForSubmitting = {
                     sentTo: mySentTo.id,
+                    invitees: newThreadInvitees.map(person => person.id),
                     message: data.message,
                     images: [...someFiles]
                   };
@@ -94,6 +95,7 @@ const CreateThreadAndAddMessageToThread = React.forwardRef(
 
                   dataForSubmitting = {
                     sentTo: mySentTo.id,
+                    invitees: newThreadInvitees.map(person => person.id),
                     message: data.message
                   };
                 }
@@ -319,7 +321,7 @@ const CreateThreadAndAddMessageToThread = React.forwardRef(
                           >
                             <CustomIcon width="1.6em" fill="#b2b2d8" />
                           </MinButton>
-                          <MinButton
+                          {/* <MinButton
                             onClick={
                               newThreadDisabled
                                 ? null
@@ -334,7 +336,7 @@ const CreateThreadAndAddMessageToThread = React.forwardRef(
                             style={{ padding: 0 }}
                           >
                             <IconMic width="1.4em" fill="#b2b2d8" />
-                          </MinButton>
+                          </MinButton> */}
                         </Flex>
                       </Flex>
                     </Flex>

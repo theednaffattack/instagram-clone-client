@@ -39,9 +39,7 @@ export function MessageBox(props: any) {
           props.me === props.message.sentBy.id ? "white" : "thread_selected"
         }
         bg={
-          props.me === props.message.sentBy.id
-            ? "chat_bubble_me"
-            : "chat_bubble_them"
+          props.me === props.message.sentBy.id ? "chat_bubble_me" : "#eee" // "chat_bubble_them"
         }
         ml={props.me !== props.message.sentBy.id ? "auto" : 0}
         mr={props.me === props.message.sentBy.id ? "auto" : 0}
@@ -55,7 +53,7 @@ export function MessageBox(props: any) {
         )}
 
         <Box
-          bg={props.me === props.message.sentBy.id ? "white" : "transparent"}
+          bg="white" // {props.me === props.message.sentBy.id ? "white" : "transparent"}
           p={3}
           color="thread_selected"
         >

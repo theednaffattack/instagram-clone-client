@@ -8,6 +8,7 @@ interface IUserProfileImage {
   color: string;
   handleRemoveInviteeToThread: any;
   isMe: boolean;
+  buttonThing: boolean;
 }
 
 function UserProfileImage({
@@ -15,7 +16,8 @@ function UserProfileImage({
   flexDirection,
   color,
   handleRemoveInviteeToThread,
-  isMe
+  isMe,
+  buttonThing
 }: IUserProfileImage) {
   const isMeLeftMargin = isMe ? 0 : 3;
   const isMeRightMargin = isMe ? 3 : 0;
@@ -43,7 +45,8 @@ function UserProfileImage({
       <Text color={color ? color : "text"}>
         {user.firstName} {user.lastName}
       </Text>
-      {flexDirection === "column" ? (
+      {buttonThing}
+      {flexDirection === "column" || !buttonThing ? (
         ""
       ) : (
         <Button

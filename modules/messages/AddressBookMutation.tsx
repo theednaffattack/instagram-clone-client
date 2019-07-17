@@ -27,7 +27,7 @@ function AddressBookMutation({
           if (loadingCreateThread) {
             return <div>loading...</div>;
           }
-          // return <div>hello data{JSON.stringify(data)}</div>;
+
           if (dataCreateThread) {
             return (
               <div>

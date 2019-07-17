@@ -54,7 +54,7 @@ function ActiveLink({
 }: CustomLinkProps) {
   const style = {
     // marginRight: 10,
-    color: router.pathname === href ? "red" : "black"
+    color: router.pathname === href ? "red" : "#b2b2d8"
   };
 
   const handleClick = e => {

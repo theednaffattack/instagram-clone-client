@@ -1,6 +1,6 @@
 import React from "react";
 
-import Layout from "../components/Layout";
+import DarkHeaderLayout from "../components/DarkHeaderLayout";
 import {
   MeComponent,
   HelloWorldComponent
@@ -9,7 +9,7 @@ import ViewThreads from "../modules/messages/ViewThreads";
 
 export default function() {
   return (
-    <Layout>
+    <DarkHeaderLayout>
       <HelloWorldComponent>
         {helloData => (
           <MeComponent>
@@ -23,6 +23,6 @@ export default function() {
           </MeComponent>
         )}
       </HelloWorldComponent>
-    </Layout>
+    </DarkHeaderLayout>
   );
 }

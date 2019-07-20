@@ -4,6 +4,7 @@ import { Image } from "rebass";
 
 interface IImagePreviewProps {
   files: string[];
+  imageFiles: string[];
 }
 
 export default class ImagePreview extends Component<
@@ -11,21 +12,22 @@ export default class ImagePreview extends Component<
   object
 > {
   render() {
-    const { files } = this.props;
+    const { files, imageFiles } = this.props;
     return (
-      <Flex width={[1]}>
-        {files
-          ? files.map((imageFile: any, index: number) => {
+      <>
+        {imageFiles
+          ? imageFiles.map((imageFile: any, index: number) => {
               return (
                 <Image
-                  width={["150px", "150px", "250px"]}
+                  height="auto"
+                  width={[1 / 2, 1 / 2, 1 / 2]}
                   key={index}
-                  src={imageFile}
+                  src={imageFile.blobUrl}
                 />
               );
             })
           : ""}
-      </Flex>
+      </>
     );
   }
 }

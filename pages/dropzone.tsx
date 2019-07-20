@@ -1,34 +1,34 @@
-// import AudioRecorder from "react-audio-recorder";
-import dynamic from "next/dynamic";
-
 import Layout from "../components/Layout";
-import { MeComponent } from "../generated/apolloComponents";
+import { MeComponent, SignS3Component } from "../generated/apolloComponents";
 import { Flex, Heading, Text } from "rebass";
 import DropZone from "../modules/messages/DropZone";
-import { isBrowser } from "../lib/isBrowser";
 
-const AudioRecorder = dynamic(() => import("react-audio-recorder") as any, {
-  ssr: false
-});
+// import AudioRecorder from "react-audio-recorder";
+// import dynamic from "next/dynamic";
+// import { isBrowser } from "../lib/isBrowser";
+
+// const AudioRecorder = dynamic(() => import("react-audio-recorder") as any, {
+//   ssr: false
+// });
 
 const DropPage = () => (
   <Layout>
     <MeComponent>
-      {({ data, loading, error }) => {
-        if (!data || !data.me) {
+      {({ data: dataMe, loading: loadingMe, error: errorMe }) => {
+        if (!dataMe || !dataMe.me) {
           return null;
         }
-        if (error) {
+        if (errorMe) {
           <Flex
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
           >
             <Heading>error!!!</Heading>
-            <Text>{error.message}</Text>
+            <Text>{errorMe.message}</Text>
           </Flex>;
         }
-        if (loading) {
+        if (loadingMe) {
           <Flex
             flexDirection="column"
             justifyContent="center"
@@ -40,12 +40,24 @@ const DropPage = () => (
 
         return (
           <Flex>
-            <DropZone onFilesAdded={console.log} me={data.me} />
-            {isBrowser && typeof window.navigator !== "undefined" ? (
-              <AudioRecorder />
-            ) : (
-              ""
-            )}
+            <SignS3Component>
+              {(
+                signS3,
+                { data: dataSignS3, error: errorSignS3, loading: loadingSignS3 }
+              ) => {
+                return (
+                  <DropZone
+                    signS3={signS3}
+                    data={dataSignS3}
+                    error={errorSignS3}
+                    loading={loadingSignS3}
+                    mutation={signS3}
+                    onFilesAdded={console.log}
+                    me={dataMe.me}
+                  />
+                );
+              }}
+            </SignS3Component>
           </Flex>
         );
       }}

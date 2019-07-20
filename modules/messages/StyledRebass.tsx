@@ -121,6 +121,16 @@ export const Dot = styled(DotBase)`
   ${zIndex}
 `;
 
+export const MaxFlex = styled(FlexBase)`
+${boxShadow}
+  ${borders}
+  ${position}
+  ${minHeight}
+  ${maxHeight}
+  ${minWidth}
+  ${height}
+`;
+
 export const Flex = styled(FlexBase)`
 ${boxShadow}
   ${borders}

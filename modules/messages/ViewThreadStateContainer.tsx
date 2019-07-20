@@ -230,8 +230,9 @@ export class ViewThreadStateContainer extends React.Component<
               (this.state.selectedThread === 0 &&
                 this.props.data.getMessageThreads) ||
               (this.state.selectedThread && this.props.data.getMessageThreads)
-                ? this.props.data.getMessageThreads[this.state.selectedThread]
-                    .id
+                ? this.props.data.getMessageThreads[
+                    this.state.selectedThread || 100
+                  ].id
                 : null
             }
             showMessagingAddressBook={this.state.showMessagingAddressBook}

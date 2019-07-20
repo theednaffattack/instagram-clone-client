@@ -115,11 +115,15 @@ export default () => {
                         const displayErrors: { [key: string]: string } = {};
 
                         let myErrors = error.graphQLErrors; //.extensions.exception.validationErrors;
+                        console.log(
+                          "myErrors",
+                          JSON.stringify(myErrors, null, 2)
+                        );
+                        // myErrors.forEach((errorThing: any) => {
+                        //   displayErrors[errorThing.path[0]] =
+                        //     errorThing.message;
+                        // });
 
-                        myErrors.forEach((errorThing: any) => {
-                          displayErrors[errorThing.path[0]] =
-                            errorThing.message;
-                        });
                         // myErrors.forEach((validationError: any) => {
                         //   Object.values(validationError.constraints).forEach(
                         //     (message: any) => {

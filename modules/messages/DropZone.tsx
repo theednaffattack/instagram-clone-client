@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import dFormat from "date-fns/format";
+import axios from "axios";
 
-import { Flex } from "./StyledRebass";
+import { Button, Flex, MaxFlex } from "./StyledRebass";
 import ImagePreview from "./ImagePreview";
+// import { SignS3Component } from "../../generated/apolloComponents";
 
 const { log } = console;
 
@@ -12,11 +15,13 @@ export const inputStyles = {
 interface IDropZoneProps {
   disabled: boolean;
   onFilesAdded: any;
+  signS3: any;
 }
 
 interface IDropZoneState {
   highlight: boolean;
   files: any[];
+  name: string;
 }
 
 export default class DropZone extends Component<
@@ -36,10 +41,14 @@ export default class DropZone extends Component<
     this.fileListToArray = this.fileListToArray.bind(this);
     this.handleClearFilePreview = this.handleClearFilePreview.bind(this);
     this.makeObjectUrls = this.makeObjectUrls.bind(this);
+    this.getSignature = this.getSignature.bind(this);
+    this.formatFilename = this.formatFilename.bind(this);
+    this.uploadToS3 = this.uploadToS3.bind(this);
 
     this.state = {
       highlight: false,
-      files: []
+      files: [],
+      name: ""
     };
   }
 
@@ -90,8 +99,151 @@ export default class DropZone extends Component<
     return array;
   }
 
+  async makeBlobUrlsFromState() {
+    const self = this;
+
+    return await Promise.all(
+      self.state.files.map(async myFile => {
+        return await fetch(myFile)
+          .then(r => r.blob())
+          .then(
+            blobFile =>
+              new File([blobFile], uuidv4(), {
+                type: "image/png"
+              })
+          );
+      })
+    );
+  }
+
+  async makeBlobUrlsFromReference(myFile) {
+    const self = this;
+
+    return await fetch(myFile)
+      .then(r => r.blob())
+      .then(
+        blobFile =>
+          new File([blobFile], myFile.name, {
+            type: myFile.type
+          })
+      );
+
+    // return await Promise.all(
+    //   self.state.files.map(async myFile => {
+    //     return await fetch(myFile)
+    //       .then(r => r.blob())
+    //       .then(
+    //         blobFile =>
+    //           new File([blobFile], uuidv4(), {
+    //             type: "image/png"
+    //           })
+    //       );
+    //   })
+    // );
+  }
+
+  uploadToS3 = async ({ file, signedRequest }) => {
+    const options = {
+      headers: {
+        "Content-Type": "image/png"
+      }
+    };
+    const theFile = await this.makeBlobUrlsFromReference(file);
+    console.log({ file, signedRequest });
+    console.log({
+      signedRequest,
+      urlOrNameMaybe: theFile,
+      options
+    });
+    await axios.put(signedRequest, theFile, options);
+  };
+
+  formatFilename = file => {
+    console.log("FILename", file);
+    const filename = file.name;
+
+    const date = dFormat(new Date(), "YYYYMMDD");
+
+    const randomString = Math.random()
+      .toString(36)
+      .substring(2, 7);
+
+    const fileExtension = file.type.substring(
+      file.type.lastIndexOf("/") + 1,
+      file.type.length
+    );
+
+    const cleanFileName = filename.toLowerCase().replace(/[^a-z0-9]/g, "-");
+
+    const restrictedLengthCleanFileName = cleanFileName.substring(0, 40);
+
+    log(
+      "restrictedLengthCleanFileName".toUpperCase(),
+      restrictedLengthCleanFileName
+    );
+    log("randomString & fileExtension".toUpperCase(), {
+      randomString,
+      fileExtension
+    });
+
+    const newFilename = `images/${date}-${randomString}-${restrictedLengthCleanFileName}.${fileExtension}`;
+
+    return newFilename;
+  };
+
+  async getSignature() {
+    const { files } = this.state;
+    const { signS3 } = this.props;
+
+    if (!files || !files[0]) return;
+
+    console.log("Files[0]".toUpperCase(), files[0]);
+    const response = await signS3({
+      variables: {
+        filename: files[0].name,
+        filetype: files[0].type
+      }
+    });
+
+    const { signedRequest, url } = response.data.signS3;
+    await this.uploadToS3({
+      file: files[0],
+      signedRequest
+    }).catch(error => console.error(JSON.stringify({ ...error }, null, 2)));
+
+    log("anyResponse".toUpperCase(), anyResponse);
+
+    // this needs to be a call to create Post?
+    // probably wrap w/ mutation component from outside and pass in
+    // const graphqlResponse = await this.props.createChampion({
+    //   variables: {
+    //     name,
+    //     pictureUrl: url
+    //   }
+    // });
+  }
+
   makeObjectUrls(someArray) {
-    return someArray.map(file => URL.createObjectURL(file));
+    return someArray.map(file => {
+      const {
+        lastModified,
+        lastModifiedDate,
+        name,
+        size,
+        type,
+        webkitRelativePath
+      } = file;
+
+      return {
+        blobUrl: URL.createObjectURL(file),
+        lastModified,
+        lastModifiedDate,
+        name: this.formatFilename(file),
+        size,
+        type,
+        webkitRelativePath
+      };
+    });
   }
 
   onFilesAdded(evt: any) {
@@ -103,13 +255,14 @@ export default class DropZone extends Component<
     if (evt && evt.target) {
       array = this.fileListToArray(evt.target.files);
       const previewFiles = this.makeObjectUrls(array);
+      log("previewFiles if", previewFiles);
       this.setState({
         files: [...previewFiles]
       });
     } else {
       array = this.fileListToArray(evt);
       const previewFiles = this.makeObjectUrls(array);
-
+      log("previewFiles else", previewFiles);
       this.setState({
         files: [...previewFiles]
       });
@@ -121,51 +274,48 @@ export default class DropZone extends Component<
   }
 
   render() {
+    const { signS3 } = this.props;
     return (
-      <Flex>
-        <div
-          style={{
-            height: "200px",
-            minHeight: "200px",
-            width: "200px",
-            backgroundColor: this.state.highlight ? "rgb(188,185,236)" : "#fff",
-            border: "2px dashed rgb(187, 186, 186)",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-            fontSize: "16px",
-            cursor: this.props.disabled ? "default" : "pointer"
-          }}
-          onClick={this.openFileDialog}
-          onDragOver={this.onDragOver}
-          onDragLeave={this.onDragLeave}
-          onDrop={this.onDrop}
-        >
-          The Drop Zone
-          {/* <img alt="upload" src="" /> */}
-          <input
-            ref={this.fileInputRef}
-            type="file"
-            onChange={this.onFilesAdded}
-            style={inputStyles}
-            multiple
-          />
-          <span>Upload Files</span>
-        </div>
-        <ImagePreview imageFiles={this.state.files} />
-        {/* {this.state.files.map((imageFile, index) => (
-          <img
-            key={`${index}-${Math.random()}`}
-            alt="file preview"
-            src={imageFile}
-          />
-        ))} */}
-
-        <button type="button" onClick={this.handleClearFilePreview}>
+      <Flex flexDirection="column" width={[1, 1, 1]}>
+        The Drop DropZone
+        <Flex>
+          <MaxFlex
+            bg={this.state.highlight ? "rgb(188,185,236)" : "#fff"}
+            height="350px"
+            width="350px"
+            minWidth="350px"
+            border="2px dashed rgb(187, 186, 186)"
+            maxHeight="350px"
+            style={{
+              borderRadius: "50%",
+              fontSize: "16px",
+              cursor: this.props.disabled ? "default" : "pointer"
+            }}
+            onClick={this.openFileDialog}
+            onDragOver={this.onDragOver}
+            onDragLeave={this.onDragLeave}
+            onDrop={this.onDrop}
+          >
+            <input
+              ref={this.fileInputRef}
+              type="file"
+              onChange={this.onFilesAdded}
+              style={inputStyles}
+              multiple
+            />
+            <span>Upload Files</span>
+            <pre>{JSON.stringify(this.state.files, null, 2)}</pre>
+          </MaxFlex>
+        </Flex>
+        <Button type="button" onClick={this.getSignature}>
+          Upload to S3
+        </Button>
+        <Flex flexWrap="wrap" width={[1, 1, 1]}>
+          <ImagePreview imageFiles={this.state.files} />
+        </Flex>
+        <Button type="button" onClick={this.handleClearFilePreview}>
           Clear `Files` State
-        </button>
+        </Button>
       </Flex>
     );
   }

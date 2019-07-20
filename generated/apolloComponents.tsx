@@ -268,6 +268,25 @@ export type CreateMessageThreadUser = {
   lastName: string;
 };
 
+export type SignS3Variables = {
+  filename: string;
+  filetype: string;
+};
+
+export type SignS3Mutation = {
+  __typename?: "Mutation";
+
+  signS3: SignS3SignS3;
+};
+
+export type SignS3SignS3 = {
+  __typename?: "SignedS3Payload";
+
+  url: string;
+
+  signedRequest: string;
+};
+
 export type GetAllMyMessagesVariables = {};
 
 export type GetAllMyMessagesQuery = {
@@ -1210,6 +1229,51 @@ export function CreateMessageThreadHOC<TProps, TChildProps = any>(
     CreateMessageThreadVariables,
     CreateMessageThreadProps<TChildProps>
   >(CreateMessageThreadDocument, operationOptions);
+}
+export const SignS3Document = gql`
+  mutation SignS3($filename: String!, $filetype: String!) {
+    signS3(filename: $filename, filetype: $filetype) {
+      url
+      signedRequest
+    }
+  }
+`;
+export class SignS3Component extends React.Component<
+  Partial<ReactApollo.MutationProps<SignS3Mutation, SignS3Variables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<SignS3Mutation, SignS3Variables>
+        mutation={SignS3Document}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type SignS3Props<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<SignS3Mutation, SignS3Variables>
+> &
+  TChildProps;
+export type SignS3MutationFn = ReactApollo.MutationFn<
+  SignS3Mutation,
+  SignS3Variables
+>;
+export function SignS3HOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        SignS3Mutation,
+        SignS3Variables,
+        SignS3Props<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    SignS3Mutation,
+    SignS3Variables,
+    SignS3Props<TChildProps>
+  >(SignS3Document, operationOptions);
 }
 export const GetAllMyMessagesDocument = gql`
   query GetAllMyMessages {

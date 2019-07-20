@@ -18,6 +18,18 @@ import Router from "next/router";
 
 const myIpAddress = "192.168.1.10"; // internalIp.v4.sync();
 
+const port = process.env.PORT || 3000;
+
+const myLanInfo = `http://${myIpAddress}:${port}`;
+
+const prodDomain = "fauxgram.eddienaff.dev";
+
+const domain = process.env.NODE_ENV !== "production" ? prodDomain : myLanInfo;
+
+const prodGraphqlUrl = `https://${domain}/graphql`;
+
+const prodWebsocketsUrl = `ws://${domain}/subscriptions`;
+
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 
 // Polyfill fetch() on the server (used by apollo-client)
@@ -36,14 +48,16 @@ function create(initialState: any, { getToken }: Options) {
   // });
 
   const uploadLink = createUploadLink({
-    uri: `http://${myIpAddress}:4000/graphql`,
+    // uri: `http://${myIpAddress}:4000/graphql`,
+    uri: prodGraphqlUrl,
     credentials: "include"
   });
 
   // Create a WebSocket link:
   const wsLink = isBrowser
     ? new WebSocketLink({
-        uri: `ws://${myIpAddress}:4000/subscriptions`,
+        // uri: `ws://${myIpAddress}:4000/subscriptions`,
+        uri: prodWebsocketsUrl,
         options: {
           reconnect: true
           // connectionParams: {

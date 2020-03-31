@@ -33,7 +33,7 @@
     "graphql": "^14.1.1",
     "internal-ip": "^4.3.0",
     "isomorphic-unfetch": "^3.0.0",
-    "next": "^7.0.2",
+    "next": "^9.3.2",
     "next-routes": "^1.4.2",
     "polished": "^3.2.0",
     "react": "^16.7.0",
